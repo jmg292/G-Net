@@ -1,4 +1,4 @@
-# G-Net Zero Trust Virtual Private Network
+# G-Net: A Zero Trust Virtual Private Network
 
 G-Net is a zero trust remote access and administration utility that is:
 
