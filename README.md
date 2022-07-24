@@ -8,7 +8,7 @@ G-Net is a zero trust remote access and administration utility that is:
 * Built using existing security concepts and technologies
 * Powerful, but easy to maintain
 
-The current codebase is available in the development branch, and technical documentation is available in the [Wiki](https://github.com/jmg292/G-Net/wiki).
+The current codebase is available in the development branch. Technical documentation is available in the [Wiki](https://github.com/jmg292/G-Net/wiki).
 
 ## Motivation
 
