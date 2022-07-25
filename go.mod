@@ -1,9 +1,8 @@
-module gnet
+module github.com/jmg292/G-Net
 
 go 1.18
 
 require (
-	github.com/cloudflare/circl v1.2.0
 	github.com/cretz/bine v0.2.0
 	github.com/go-piv/piv-go v1.9.0
 	github.com/google/go-tpm v0.3.3
