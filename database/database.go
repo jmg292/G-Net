@@ -1,7 +1,7 @@
 package database
 
 import (
-	"gnet/database/models"
+	"github.com/jmg292/G-Net/database/models"
 
 	"github.com/google/uuid"
 )

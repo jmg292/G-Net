@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"compress/zlib"
 	"encoding/json"
-	"gnet/identity"
-	"gnet/management"
+
+	"github.com/jmg292/G-Net/identity"
+	"github.com/jmg292/G-Net/management"
 
 	"golang.org/x/crypto/sha3"
 )

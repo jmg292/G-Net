@@ -2,10 +2,11 @@ package wumbo
 
 import (
 	"fmt"
-	"gnet/identity"
-	"gnet/management"
-	"gnet/utilities/convert"
 	"time"
+
+	"github.com/jmg292/G-Net/identity"
+	"github.com/jmg292/G-Net/management"
+	"github.com/jmg292/G-Net/utilities/convert"
 )
 
 const WumboHeaderByteCount int = 82

@@ -1,8 +1,9 @@
 package message
 
 import (
-	"gnet/control/protocol/payload"
 	"time"
+
+	"github.com/jmg292/G-Net/control/protocol/payload"
 )
 
 type header struct {

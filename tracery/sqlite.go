@@ -1,6 +1,6 @@
 package tracery
 
-import "gnet/tracery/wumbo"
+import "github.com/jmg292/G-Net/tracery/wumbo"
 
 type SqliteTracery struct {
 	filePath     string

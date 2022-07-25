@@ -1,6 +1,6 @@
 package publication
 
-import "gnet/management"
+import "github.com/jmg292/G-Net/management"
 
 type NetworkInformation struct {
 	PublicIPv4  []string

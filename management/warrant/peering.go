@@ -1,7 +1,7 @@
 package warrant
 
 import (
-	"gnet/management"
+	"github.com/jmg292/G-Net/management"
 
 	"github.com/go-piv/piv-go/piv"
 )

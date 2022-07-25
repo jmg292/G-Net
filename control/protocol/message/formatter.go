@@ -6,8 +6,9 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/json"
-	"gnet/control/protocol/payload"
-	"gnet/identity"
+
+	"github.com/jmg292/G-Net/control/protocol/payload"
+	"github.com/jmg292/G-Net/identity"
 )
 
 type messageFormatter struct {

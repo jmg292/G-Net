@@ -4,9 +4,10 @@ import (
 	"crypto/x509"
 	"database/sql"
 	"fmt"
-	userroles "gnet/access_control/user_roles"
-	"gnet/database/models"
 	"os"
+
+	userroles "github.com/jmg292/G-Net/access_control/userroles"
+	"github.com/jmg292/G-Net/database/models"
 
 	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"

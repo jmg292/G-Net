@@ -1,6 +1,6 @@
 package edict
 
-import "gnet/management"
+import "github.com/jmg292/G-Net/management"
 
 type NetworkExit struct {
 	PeerFingerprint []byte

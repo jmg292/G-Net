@@ -1,8 +1,8 @@
 package tracery
 
 import (
-	"gnet/management"
-	"gnet/tracery/wumbo"
+	"github.com/jmg292/G-Net/management"
+	"github.com/jmg292/G-Net/tracery/wumbo"
 )
 
 type Tracery interface {

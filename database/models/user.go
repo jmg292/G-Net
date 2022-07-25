@@ -2,7 +2,8 @@ package models
 
 import (
 	"crypto/x509"
-	roles "gnet/access_control/user_roles"
+
+	roles "github.com/jmg292/G-Net/access_control/user_roles"
 
 	"github.com/google/uuid"
 )
