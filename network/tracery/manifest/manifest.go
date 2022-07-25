@@ -1,6 +1,6 @@
 package manifest
 
 type Manifest interface {
-	GetAdminWarrantBlockIndex([]byte) (int, error)
-	GetDeviceWarrantBlockIndex([]byte) (int, error)
+	GetAdminWarrantBlockIndex([]byte) (uint64, error)
+	GetDeviceWarrantBlockIndex([]byte) (uint64, error)
 }
