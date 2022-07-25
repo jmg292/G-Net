@@ -1,9 +1,10 @@
 package payload
 
-type ContentType uint16
+type ContentType string
 
 const (
-	ContentType_NetworkState ContentType = iota
+	NetworkState ContentType = "NetworkState"
+	BlockObject              = "BlockObject"
 )
 
 type Content interface {

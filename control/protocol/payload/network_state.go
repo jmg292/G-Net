@@ -2,7 +2,7 @@ package payload
 
 import "time"
 
-type NetworkState struct {
+type NetworkStateContent struct {
 	CurrentStateDigest []byte
 	CurrentBlockId     []byte
 	PrecedingBlockID   []byte
@@ -10,6 +10,6 @@ type NetworkState struct {
 	CurrentTime        time.Time
 }
 
-func (*NetworkState) Type() ContentType {
-	return ContentType_NetworkState
+func (*NetworkStateContent) Type() ContentType {
+	return NetworkState
 }
