@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/jmg292/G-Net/identity"
-	"github.com/jmg292/G-Net/management"
+	"github.com/jmg292/G-Net/network/management"
 	"github.com/jmg292/G-Net/utilities/convert"
 )
 

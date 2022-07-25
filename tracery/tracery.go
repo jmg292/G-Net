@@ -1,7 +1,7 @@
 package tracery
 
 import (
-	"github.com/jmg292/G-Net/management"
+	"github.com/jmg292/G-Net/network/management"
 	"github.com/jmg292/G-Net/tracery/wumbo"
 )
 

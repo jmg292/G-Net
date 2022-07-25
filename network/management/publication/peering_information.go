@@ -1,6 +1,6 @@
 package publication
 
-import "github.com/jmg292/G-Net/management"
+import "github.com/jmg292/G-Net/network/management"
 
 type PeeringInformation struct {
 	ServiceAddress string

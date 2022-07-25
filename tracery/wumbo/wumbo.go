@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 
 	"github.com/jmg292/G-Net/identity"
-	"github.com/jmg292/G-Net/management"
+	"github.com/jmg292/G-Net/network/management"
 
 	"golang.org/x/crypto/sha3"
 )
