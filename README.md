@@ -1,3 +1,5 @@
+## Decentralized Zero Trust Networking
+
 G-Net a peer-to-peer virtual private network that is:
 
 * Free, private, and secure by default
