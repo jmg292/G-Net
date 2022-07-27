@@ -1,4 +1,4 @@
-package netdriver
+package driver
 
 // Functions dealing with the `Adapter` object
 var (

@@ -1,4 +1,4 @@
-package netdriver
+package driver
 
 import "syscall"
 
@@ -6,5 +6,5 @@ var tunnelDriver = syscall.NewLazyDLL("wintun.dll")
 
 // Functions dealing with logging
 var (
-	pSetLogger     = tunnelDriver.NewProc("WintunSetLogger")	
+	pSetLogger = tunnelDriver.NewProc("WintunSetLogger")
 )
