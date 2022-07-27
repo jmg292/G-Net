@@ -1,8 +1,6 @@
-package device
+package tpm
 
 import (
-	"crypto/rand"
-	"crypto/x509"
 	"fmt"
 	"io"
 
@@ -50,16 +48,19 @@ func (idProvider *Tpm2IdentityProvider) GenerateKey() error {
 }
 
 func (idProvider *Tpm2IdentityProvider) Certificate() ([]byte, error) {
-	var err error = nil
-	idProvider.publicKey, _, _, err = tpm2.ReadPublic(idProvider.tpmHandle, idProvider.primaryKey)
-	if err != nil {
-		return nil, error
-	}
-	certificateTemplate := x509.Certificate{
-		KeyUsage:    x509.KeyUsageCertSign,
-		ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth},
-	}
-	x509.CreateCertificate(rand.Reader)
+	// var err error
+	// idProvider.publicKey, _, _, err = tpm2.ReadPublic(idProvider.tpmHandle, idProvider.primaryKey)
+	/*
+		if err != nil {
+			return nil, error
+		}
+		certificateTemplate := x509.Certificate{
+			KeyUsage:    x509.KeyUsageCertSign,
+			ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageClientAuth},
+		}
+		x509.CreateCertificate(rand.Reader)
+	*/
+	return nil, nil
 }
 
 func (idProvider *Tpm2IdentityProvider) Sign(data []byte) ([]byte, error) {
