@@ -7,7 +7,7 @@ func (block *Block) ToBytes() []byte {
 	return append(blockBytes, block.Signature...)
 }
 
-func FromBytes(blockData []byte) (*Block, error) {
+func NewFromBytes(blockData []byte) (*Block, error) {
 	blockHeader, err := header.FromBytes(blockData)
 	if err != nil {
 		return nil, err
