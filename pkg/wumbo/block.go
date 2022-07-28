@@ -5,7 +5,7 @@ import (
 	"compress/zlib"
 	"encoding/json"
 
-	"github.com/jmg292/G-Net/identity"
+	"github.com/jmg292/G-Net/pkg/identity/public"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -22,7 +22,7 @@ func (block *Block) Digest() []byte {
 }
 
 func (block *Block) Validate(issuer any) error {
-	return issuer.(identity.PublicKey).Verify(block.Digest(), block.Signature)
+	return issuer.(public.KeyRing).VerifySignature(block.Digest(), block.Signature)
 }
 
 func (block *Block) UnmarshalContent(v any) error {

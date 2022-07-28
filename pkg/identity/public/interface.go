@@ -2,7 +2,7 @@ package public
 
 import "crypto/x509"
 
-type PublicKeyRing interface {
+type KeyRing interface {
 	Name() string
 	Fingerprint() []byte
 	SigningCertificate() *x509.Certificate
