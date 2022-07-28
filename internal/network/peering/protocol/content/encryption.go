@@ -1,4 +1,4 @@
-package message
+package content
 
 import (
 	"golang.org/x/crypto/chacha20poly1305"
