@@ -2,12 +2,12 @@ package publication
 
 import "github.com/jmg292/G-Net/internal/datagrams/management"
 
-type PeeringInformation struct {
+type PeeringInfo struct {
 	ServiceAddress string
 	PortNumber     int
 	Certificate    []byte
 }
 
-func (*PeeringInformation) Type() management.Datagram {
+func (*PeeringInfo) Type() management.Datagram {
 	return management.PeeringInformation
 }
