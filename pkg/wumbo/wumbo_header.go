@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jmg292/G-Net/identity"
 	"github.com/jmg292/G-Net/internal/datagrams"
 	"github.com/jmg292/G-Net/internal/utilities/convert"
+	"github.com/jmg292/G-Net/pkg/identity/public"
 )
 
 const WumboHeaderByteCount int = 82
@@ -46,7 +46,7 @@ func ReadHeaderFromBlock(data []byte) (*WumboHeader, error) {
 func NewWumboHeader(precedingBlockId []byte, blockType datagrams.Type, contentLength int, issuer any) *WumboHeader {
 	header := WumboHeader{
 		PrecedingBlockDigest: precedingBlockId,
-		IssuerFingerprint:    issuer.(identity.Key).Fingerprint(),
+		IssuerFingerprint:    issuer.(public.KeyRing).Fingerprint(),
 		CreationTime:         time.Now(),
 		BlockType:            blockType,
 		ContentLength:        uint32(contentLength),

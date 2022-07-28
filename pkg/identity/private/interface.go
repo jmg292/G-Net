@@ -2,7 +2,7 @@ package private
 
 import "github.com/jmg292/G-Net/pkg/identity/public"
 
-type PrivateKeyRing interface {
+type KeyRing interface {
 	Name() string
 	Fingerprint() []byte
 	PublicKeyRing() public.KeyRing

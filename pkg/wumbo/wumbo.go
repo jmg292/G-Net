@@ -5,8 +5,8 @@ import (
 	"compress/zlib"
 	"encoding/json"
 
-	"github.com/jmg292/G-Net/identity"
 	"github.com/jmg292/G-Net/internal/datagrams"
+	"github.com/jmg292/G-Net/pkg/identity/private"
 )
 
 func serializeBlockContent(blockContent any) ([]byte, error) {
@@ -32,7 +32,7 @@ func IssueBlock(precedingBlockId []byte, data any, issuer any) (*Block, error) {
 		Header:  NewWumboHeader(precedingBlockId, contentType, len(blockContent), issuer),
 		Content: blockContent,
 	}
-	if issuedBlock.Signature, err = issuer.(identity.Key).Sign(issuedBlock.Digest()); err != nil {
+	if issuedBlock.Signature, err = issuer.(private.KeyRing).Sign(issuedBlock.Digest()); err != nil {
 		return nil, err
 	}
 	return &issuedBlock, nil
