@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/jmg292/G-Net/internal/datagrams"
+	"github.com/jmg292/G-Net/internal/datagram"
 	"github.com/jmg292/G-Net/internal/utilities/convert"
 )
 
@@ -25,7 +25,7 @@ func FromBytes(data []byte) (*Header, error) {
 		PrecedingBlockDigest: data[:32],
 		IssuerFingerprint:    data[32:64],
 		CreationTime:         time.UnixMilli(int64(convert.BytesToUInt64(data[64:72]))),
-		BlockType:            datagrams.Type(convert.BytesToUInt16(data[72:74])),
+		BlockType:            datagram.Type(convert.BytesToUInt16(data[72:74])),
 		ContentLength:        convert.BytesToUInt32(data[74:78]),
 		SignatureLength:      convert.BytesToUInt32(data[78:82]),
 	}, nil

@@ -1,13 +1,13 @@
 package wumbo
 
 import (
-	"github.com/jmg292/G-Net/internal/datagrams"
+	"github.com/jmg292/G-Net/internal/datagram"
 	"github.com/jmg292/G-Net/pkg/identity/private"
 	"github.com/jmg292/G-Net/pkg/wumbo/header"
 )
 
 func New(precedingBlockId []byte, data any, issuer any) (*Block, error) {
-	contentType := data.(datagrams.Datagram).Type()
+	contentType := data.(datagram.Datagram).Type()
 	blockContent, err := MarshalContent(data)
 	if err != nil {
 		return nil, err
