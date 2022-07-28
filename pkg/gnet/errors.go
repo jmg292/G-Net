@@ -20,3 +20,11 @@ const (
 	ErrorInvalidSignature     ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest ValidationError = "invalid message digest"
 )
+
+type TraceryError ApplicationError
+
+const (
+	ErrorStorageLocked TraceryError = "block storage is locked"
+	ErrorBlockExists   TraceryError = "block already exists"
+	ErrorBlockNotFound TraceryError = "block not found"
+)
