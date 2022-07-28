@@ -4,7 +4,7 @@ import (
 	"crypto/x509"
 	"fmt"
 
-	"github.com/jmg292/G-Net/utilities/gnet"
+	"github.com/jmg292/G-Net/pkg/gnet"
 	"golang.org/x/crypto/sha3"
 )
 

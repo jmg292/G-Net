@@ -4,7 +4,7 @@ import (
 	"crypto/x509"
 	"fmt"
 
-	"github.com/jmg292/G-Net/utilities/gnet"
+	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
 func rsaValidateSignature(cert *x509.Certificate, data []byte, signature []byte) error {
