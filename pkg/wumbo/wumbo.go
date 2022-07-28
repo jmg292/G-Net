@@ -1,35 +1,23 @@
 package wumbo
 
 import (
-	"bytes"
-	"compress/zlib"
-	"encoding/json"
-
 	"github.com/jmg292/G-Net/internal/datagrams"
 	"github.com/jmg292/G-Net/pkg/identity/private"
+	"github.com/jmg292/G-Net/pkg/wumbo/block"
+	"github.com/jmg292/G-Net/pkg/wumbo/header"
 )
 
-func serializeBlockContent(blockContent any) ([]byte, error) {
-	jsonContent, err := json.Marshal(blockContent)
-	if err != nil {
-		return nil, err
-	}
-	var serializedContentBuffer bytes.Buffer
-	compressor := zlib.NewWriter(&serializedContentBuffer)
-	if _, err := compressor.Write(jsonContent); err != nil {
-		return nil, err
-	}
-	return serializedContentBuffer.Bytes(), nil
-}
+type Header *header.Header
+type Block *block.Block
 
-func IssueBlock(precedingBlockId []byte, data any, issuer any) (*Block, error) {
+func New(precedingBlockId []byte, data any, issuer any) (Block, error) {
 	contentType := data.(datagrams.Datagram).Type()
-	blockContent, err := serializeBlockContent(data)
+	blockContent, err := MarshalContent(data)
 	if err != nil {
 		return nil, err
 	}
-	issuedBlock := Block{
-		Header:  NewWumboHeader(precedingBlockId, contentType, len(blockContent), issuer),
+	issuedBlock := block.Block{
+		Header:  header.New(precedingBlockId, contentType, len(blockContent), issuer),
 		Content: blockContent,
 	}
 	if issuedBlock.Signature, err = issuer.(private.KeyRing).Sign(issuedBlock.Digest()); err != nil {

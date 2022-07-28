@@ -1,4 +1,4 @@
-package wumbo
+package header
 
 import (
 	"fmt"
@@ -6,21 +6,9 @@ import (
 
 	"github.com/jmg292/G-Net/internal/datagrams"
 	"github.com/jmg292/G-Net/internal/utilities/convert"
-	"github.com/jmg292/G-Net/pkg/identity/public"
 )
 
-const WumboHeaderByteCount int = 82
-
-type WumboHeader struct {
-	PrecedingBlockDigest []byte
-	IssuerFingerprint    []byte
-	CreationTime         time.Time
-	BlockType            datagrams.Type
-	ContentLength        uint32
-	SignatureLength      uint32
-}
-
-func (header *WumboHeader) AsBytes() []byte {
+func (header *Header) ToBytes() []byte {
 	headerBytes := append(header.PrecedingBlockDigest, header.IssuerFingerprint...)
 	headerBytes = append(headerBytes, convert.UInt64ToBytes(uint64(header.CreationTime.UnixMilli()))...)
 	headerBytes = append(headerBytes, convert.UInt16ToBytes(uint16(header.BlockType))...)
@@ -29,11 +17,11 @@ func (header *WumboHeader) AsBytes() []byte {
 	return headerBytes
 }
 
-func ReadHeaderFromBlock(data []byte) (*WumboHeader, error) {
-	if data == nil || len(data) < WumboHeaderByteCount {
+func FromBytes(data []byte) (*Header, error) {
+	if data == nil || len(data) < ByteCount {
 		return nil, fmt.Errorf("invalid WUMBO data supplied")
 	}
-	return &WumboHeader{
+	return &Header{
 		PrecedingBlockDigest: data[:32],
 		IssuerFingerprint:    data[32:64],
 		CreationTime:         time.UnixMilli(int64(convert.BytesToUInt64(data[64:72]))),
@@ -41,15 +29,4 @@ func ReadHeaderFromBlock(data []byte) (*WumboHeader, error) {
 		ContentLength:        convert.BytesToUInt32(data[74:78]),
 		SignatureLength:      convert.BytesToUInt32(data[78:82]),
 	}, nil
-}
-
-func NewWumboHeader(precedingBlockId []byte, blockType datagrams.Type, contentLength int, issuer any) *WumboHeader {
-	header := WumboHeader{
-		PrecedingBlockDigest: precedingBlockId,
-		IssuerFingerprint:    issuer.(public.KeyRing).Fingerprint(),
-		CreationTime:         time.Now(),
-		BlockType:            blockType,
-		ContentLength:        uint32(contentLength),
-	}
-	return &header
 }
