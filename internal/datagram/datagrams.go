@@ -1,3 +1,3 @@
-package datagrams
+package datagram
 
 type Type uint16

@@ -2,7 +2,7 @@ package warrant
 
 import (
 	"github.com/go-piv/piv-go/piv"
-	"github.com/jmg292/G-Net/internal/datagrams/management"
+	"github.com/jmg292/G-Net/internal/datagram/management"
 )
 
 type DeviceWarrant struct {

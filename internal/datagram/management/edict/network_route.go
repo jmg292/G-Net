@@ -1,6 +1,6 @@
 package edict
 
-import "github.com/jmg292/G-Net/internal/datagrams/management"
+import "github.com/jmg292/G-Net/internal/datagram/management"
 
 type NetworkRoute struct {
 	From   string

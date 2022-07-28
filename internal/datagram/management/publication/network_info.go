@@ -1,6 +1,6 @@
 package publication
 
-import "github.com/jmg292/G-Net/internal/datagrams/management"
+import "github.com/jmg292/G-Net/internal/datagram/management"
 
 type NetworkInfo struct {
 	PublicIPv4  []string

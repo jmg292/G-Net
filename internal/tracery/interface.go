@@ -1,7 +1,7 @@
 package tracery
 
 import (
-	"github.com/jmg292/G-Net/internal/datagrams/management"
+	"github.com/jmg292/G-Net/internal/datagram/management"
 	"github.com/jmg292/G-Net/internal/tracery/manifest"
 	"github.com/jmg292/G-Net/internal/tracery/sequencing"
 	"github.com/jmg292/G-Net/pkg/wumbo"
