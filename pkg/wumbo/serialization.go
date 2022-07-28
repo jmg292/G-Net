@@ -1,4 +1,4 @@
-package block
+package wumbo
 
 import "github.com/jmg292/G-Net/pkg/wumbo/header"
 
