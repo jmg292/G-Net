@@ -4,7 +4,7 @@ import (
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
-func encryptPayload(key []byte, nonce []byte, plaintextPayload []byte) ([]byte, error) {
+func encryptContent(key []byte, nonce []byte, plaintextPayload []byte) ([]byte, error) {
 	cipher, err := chacha20poly1305.NewX(key)
 	if err != nil {
 		return nil, err
@@ -13,7 +13,7 @@ func encryptPayload(key []byte, nonce []byte, plaintextPayload []byte) ([]byte, 
 	return cipher.Seal(ciphertext, nonce, plaintextPayload, nil), nil
 }
 
-func decryptPayload(key []byte, nonce []byte, encryptedPayload []byte) ([]byte, error) {
+func decryptContent(key []byte, nonce []byte, encryptedPayload []byte) ([]byte, error) {
 	cipher, err := chacha20poly1305.NewX(key)
 	if err != nil {
 		return nil, err
