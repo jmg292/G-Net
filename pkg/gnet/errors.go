@@ -12,19 +12,23 @@ const (
 	ErrorWarrantNotFound ItemNotFound = "warrant not found"
 )
 
-type CryptoError ApplicationError
-type ValidationError CryptoError
+type ValidationError ApplicationError
+type CryptoError ValidationError
 
 const (
-	ErrorUnsupportedAlgorithm CryptoError     = "unsupported algorithm"
 	ErrorInvalidSignature     ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest ValidationError = "invalid message digest"
+	ErrorInvalidHeader        ValidationError = "invalid header"
+	ErrorUnsupportedAlgorithm CryptoError     = "unsupported algorithm"
 )
 
 type TraceryError ApplicationError
+type ManifestError TraceryError
 
 const (
-	ErrorStorageLocked TraceryError = "block storage is locked"
-	ErrorBlockExists   TraceryError = "block already exists"
-	ErrorBlockNotFound TraceryError = "block not found"
+	ErrorStorageLocked        TraceryError  = "block storage is locked"
+	ErrorBlockExists          TraceryError  = "block already exists"
+	ErrorBlockNotFound        TraceryError  = "block not found"
+	ErrorManifestInvalidSize  ManifestError = "invalid manifest size"
+	ErrorBlockIndexOutOfRange ManifestError = "block index out of range"
 )
