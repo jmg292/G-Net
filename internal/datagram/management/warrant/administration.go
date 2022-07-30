@@ -11,6 +11,7 @@ type Administration struct {
 	SignatureAlgorithm        piv.Algorithm
 	AuthenticationCertificate []byte
 	AuthenticationAlgorithm   piv.Algorithm
+	EncryptionKey             []byte
 }
 
 func (*Administration) Type() management.Datagram {
