@@ -1,18 +1,17 @@
 package filesystem
 
 import (
-	"bufio"
 	"encoding/hex"
 	"fmt"
 	"os"
 
+	"github.com/jmg292/G-Net/internal/tracery/sequencing/filesystem/entry"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-const entrySize int64 = 40
-
 type sequenceMapFile struct {
 	path            string
+	blockCount      uint64
 	blockIdIndexMap map[string]uint64
 }
 
@@ -29,25 +28,51 @@ func (*sequenceMapFile) validateManifestFile(handle *os.File) error {
 	if err != nil {
 		return err
 	}
-	if stat.Size()%entrySize != 0 {
+	if stat.Size()%entry.Size != 0 {
 		return fmt.Errorf(string(gnet.ErrorManifestInvalidSize))
 	}
 	return nil
 }
 
-func (*sequenceMapFile) getBlockCount(handle *os.File) (uint64, error) {
-	stat, err := handle.Stat()
-	if err != nil {
-		return 0, err
+func (f *sequenceMapFile) getBlockCount(handle *os.File) (uint64, error) {
+	if f.blockCount == 0 {
+		stat, err := handle.Stat()
+		if err != nil {
+			return 0, err
+		}
+		f.blockCount = uint64(stat.Size() / entry.Size)
 	}
-	return uint64(stat.Size() / entrySize), nil
+	return f.blockCount, nil
+}
+
+func (f *sequenceMapFile) getEntryAtIndex(handle *os.File, blockIndex uint64) (*entry.FileEntry, error) {
+	blockCount, err := f.getBlockCount(handle)
+	if err != nil {
+		return nil, err
+	}
+	if blockIndex > blockCount {
+		return nil, fmt.Errorf(string(gnet.ErrorBlockIndexOutOfRange))
+	}
+	entryBytes := make([]byte, entry.Size)
+	handle.Seek(int64(blockIndex)*entry.Size, 0)
+	if _, err = handle.Read(entryBytes); err != nil {
+		return nil, err
+	}
+	return entry.New(entryBytes)
 }
 
 func (f *sequenceMapFile) loadBlockIdIndexMap(handle *os.File) error {
-	reader := bufio.NewReader(handle)
-	entryBytes := make([]byte, entrySize)
-	readCount, err := reader.Read(entryBytes)
-	for readCount {
-
+	totalBlockCount, err := f.getBlockCount(handle)
+	if err != nil {
+		return err
 	}
+	f.blockIdIndexMap = make(map[string]uint64, totalBlockCount)
+	for i := uint64(0); i < totalBlockCount; i++ {
+		mapEntry, err := f.getEntryAtIndex(handle, i)
+		if err != nil {
+			return err
+		}
+		f.blockIdIndexMap[mapEntry.BlockIdString()] = i
+	}
+	return nil
 }

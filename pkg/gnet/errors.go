@@ -24,11 +24,13 @@ const (
 
 type TraceryError ApplicationError
 type ManifestError TraceryError
+type SequencingError TraceryError
 
 const (
-	ErrorStorageLocked        TraceryError  = "block storage is locked"
-	ErrorBlockExists          TraceryError  = "block already exists"
-	ErrorBlockNotFound        TraceryError  = "block not found"
-	ErrorManifestInvalidSize  ManifestError = "invalid manifest size"
-	ErrorBlockIndexOutOfRange ManifestError = "block index out of range"
+	ErrorStorageLocked        TraceryError    = "block storage is locked"
+	ErrorBlockExists          TraceryError    = "block already exists"
+	ErrorBlockNotFound        TraceryError    = "block not found"
+	ErrorManifestInvalidSize  ManifestError   = "invalid manifest size"
+	ErrorBlockIndexOutOfRange SequencingError = "block index out of range"
+	ErrorMalformedEntry       SequencingError = "malformed sequence map entry"
 )

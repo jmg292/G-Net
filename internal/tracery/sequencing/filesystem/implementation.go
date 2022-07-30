@@ -1,6 +1,11 @@
 package filesystem
 
-import "os"
+import (
+	"fmt"
+	"os"
+
+	"github.com/jmg292/G-Net/pkg/gnet"
+)
 
 func (f *sequenceMapFile) Open() error {
 	var handle *os.File
@@ -21,6 +26,11 @@ func (f *sequenceMapFile) Open() error {
 }
 
 func (f *sequenceMapFile) Close() error {
+	for k := range f.blockIdIndexMap {
+		delete(f.blockIdIndexMap, k)
+	}
+	f.blockIdIndexMap = nil
+	f.blockCount = 0
 	return nil
 }
 
@@ -32,4 +42,24 @@ func (f *sequenceMapFile) BlockCount() (uint64, error) {
 	}
 	defer handle.Close()
 	return f.getBlockCount(handle)
+}
+
+func (f *sequenceMapFile) PutBlockId(blockId []byte) error {
+	if _, ok := f.blockIdIndexMap[f.blockIdToString(blockId)]; ok {
+		return fmt.Errorf(string(gnet.ErrorBlockExists))
+	}
+	return fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *sequenceMapFile) GetBlockIdFromIndex(index uint64) ([]byte, error) {
+	handle, err := os.Open(f.path)
+	if err != nil {
+		return nil, err
+	}
+	defer handle.Close()
+	entry, err := f.getEntryAtIndex(handle, index)
+	if err != nil {
+		return nil, err
+	}
+	return entry.BlockId, nil
 }
