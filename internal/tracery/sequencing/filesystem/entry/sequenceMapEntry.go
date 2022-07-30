@@ -15,6 +15,10 @@ type FileEntry struct {
 	BlockIndex uint64
 }
 
+func (f *FileEntry) ToBytes() []byte {
+	return append(convert.UInt64ToBytes(f.BlockIndex), f.BlockId...)
+}
+
 func (f *FileEntry) BlockIdString() string {
 	return hex.EncodeToString(f.BlockId)
 }

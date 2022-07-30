@@ -15,12 +15,12 @@ type sequenceMapFile struct {
 	blockIdIndexMap map[string]uint64
 }
 
-func (*sequenceMapFile) blockIdToString(blockId []byte) string {
-	return hex.EncodeToString(blockId)
+func New(path string) *sequenceMapFile {
+	return &sequenceMapFile{path: path}
 }
 
-func (*sequenceMapFile) stringToBlockId(blockId string) ([]byte, error) {
-	return hex.DecodeString(blockId)
+func (*sequenceMapFile) blockIdToString(blockId []byte) string {
+	return hex.EncodeToString(blockId)
 }
 
 func (*sequenceMapFile) validateManifestFile(handle *os.File) error {

@@ -4,19 +4,14 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jmg292/G-Net/internal/tracery/sequencing/filesystem/entry"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
 func (f *sequenceMapFile) Open() error {
-	var handle *os.File
-	if _, err := os.Stat(f.path); os.IsNotExist(err) {
-		if handle, err = os.Create(f.path); err != nil {
-			return err
-		}
-	} else {
-		if handle, err = os.Open(f.path); err != nil {
-			return err
-		}
+	handle, err := os.OpenFile(f.path, os.O_CREATE|os.O_RDONLY, 0600)
+	if err != nil {
+		return err
 	}
 	defer handle.Close()
 	if err := f.validateManifestFile(handle); err != nil {
@@ -35,20 +30,35 @@ func (f *sequenceMapFile) Close() error {
 }
 
 func (f *sequenceMapFile) BlockCount() (uint64, error) {
-	var blockCount uint64 = 0
 	handle, err := os.Open(f.path)
 	if err != nil {
-		return blockCount, err
+		return 0, err
 	}
 	defer handle.Close()
 	return f.getBlockCount(handle)
 }
 
-func (f *sequenceMapFile) PutBlockId(blockId []byte) error {
+func (f *sequenceMapFile) PutBlockId(blockId []byte) (uint64, error) {
 	if _, ok := f.blockIdIndexMap[f.blockIdToString(blockId)]; ok {
-		return fmt.Errorf(string(gnet.ErrorBlockExists))
+		return 0, fmt.Errorf(string(gnet.ErrorBlockExists))
 	}
-	return fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+	handle, err := os.OpenFile(f.path, os.O_APPEND|os.O_WRONLY, 0600)
+	if err != nil {
+		return 0, err
+	}
+	defer handle.Close()
+	currentCount, err := f.getBlockCount(handle)
+	if err != nil {
+		return 0, err
+	}
+	entry := entry.FileEntry{
+		BlockId:    blockId,
+		BlockIndex: currentCount + 1,
+	}
+	if _, err := handle.Write(entry.ToBytes()); err != nil {
+		return 0, err
+	}
+	return entry.BlockIndex, nil
 }
 
 func (f *sequenceMapFile) GetBlockIdFromIndex(index uint64) ([]byte, error) {
