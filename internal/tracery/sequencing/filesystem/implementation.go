@@ -63,3 +63,10 @@ func (f *sequenceMapFile) GetBlockIdFromIndex(index uint64) ([]byte, error) {
 	}
 	return entry.BlockId, nil
 }
+
+func (f *sequenceMapFile) GetIndexFromBlockId(blockId []byte) (uint64, error) {
+	if index, ok := f.blockIdIndexMap[f.blockIdToString(blockId)]; ok {
+		return index, nil
+	}
+	return 0, fmt.Errorf(string(gnet.ErrorBlockNotFound))
+}
