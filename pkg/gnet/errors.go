@@ -4,6 +4,7 @@ type ApplicationError string
 
 const (
 	ErrorNotYetImplemented ApplicationError = "not yet implemented"
+	ErrorInvalidPIN        ApplicationError = "invalid pin"
 )
 
 type ItemNotFound ApplicationError
