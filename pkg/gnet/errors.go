@@ -14,13 +14,20 @@ const (
 )
 
 type ValidationError ApplicationError
-type CryptoError ValidationError
 
 const (
 	ErrorInvalidSignature     ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest ValidationError = "invalid message digest"
 	ErrorInvalidHeader        ValidationError = "invalid header"
-	ErrorUnsupportedAlgorithm CryptoError     = "unsupported algorithm"
+)
+
+type CryptoError ValidationError
+
+const (
+	ErrorInvalidKeySlot                 CryptoError = "invalid key slot"
+	ErrorKeyAlreadyExists               CryptoError = "key already exists"
+	ErrorUnsupportedAlgorithm           CryptoError = "unsupported algorithm"
+	ErrorUnsupportedAlgorithmForKeySlot CryptoError = "unsupported algorithm for key slot"
 )
 
 type TraceryError ApplicationError
