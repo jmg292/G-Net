@@ -16,7 +16,7 @@ func generateSharedSecret(private crypto.PrivateKey, public crypto.PublicKey) ([
 	return keyExchange.ComputeSecret(private, public), nil
 }
 
-func Encrypt(data []byte, publicKey []byte) ([]byte, error) {
+func Encrypt(data []byte, publicKey crypto.PublicKey) ([]byte, error) {
 	var s *sealed
 	var sharedSecret []byte
 	keyExchange := ecdh.X25519()
@@ -36,7 +36,7 @@ func Encrypt(data []byte, publicKey []byte) ([]byte, error) {
 	return s.toBytes(), nil
 }
 
-func Decrypt(data []byte, privateKey []byte) (plaintext []byte, err error) {
+func Decrypt(data []byte, privateKey crypto.PrivateKey) (plaintext []byte, err error) {
 	if s, err := sealedFromBytes(data); err == nil {
 		if sharedSecret, err := generateSharedSecret(privateKey, s.ephemeralPublicKey); err == nil {
 			if cipher, err := chacha20poly1305.NewX(sharedSecret); err == nil {
