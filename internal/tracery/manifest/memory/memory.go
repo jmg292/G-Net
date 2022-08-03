@@ -2,7 +2,7 @@ package memory
 
 import (
 	"github.com/jmg292/G-Net/internal/tracery/manifest/entries"
-	"github.com/jmg292/G-Net/pkg/pki/public"
+	"github.com/jmg292/G-Net/pkg/crypto/public"
 )
 
 type memoryManifest struct {

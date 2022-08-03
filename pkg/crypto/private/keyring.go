@@ -1,7 +1,7 @@
 package private
 
 import (
-	"github.com/jmg292/G-Net/pkg/pki/private/keyring"
+	"github.com/jmg292/G-Net/pkg/crypto/private/keyring"
 )
 
 type KeyRing struct {

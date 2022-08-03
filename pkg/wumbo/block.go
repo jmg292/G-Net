@@ -1,7 +1,7 @@
 package wumbo
 
 import (
-	"github.com/jmg292/G-Net/pkg/pki/public"
+	"github.com/jmg292/G-Net/pkg/crypto/public"
 	"github.com/jmg292/G-Net/pkg/wumbo/header"
 	"golang.org/x/crypto/sha3"
 )

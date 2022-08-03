@@ -2,7 +2,7 @@ package wumbo
 
 import (
 	"github.com/jmg292/G-Net/internal/datagram"
-	"github.com/jmg292/G-Net/pkg/pki/private"
+	"github.com/jmg292/G-Net/pkg/crypto/private"
 	"github.com/jmg292/G-Net/pkg/wumbo/header"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"syscall"
 
+	"github.com/jmg292/G-Net/pkg/crypto/private/keyring/yubikey"
 	"github.com/jmg292/G-Net/pkg/gnet"
-	"github.com/jmg292/G-Net/pkg/pki/private/keyring/yubikey"
 	"golang.org/x/term"
 )
 

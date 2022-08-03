@@ -5,12 +5,12 @@ import (
 	"crypto/rand"
 	"fmt"
 
+	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 	"github.com/jmg292/G-Net/pkg/gnet"
-	"github.com/jmg292/G-Net/pkg/pki"
 	"golang.org/x/crypto/sha3"
 )
 
-func (keyring *KeyRing) signDataWithKey(data []byte, keyType pki.KeySlot) ([]byte, error) {
+func (keyring *KeyRing) signDataWithKey(data []byte, keyType gcrypt.KeySlot) ([]byte, error) {
 	signingKey, err := keyring.storage.GetPrivateKey(keyType)
 	if err != nil {
 		return nil, err
@@ -23,9 +23,9 @@ func (keyring *KeyRing) signDataWithKey(data []byte, keyType pki.KeySlot) ([]byt
 }
 
 func (keyring *KeyRing) Sign(data []byte) ([]byte, error) {
-	return keyring.signDataWithKey(data, pki.SigningKeySlot)
+	return keyring.signDataWithKey(data, gcrypt.SigningKeySlot)
 }
 
 func (keyring *KeyRing) Authenticate(data []byte) ([]byte, error) {
-	return keyring.signDataWithKey(data, pki.AuthenticationKeySlot)
+	return keyring.signDataWithKey(data, gcrypt.AuthenticationKeySlot)
 }
