@@ -19,11 +19,14 @@ const (
 	ErrorInvalidSignature     ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest ValidationError = "invalid message digest"
 	ErrorInvalidHeader        ValidationError = "invalid header"
+	ErrorInvalidContentLength ValidationError = "invalid content length"
 )
 
 type CryptoError ValidationError
 
 const (
+	ErrorInvalidSigningKey              CryptoError = "invalid signing key"
+	ErrorInvalidPublicKey               CryptoError = "invalid public key"
 	ErrorInvalidKeySlot                 CryptoError = "invalid key slot"
 	ErrorKeyAlreadyExists               CryptoError = "key already exists"
 	ErrorUnsupportedAlgorithm           CryptoError = "unsupported algorithm"

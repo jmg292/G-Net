@@ -9,16 +9,16 @@ import (
 	"fmt"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
-	"github.com/jmg292/G-Net/pkg/identity"
+	"github.com/jmg292/G-Net/pkg/pki"
 )
 
-func (*SoftwareKeyRing) generateKey(keyType identity.SupportedKeyType) (newKey crypto.PrivateKey, err error) {
+func (*SoftwareKeyRing) generateKey(keyType pki.SupportedKeyType) (newKey crypto.PrivateKey, err error) {
 	switch keyType {
-	case identity.EC256Key:
+	case pki.EC256Key:
 		newKey, err = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	case identity.EC384Key:
+	case pki.EC384Key:
 		newKey, err = ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
-	case identity.Ed25519Key:
+	case pki.Ed25519Key:
 		_, newKey, err = ed25519.GenerateKey(rand.Reader)
 	default:
 		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
@@ -26,27 +26,27 @@ func (*SoftwareKeyRing) generateKey(keyType identity.SupportedKeyType) (newKey c
 	return &newKey, err
 }
 
-func (keyring *SoftwareKeyRing) slotKey(key *crypto.PrivateKey, keyType identity.SupportedKeyType, slot identity.KeySlot) error {
+func (keyring *SoftwareKeyRing) slotKey(key *crypto.PrivateKey, keyType pki.SupportedKeyType, slot pki.KeySlot) error {
 	// ed25519 keys only supported for encryption
-	if keyType != identity.Ed25519Key && slot == identity.EncryptionKeySlot {
+	if keyType != pki.Ed25519Key && slot == pki.EncryptionKeySlot {
 		return fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithmForKeySlot))
-	} else if keyType == identity.Ed25519Key && slot != identity.EncryptionKeySlot {
+	} else if keyType == pki.Ed25519Key && slot != pki.EncryptionKeySlot {
 		return fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithmForKeySlot))
 	}
 	switch slot {
-	case identity.SigningKeySlot:
+	case pki.SigningKeySlot:
 		if keyring.signingKey != nil {
 			return fmt.Errorf(string(gnet.ErrorKeyAlreadyExists))
 		}
 		keyring.signingKey = key
 		keyring.signingKeyType = keyType
-	case identity.EncryptionKeySlot:
+	case pki.EncryptionKeySlot:
 		if keyring.encryptionKey != nil {
 			return fmt.Errorf(string(gnet.ErrorKeyAlreadyExists))
 		}
 		keyring.encryptionKey = key
 		keyring.encryptionKeyType = keyType
-	case identity.AuthenticationKeySlot:
+	case pki.AuthenticationKeySlot:
 		if keyring.encryptionKey != nil {
 			return fmt.Errorf(string(gnet.ErrorKeyAlreadyExists))
 		}

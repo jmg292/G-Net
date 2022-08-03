@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jmg292/G-Net/internal/datagram"
-	"github.com/jmg292/G-Net/pkg/identity/public"
+	"github.com/jmg292/G-Net/pkg/pki/public"
 )
 
 const ByteCount int = 82

@@ -11,6 +11,7 @@ require (
 )
 
 require (
+	github.com/aead/ecdh v0.2.0 // indirect
 	golang.org/x/net v0.0.0-20220728211354-c7608f3a8462 // indirect
 	golang.org/x/sys v0.0.0-20220731174439-a90be440212d // indirect
 )

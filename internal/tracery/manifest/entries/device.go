@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jmg292/G-Net/internal/datagram/management/publication"
-	"github.com/jmg292/G-Net/pkg/identity/public"
+	"github.com/jmg292/G-Net/pkg/pki/public"
 )
 
 type DeviceManifest struct {
