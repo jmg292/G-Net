@@ -29,6 +29,7 @@ const (
 	ErrorInvalidPublicKey               CryptoError = "invalid public key"
 	ErrorInvalidKeySlot                 CryptoError = "invalid key slot"
 	ErrorKeyAlreadyExists               CryptoError = "key already exists"
+	ErrorKeyNotFound                    CryptoError = "key not found"
 	ErrorUnsupportedAlgorithm           CryptoError = "unsupported algorithm"
 	ErrorUnsupportedAlgorithmForKeySlot CryptoError = "unsupported algorithm for key slot"
 )
