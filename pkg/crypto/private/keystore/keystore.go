@@ -11,7 +11,7 @@ import (
 type Storage interface {
 	// Identification
 	Name() string
-	GetKeyId(gcrypt.KeySlot) []byte
+	GetKeyId(gcrypt.KeySlot) ([]byte, error)
 
 	// Management
 	Unlock([]byte) error
@@ -22,7 +22,7 @@ type Storage interface {
 
 	// Key lifecycle
 	DestroyKey(gcrypt.KeySlot) error
-	CreateKey(gcrypt.SupportedKeyType) ([]byte, error)
+	CreateKey(gcrypt.SupportedKeyType, gcrypt.KeySlot) ([]byte, error)
 
 	// Public keys
 	GetPublicKey(gcrypt.KeySlot) (crypto.PublicKey, error)
