@@ -1,12 +1,12 @@
 package private
 
 import (
-	"github.com/jmg292/G-Net/pkg/crypto/private/keyring"
+	"github.com/jmg292/G-Net/pkg/crypto/private/keystore"
 )
 
 type KeyRing struct {
 	unlockKey []byte
-	storage   keyring.KeyStorage
+	storage   keystore.Storage
 }
 
 func (keyring *KeyRing) Open() error {

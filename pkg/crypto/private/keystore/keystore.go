@@ -1,4 +1,4 @@
-package keyring
+package keystore
 
 import (
 	"crypto"
@@ -8,7 +8,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/crypto/public"
 )
 
-type KeyStorage interface {
+type Storage interface {
 	// Identification
 	Name() string
 	GetKeyId(gcrypt.KeySlot) []byte
@@ -39,9 +39,4 @@ type KeyStorage interface {
 	// Attestation functions
 	AttestationCertificate() (*x509.Certificate, error)
 	Attest(gcrypt.KeySlot) (*x509.Certificate, error)
-
-	// Cryptographic functions
-	Sign([]byte) ([]byte, error)
-	Authenticate([]byte) ([]byte, error)
-	Decrypt([]byte) ([]byte, error)
 }
