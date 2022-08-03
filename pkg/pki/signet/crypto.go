@@ -35,3 +35,17 @@ func Encrypt(data []byte, publicKey []byte) ([]byte, error) {
 	}
 	return s.toBytes(), nil
 }
+
+func Decrypt(data []byte, privateKey []byte) (plaintext []byte, err error) {
+	if s, err := sealedFromBytes(data); err == nil {
+		if sharedSecret, err := generateSharedSecret(privateKey, s.ephemeralPublicKey); err == nil {
+			if cipher, err := chacha20poly1305.NewX(sharedSecret); err == nil {
+				plaintext = make([]byte, len(s.content)-cipher.Overhead())
+				if _, err = cipher.Open(plaintext, s.nonce, s.content, nil); err != nil {
+					return nil, err
+				}
+			}
+		}
+	}
+	return
+}
