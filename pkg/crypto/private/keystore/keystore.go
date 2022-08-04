@@ -22,7 +22,7 @@ type Storage interface {
 
 	// Key lifecycle
 	DestroyKey(gcrypt.KeySlot) error
-	CreateKey(gcrypt.SupportedKeyType, gcrypt.KeySlot) ([]byte, error)
+	CreateKey(gcrypt.SupportedKeyType, gcrypt.KeySlot) error
 
 	// Public keys
 	GetPublicKey(gcrypt.KeySlot) (crypto.PublicKey, error)

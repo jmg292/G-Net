@@ -1,5 +1,12 @@
 package crypto
 
+import "golang.org/x/crypto/chacha20poly1305"
+
+const (
+	NonceSize     int = chacha20poly1305.NonceSizeX
+	KdfIterations int = 5000
+)
+
 type SupportedKeyType uint16
 
 const (
@@ -19,7 +26,8 @@ const (
 type KeySizeBytes int
 
 const (
-	EC256KeySize  KeySizeBytes = 32
-	EC384KeySize  KeySizeBytes = 48
-	X25519KeySize KeySizeBytes = 32
+	EC256KeySize     KeySizeBytes = 32
+	EC384KeySize     KeySizeBytes = 48
+	X25519KeySize    KeySizeBytes = 32
+	SymmetricKeySize KeySizeBytes = 32
 )
