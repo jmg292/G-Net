@@ -19,8 +19,9 @@ type KeySlot uint8
 
 const (
 	SigningKeySlot KeySlot = iota
-	EncryptionKeySlot
 	AuthenticationKeySlot
+	EncryptionKeySlot
+	DeviceKeySlot
 )
 
 type KeySizeBytes int
