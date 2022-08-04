@@ -14,6 +14,7 @@ const managementKeySize = 24
 type fileKeyStore struct {
 	path                  string
 	managementKey         []byte
+	keyEncryptionKeySalt  []byte
 	signingKey            crypto.PrivateKey
 	signingKeyType        gcrypt.SupportedKeyType
 	encryptionKey         crypto.PrivateKey

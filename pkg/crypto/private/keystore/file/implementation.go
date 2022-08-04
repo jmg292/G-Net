@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
+	"github.com/jmg292/G-Net/pkg/crypto/kdf"
 	"github.com/jmg292/G-Net/pkg/crypto/public"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
@@ -28,16 +29,19 @@ func (f *fileKeyStore) Validate() error {
 }
 
 func (f *fileKeyStore) ManagementKey() (managementKey []byte, err error) {
-	if f.managementKey == nil {
-		err = fmt.Errorf(string(gnet.ErrorKeyNotFound))
-	} else {
+	if f.managementKey != nil {
 		managementKey = f.managementKey
+	} else {
+		err = fmt.Errorf(string(gnet.ErrorKeyNotFound))
 	}
 	return
 }
 
-func (f *fileKeyStore) KeyEncryptionKey() ([]byte, error) {
-	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+func (f *fileKeyStore) KeyEncryptionKey() (kek []byte, err error) {
+	if managementKey, err := f.ManagementKey(); err == nil {
+		kek = kdf.DeriveKey(managementKey, kek)
+	}
+	return
 }
 
 func (f *fileKeyStore) Lock() error {
