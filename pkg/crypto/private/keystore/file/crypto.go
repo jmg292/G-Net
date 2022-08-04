@@ -22,9 +22,11 @@ func encrypt(data []byte, pin []byte) (ciphertext []byte, err error) {
 }
 
 func decrypt(data []byte, pin []byte) (plaintext []byte, err error) {
-	if cipher, err := chacha20poly1305.NewX(kdf.DeriveKey(pin, data[:gcrypt.NonceSize])); err == nil {
+	if cipher, e := chacha20poly1305.NewX(kdf.DeriveKey(pin, data[:gcrypt.NonceSize])); e == nil {
 		plaintext = make([]byte, len(data)-cipher.Overhead()-gcrypt.NonceSize)
 		plaintext, err = cipher.Open(plaintext, data[:gcrypt.NonceSize], data[gcrypt.NonceSize:], nil)
+	} else {
+		err = e
 	}
 	return
 }
