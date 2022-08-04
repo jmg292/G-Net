@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"fmt"
 
+	"github.com/cloudflare/circl/dh/x25519"
 	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
@@ -17,7 +18,7 @@ type fileKeyStore struct {
 	keyEncryptionKeySalt  []byte
 	signingKey            crypto.PrivateKey
 	signingKeyType        gcrypt.SupportedKeyType
-	encryptionKey         crypto.PrivateKey
+	encryptionKey         x25519.Key
 	encryptionKeyType     gcrypt.SupportedKeyType
 	authenticationKey     crypto.PrivateKey
 	authenticationKeyType gcrypt.SupportedKeyType

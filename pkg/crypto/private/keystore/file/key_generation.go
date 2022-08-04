@@ -1,13 +1,15 @@
 package file
 
 import (
+	"bytes"
 	"crypto"
 	"crypto/ecdsa"
-	"crypto/ed25519"
 	"crypto/elliptic"
 	"crypto/rand"
 	"fmt"
+	"io"
 
+	"github.com/cloudflare/circl/dh/x25519"
 	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
@@ -19,7 +21,9 @@ func (*fileKeyStore) generateKey(keyType gcrypt.SupportedKeyType) (newKey crypto
 	case gcrypt.EC384Key:
 		newKey, err = ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
 	case gcrypt.X25519Key:
-		_, newKey, err = ed25519.GenerateKey(rand.Reader)
+		var privateKey x25519.Key
+		io.ReadFull(rand.Reader, privateKey[:])
+		newKey = privateKey
 	default:
 		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
 	}
@@ -41,13 +45,14 @@ func (keyring *fileKeyStore) slotKey(key *crypto.PrivateKey, keyType gcrypt.Supp
 		keyring.signingKey = key
 		keyring.signingKeyType = keyType
 	case gcrypt.EncryptionKeySlot:
-		if keyring.encryptionKey != nil {
+		var emptyKey x25519.Key
+		if bytes.Compare(keyring.encryptionKey[:], emptyKey[:]) != 0 {
 			return fmt.Errorf(string(gnet.ErrorKeyAlreadyExists))
 		}
 		keyring.encryptionKey = key
 		keyring.encryptionKeyType = keyType
 	case gcrypt.AuthenticationKeySlot:
-		if keyring.encryptionKey != nil {
+		if keyring.authenticationKey != nil {
 			return fmt.Errorf(string(gnet.ErrorKeyAlreadyExists))
 		}
 		keyring.authenticationKey = key
