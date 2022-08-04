@@ -2,10 +2,12 @@ package file
 
 import (
 	"crypto"
+	"crypto/x509"
 	"fmt"
 	"path/filepath"
 
 	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
+	"github.com/jmg292/G-Net/pkg/crypto/public"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
@@ -51,5 +53,25 @@ func (f *fileKeyStore) CreateKey(keyType gcrypt.SupportedKeyType, keySlot gcrypt
 }
 
 func (f *fileKeyStore) GetPublicKey(keySlot gcrypt.KeySlot) (crypto.PublicKey, error) {
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *fileKeyStore) PublicKeyRing() (public.KeyRing, error) {
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *fileKeyStore) GetPrivateKey(keySlot gcrypt.KeySlot) (crypto.PrivateKey, error) {
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *fileKeyStore) GetPrivateKeyBytes(keySlot gcrypt.KeySlot) ([]byte, error) {
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *fileKeyStore) AttestationCertificate() (*x509.Certificate, error) {
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+}
+
+func (f *fileKeyStore) Attest(gcrypt.KeySlot) (*x509.Certificate, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
