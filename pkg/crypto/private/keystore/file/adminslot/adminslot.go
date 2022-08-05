@@ -19,21 +19,21 @@ const (
 	kdfSalt
 )
 
-type adminSlot [Size]byte
+type AdminSlot [Size]byte
 
-var empty adminSlot
+var empty AdminSlot
 
-func Empty() *adminSlot {
-	var slot adminSlot
+func Empty() *AdminSlot {
+	var slot AdminSlot
 	return &slot
 }
 
-func New() *adminSlot {
-	var slot adminSlot
+func New() *AdminSlot {
+	var slot AdminSlot
 	rand.Read(slot[:])
 	return &slot
 }
 
-func (slot *adminSlot) IsEmpty() bool {
+func (slot *AdminSlot) IsEmpty() bool {
 	return bytes.Equal(slot[:], empty[:])
 }

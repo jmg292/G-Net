@@ -1,14 +1,14 @@
 package adminslot
 
-func (slot *adminSlot) getKey(t keyType) []byte {
+func (slot *AdminSlot) getKey(t keyType) []byte {
 	keyOffset := int(t) * keySize
 	return slot[keyOffset : keyOffset+keySize]
 }
 
-func (slot *adminSlot) ManagementKey() []byte {
+func (slot *AdminSlot) ManagementKey() []byte {
 	return slot.getKey(managementKey)
 }
 
-func (slot *adminSlot) KdfSalt() []byte {
+func (slot *AdminSlot) KdfSalt() []byte {
 	return slot.getKey(kdfSalt)
 }
