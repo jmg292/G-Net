@@ -1,10 +1,8 @@
 package adminslot
 
 func (slot *adminSlot) getKey(t keyType) []byte {
-	key := make([]byte, keySize)
 	keyOffset := int(t) * keySize
-	copy(key, slot[keyOffset:keyOffset+keySize])
-	return key
+	return slot[keyOffset : keyOffset+keySize]
 }
 
 func (slot *adminSlot) ManagementKey() []byte {
