@@ -6,15 +6,15 @@ import (
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-func (slot *keySlot) getKey() []byte {
-	return slot[keyOffset:maxKeySize]
-}
-
 func (slot *keySlot) getKeyWithOverhead() []byte {
 	return slot[keyOffset:]
 }
 
-func (slot *keySlot) setKey(key []byte) (err error) {
+func (slot *keySlot) GetKey() []byte {
+	return slot[keyOffset:maxKeySize]
+}
+
+func (slot *keySlot) SetKey(key []byte) (err error) {
 	if len(key) > maxKeySize {
 		err = fmt.Errorf(string(gnet.ErrorInvalidContentLength))
 	} else {
