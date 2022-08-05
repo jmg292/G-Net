@@ -10,7 +10,8 @@ const (
 type SupportedKeyType uint16
 
 const (
-	EC256Key SupportedKeyType = iota
+	NullKey SupportedKeyType = iota
+	EC256Key
 	EC384Key
 	X25519Key
 )
