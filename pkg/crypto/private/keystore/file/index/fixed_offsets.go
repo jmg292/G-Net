@@ -29,13 +29,13 @@ func (*index) SaltOffset() int {
 }
 
 func (*index) SaltSize() int {
-	return int(managementKeys - salt)
+	return int(adminSlot - salt)
 }
 
 func (*index) ManagementKeyOffset() int {
-	return int(managementKeys)
+	return int(adminSlot)
 }
 
 func (*index) ManagementKeySize() int {
-	return int(keySlotBase - managementKeys)
+	return int(keySlotBase - adminSlot)
 }
