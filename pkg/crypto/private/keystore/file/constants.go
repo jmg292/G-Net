@@ -1,5 +1,5 @@
 package file
 
-const preamble string = "gnet.id"
+const Preamble string = "gnet.id"
 
-type versionNumber byte
+type VersionNumber byte
