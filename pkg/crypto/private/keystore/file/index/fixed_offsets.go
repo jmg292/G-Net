@@ -32,10 +32,10 @@ func (*index) SaltSize() int {
 	return int(adminSlot - salt)
 }
 
-func (*index) ManagementKeyOffset() int {
+func (*index) AdminSlotOffset() int {
 	return int(adminSlot)
 }
 
-func (*index) ManagementKeySize() int {
+func (*index) AdminSlotSize() int {
 	return int(keySlotBase - adminSlot)
 }
