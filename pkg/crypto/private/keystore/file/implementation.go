@@ -29,12 +29,7 @@ func (f *fileKeyStore) Validate() error {
 }
 
 func (f *fileKeyStore) ManagementKey() (managementKey []byte, err error) {
-	if f.managementKey != nil {
-		managementKey = f.managementKey
-	} else {
-		err = fmt.Errorf(string(gnet.ErrorKeyNotFound))
-	}
-	return
+	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
 func (f *fileKeyStore) KeyEncryptionKey() (kek []byte, err error) {
