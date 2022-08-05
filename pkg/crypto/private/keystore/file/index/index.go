@@ -12,6 +12,8 @@ const Size int = 8
 
 type index [Size]byte
 
+var empty index
+
 func Empty() *index {
 	var idx index
 	return &idx
@@ -36,5 +38,5 @@ func (i *index) LoadOffsets(indexBytes []byte) (err error) {
 }
 
 func (i *index) IsEmpty() bool {
-	return bytes.Equal(Empty()[:], i[:])
+	return bytes.Equal(empty[:], i[:])
 }
