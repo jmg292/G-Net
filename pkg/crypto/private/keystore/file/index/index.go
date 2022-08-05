@@ -36,6 +36,5 @@ func (i *index) LoadOffsets(indexBytes []byte) (err error) {
 }
 
 func (i *index) IsEmpty() bool {
-	emptyIndex := Empty()
-	return bytes.Equal(emptyIndex[:], i[:])
+	return bytes.Equal(Empty()[:], i[:])
 }
