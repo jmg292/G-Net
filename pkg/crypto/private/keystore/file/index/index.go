@@ -17,13 +17,13 @@ func Empty() *index {
 	return &idx
 }
 
-func New(signCertSize uint16, authCertSize uint16, encCertSize uint16, devCertSize uint16) *index {
-	var idx index
+func New(signCertSize uint16, authCertSize uint16, encCertSize uint16, devCertSize uint16) (idx *index) {
+	idx = Empty()
 	copy(idx[:2], convert.UInt16ToBytes(signCertSize))
 	copy(idx[2:4], convert.UInt16ToBytes(authCertSize))
 	copy(idx[4:6], convert.UInt16ToBytes(encCertSize))
 	copy(idx[6:], convert.UInt16ToBytes(devCertSize))
-	return &idx
+	return
 }
 
 func (i *index) LoadOffsets(indexBytes []byte) (err error) {
