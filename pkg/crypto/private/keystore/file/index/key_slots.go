@@ -1,11 +1,12 @@
 package index
 
-import "github.com/jmg292/G-Net/pkg/crypto"
-
-const keySlotSize = 100
+import (
+	"github.com/jmg292/G-Net/pkg/crypto"
+	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/keyslot"
+)
 
 func (*index) getSlotOffset(keySlot crypto.KeySlot) int {
-	relativeOffset := int(keySlot) * keySlotSize
+	relativeOffset := int(keySlot) * keyslot.Size
 	return int(keySlotBase) + relativeOffset
 }
 
