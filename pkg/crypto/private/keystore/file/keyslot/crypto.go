@@ -2,7 +2,7 @@ package keyslot
 
 import "golang.org/x/crypto/chacha20poly1305"
 
-func (slot *keySlot) LockKeySlot(kek []byte) (err error) {
+func (slot *keySlot) Lock(kek []byte) (err error) {
 	if slot.nonceIsEmpty() {
 		slot.generateNonce()
 	}
@@ -12,7 +12,7 @@ func (slot *keySlot) LockKeySlot(kek []byte) (err error) {
 	return
 }
 
-func (slot *keySlot) UnlockKeySlot(kek []byte) (err error) {
+func (slot *keySlot) Unlock(kek []byte) (err error) {
 	if cipher, err := chacha20poly1305.NewX(kek); err != nil {
 		_, err = cipher.Open(slot.GetKey(), slot.getNonce(), slot.getKeyWithOverhead(), slot.getKeyTypeBytes())
 		return err
