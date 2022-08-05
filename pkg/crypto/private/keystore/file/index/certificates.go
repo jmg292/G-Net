@@ -5,39 +5,39 @@ import (
 	"github.com/jmg292/G-Net/pkg/crypto"
 )
 
-func (i *index) getCertificateSize(keySlot crypto.KeySlot) int {
+func (i *Index) getCertificateSize(keySlot crypto.KeySlot) int {
 	relativeOffset := int(keySlot) * 2
 	return int(convert.BytesToUInt16(i[relativeOffset : relativeOffset+2]))
 }
 
-func (*index) SigningCertificateOffset() int {
+func (*Index) SigningCertificateOffset() int {
 	return int(certificateBase)
 }
 
-func (i *index) SigningCertificateSize() int {
+func (i *Index) SigningCertificateSize() int {
 	return i.getCertificateSize(crypto.SigningKeySlot)
 }
 
-func (i *index) AuthenticationCertificateOffset() int {
+func (i *Index) AuthenticationCertificateOffset() int {
 	return i.SigningCertificateOffset() + i.SigningCertificateSize()
 }
 
-func (i *index) AuthenticationCertificateSize() int {
+func (i *Index) AuthenticationCertificateSize() int {
 	return i.getCertificateSize(crypto.AuthenticationKeySlot)
 }
 
-func (i *index) EncryptionCertificateOffset() int {
+func (i *Index) EncryptionCertificateOffset() int {
 	return i.AuthenticationCertificateOffset() + i.AuthenticationCertificateSize()
 }
 
-func (i *index) EncryptionCertificateSize() int {
+func (i *Index) EncryptionCertificateSize() int {
 	return i.getCertificateSize(crypto.EncryptionKeySlot)
 }
 
-func (i *index) DeviceCertificateOffset() int {
+func (i *Index) DeviceCertificateOffset() int {
 	return i.EncryptionCertificateOffset() + i.EncryptionCertificateSize()
 }
 
-func (i *index) DeviceCertificateSize() int {
+func (i *Index) DeviceCertificateSize() int {
 	return i.getCertificateSize(crypto.DeviceKeySlot)
 }

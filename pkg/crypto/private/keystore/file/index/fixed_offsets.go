@@ -1,41 +1,41 @@
 package index
 
-func (*index) PreambleOffset() int {
+func (*Index) PreambleOffset() int {
 	return int(preamble)
 }
 
-func (*index) PreambleSize() int {
+func (*Index) PreambleSize() int {
 	return int(versionNumber - preamble)
 }
 
-func (*index) VersionNumberOffset() int {
+func (*Index) VersionNumberOffset() int {
 	return int(versionNumber)
 }
 
-func (*index) VersionNumberSize() int {
+func (*Index) VersionNumberSize() int {
 	return int(indexBytes - versionNumber)
 }
 
-func (*index) IndexOffset() int {
+func (*Index) IndexOffset() int {
 	return int(indexBytes)
 }
 
-func (*index) IndexSize() int {
+func (*Index) IndexSize() int {
 	return Size
 }
 
-func (*index) SaltOffset() int {
+func (*Index) SaltOffset() int {
 	return int(salt)
 }
 
-func (*index) SaltSize() int {
+func (*Index) SaltSize() int {
 	return int(adminSlot - salt)
 }
 
-func (*index) AdminSlotOffset() int {
+func (*Index) AdminSlotOffset() int {
 	return int(adminSlot)
 }
 
-func (*index) AdminSlotSize() int {
+func (*Index) AdminSlotSize() int {
 	return int(keySlotBase - adminSlot)
 }
