@@ -10,6 +10,13 @@ import (
 )
 
 const Size int = 100
+const (
+	keyTypeOffset = 0
+	keyTypeSize   = 2
+	nonceOffset   = keyTypeSize
+	nonceSize     = gcrypt.NonceSize
+	keyOffset     = nonceOffset + nonceSize
+)
 
 type keySlot [Size]byte
 
