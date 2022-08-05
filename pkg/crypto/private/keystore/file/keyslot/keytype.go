@@ -6,7 +6,7 @@ import (
 )
 
 func (slot *keySlot) KeyType() gcrypt.SupportedKeyType {
-	return gcrypt.SupportedKeyType(convert.BytesToUInt16(slot[:2]))
+	return gcrypt.SupportedKeyType(convert.BytesToUInt16(slot[keyTypeOffset : keyTypeOffset+keyTypeSize]))
 }
 
 func (slot *keySlot) setKeyType(keyType gcrypt.SupportedKeyType) {

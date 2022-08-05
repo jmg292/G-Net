@@ -2,12 +2,10 @@ package keyslot
 
 import (
 	"crypto/rand"
-
-	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 )
 
 func (slot *keySlot) getNonce() []byte {
-	return slot[2 : gcrypt.NonceSize+2]
+	return slot[nonceOffset : nonceSize+nonceOffset]
 }
 
 func (slot *keySlot) generateNonce() []byte {
