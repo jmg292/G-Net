@@ -15,7 +15,7 @@ func (i *index) SigningKeySlotOffset() int {
 }
 
 func (*index) SigningKeySlotSize() int {
-	return keySlotSize
+	return keyslot.Size
 }
 
 func (i *index) AuthenticationKeySlotOffset() int {
@@ -23,7 +23,7 @@ func (i *index) AuthenticationKeySlotOffset() int {
 }
 
 func (*index) AuthenticationKeySlotSize() int {
-	return keySlotSize
+	return keyslot.Size
 }
 
 func (i *index) EncryptionKeySlotOffset() int {
@@ -31,7 +31,7 @@ func (i *index) EncryptionKeySlotOffset() int {
 }
 
 func (*index) EncryptionKeySlotSize() int {
-	return keySlotSize
+	return keyslot.Size
 }
 
 func (i *index) DeviceKeySlotOffset() int {
@@ -39,5 +39,5 @@ func (i *index) DeviceKeySlotOffset() int {
 }
 
 func (*index) DeviceKeySlotSize() int {
-	return keySlotSize
+	return keyslot.Size
 }
