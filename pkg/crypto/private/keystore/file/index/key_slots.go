@@ -4,39 +4,39 @@ import "github.com/jmg292/G-Net/pkg/crypto"
 
 const keySlotSize = 100
 
-func (*Index) getSlotOffset(keySlot crypto.KeySlot) int {
+func (*index) getSlotOffset(keySlot crypto.KeySlot) int {
 	relativeOffset := int(keySlot) * keySlotSize
 	return int(keySlotBase) + relativeOffset
 }
 
-func (i *Index) SigningKeySlotOffset() int {
+func (i *index) SigningKeySlotOffset() int {
 	return i.getSlotOffset(crypto.SigningKeySlot)
 }
 
-func (*Index) SigningKeySlotSize() int {
+func (*index) SigningKeySlotSize() int {
 	return keySlotSize
 }
 
-func (i *Index) AuthenticationKeySlotOffset() int {
+func (i *index) AuthenticationKeySlotOffset() int {
 	return i.getSlotOffset(crypto.AuthenticationKeySlot)
 }
 
-func (*Index) AuthenticationKeySlotSize() int {
+func (*index) AuthenticationKeySlotSize() int {
 	return keySlotSize
 }
 
-func (i *Index) EncryptionKeySlotOffset() int {
+func (i *index) EncryptionKeySlotOffset() int {
 	return i.getSlotOffset(crypto.EncryptionKeySlot)
 }
 
-func (*Index) EncryptionKeySlotSize() int {
+func (*index) EncryptionKeySlotSize() int {
 	return keySlotSize
 }
 
-func (i *Index) DeviceKeySlotOffset() int {
+func (i *index) DeviceKeySlotOffset() int {
 	return i.getSlotOffset(crypto.DeviceKeySlot)
 }
 
-func (*Index) DeviceKeySlotSize() int {
+func (*index) DeviceKeySlotSize() int {
 	return keySlotSize
 }
