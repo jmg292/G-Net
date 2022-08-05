@@ -1,5 +1,8 @@
 package file
 
-const Preamble string = "gnet.id"
+const prelude string = "gnet.id"
 
-type VersionNumber byte
+const (
+	SupportedVersionMin byte = 1
+	SupportedVersionMax byte = 1
+)
