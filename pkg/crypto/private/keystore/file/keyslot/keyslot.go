@@ -1,6 +1,7 @@
 package keyslot
 
 import (
+	"bytes"
 	"crypto"
 	"fmt"
 
@@ -21,4 +22,8 @@ func New(keyType gcrypt.SupportedKeyType, key crypto.PrivateKey, managementKey [
 	slot = Empty()
 	err = fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 	return
+}
+
+func (slot *keySlot) IsEmpty() bool {
+	return bytes.Equal(Empty()[:], slot[:])
 }
