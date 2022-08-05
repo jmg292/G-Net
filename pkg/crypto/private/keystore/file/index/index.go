@@ -1,29 +1,41 @@
 package index
 
 import (
+	"bytes"
 	"fmt"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-const size int = 8
+const Size int = 8
 
-type Index [size]byte
+type index [Size]byte
 
-func New(signCertSize uint16, authCertSize uint16, encCertSize uint16, devCertSize uint16) (idx Index) {
+func Empty() *index {
+	var idx index
+	return &idx
+}
+
+func New(signCertSize uint16, authCertSize uint16, encCertSize uint16, devCertSize uint16) *index {
+	var idx index
 	copy(idx[:2], convert.UInt16ToBytes(signCertSize))
 	copy(idx[2:4], convert.UInt16ToBytes(authCertSize))
 	copy(idx[4:6], convert.UInt16ToBytes(encCertSize))
 	copy(idx[6:], convert.UInt16ToBytes(devCertSize))
-	return idx
+	return &idx
 }
 
-func (i *Index) LoadOffsets(indexBytes []byte) (err error) {
-	if len(indexBytes) >= size {
+func (i *index) LoadOffsets(indexBytes []byte) (err error) {
+	if len(indexBytes) >= Size {
 		copy(i[:], indexBytes[:8])
 	} else {
 		err = fmt.Errorf(string(gnet.ErrorInvalidContentLength))
 	}
 	return
+}
+
+func (i *index) IsEmpty() bool {
+	emptyIndex := Empty()
+	return bytes.Equal(emptyIndex[:], i[:])
 }
