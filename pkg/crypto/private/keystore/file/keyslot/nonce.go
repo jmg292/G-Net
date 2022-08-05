@@ -9,10 +9,9 @@ func (slot *keySlot) getNonce() []byte {
 	return slot[nonceOffset : nonceSize+nonceOffset]
 }
 
-func (slot *keySlot) generateNonce() []byte {
+func (slot *keySlot) generateNonce() {
 	nonce := slot.getNonce()
 	rand.Read(nonce)
-	return nonce
 }
 
 func (slot *keySlot) nonceIsEmpty() bool {
