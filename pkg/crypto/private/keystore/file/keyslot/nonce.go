@@ -5,15 +5,15 @@ import (
 	"crypto/rand"
 )
 
-func (slot *keySlot) getNonce() []byte {
+func (slot *KeySlot) getNonce() []byte {
 	return slot[nonceOffset : nonceSize+nonceOffset]
 }
 
-func (slot *keySlot) generateNonce() {
+func (slot *KeySlot) generateNonce() {
 	nonce := slot.getNonce()
 	rand.Read(nonce)
 }
 
-func (slot *keySlot) nonceIsEmpty() bool {
+func (slot *KeySlot) nonceIsEmpty() bool {
 	return bytes.Equal(slot.getNonce(), empty.getNonce())
 }

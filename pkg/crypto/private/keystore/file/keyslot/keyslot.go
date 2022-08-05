@@ -20,21 +20,21 @@ const (
 	maxKeySize    = Size - keyOffset - chacha20poly1305.Overhead
 )
 
-type keySlot [Size]byte
+type KeySlot [Size]byte
 
-var empty keySlot
+var empty KeySlot
 
-func NewEmpty() *keySlot {
-	var slot keySlot
+func NewEmpty() *KeySlot {
+	var slot KeySlot
 	return &slot
 }
 
-func New(keyType gcrypt.SupportedKeyType, key crypto.PrivateKey, managementKey []byte) (slot *keySlot, err error) {
+func New(keyType gcrypt.SupportedKeyType, key crypto.PrivateKey, managementKey []byte) (slot *KeySlot, err error) {
 	slot = NewEmpty()
 	err = fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 	return
 }
 
-func (slot *keySlot) IsEmpty() bool {
+func (slot *KeySlot) IsEmpty() bool {
 	return bytes.Equal(NewEmpty()[:], slot[:])
 }

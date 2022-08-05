@@ -5,14 +5,14 @@ import (
 	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 )
 
-func (slot *keySlot) getKeyTypeBytes() []byte {
+func (slot *KeySlot) getKeyTypeBytes() []byte {
 	return slot[keyTypeOffset : keyTypeSize+keyTypeOffset]
 }
 
-func (slot *keySlot) KeyType() gcrypt.SupportedKeyType {
+func (slot *KeySlot) KeyType() gcrypt.SupportedKeyType {
 	return gcrypt.SupportedKeyType(convert.BytesToUInt16(slot.getKeyTypeBytes()))
 }
 
-func (slot *keySlot) setKeyType(keyType gcrypt.SupportedKeyType) {
+func (slot *KeySlot) SetKeyType(keyType gcrypt.SupportedKeyType) {
 	copy(slot[:2], convert.UInt16ToBytes(uint16(keyType)))
 }
