@@ -31,19 +31,24 @@ func testSetup() {
 
 func getAdminSlot() *adminslot.AdminSlot {
 	slot := adminslot.Empty()
-	slot.Load(testData[:])
+	if err := slot.Load(testData[:]); err != nil {
+		panic(err)
+	}
 	return slot
 }
 
 func getLockedAdminSlot() *adminslot.AdminSlot {
 	slot := getAdminSlot()
-	slot.Lock(pin[:], salt[:])
+	if err := slot.Lock(pin[:], salt[:]); err != nil {
+		panic(err)
+	}
 	return slot
 }
 
 func equalsTestDataSlot(idx slotIndex, keyContent []byte, t *testing.T) bool {
 	slotOffset := keySize * int(idx)
 	testDataSlotContent := testData[slotOffset : slotOffset+keySize]
+	t.Logf("key content: 0x%x", keyContent)
 	t.Logf("test content: 0x%x", testDataSlotContent)
 	return bytes.Equal(testDataSlotContent, keyContent)
 }
@@ -56,7 +61,6 @@ func keyContentMatches(slot *adminslot.AdminSlot, idx slotIndex, t *testing.T) b
 	case kdfSaltSlot:
 		keyContent = slot.KdfSalt()
 	}
-	t.Logf("key content: 0x%x", keyContent)
 	return equalsTestDataSlot(idx, keyContent, t)
 }
 
@@ -69,6 +73,7 @@ func TestEmpty(t *testing.T) {
 
 func TestGetManagementKey(t *testing.T) {
 	slot := getAdminSlot()
+	t.Logf("Slot content: 0x%x", slot[:])
 	if !equalsTestDataSlot(managementKeySlot, slot.ManagementKey(), t) {
 		t.Fail()
 	}
@@ -76,6 +81,7 @@ func TestGetManagementKey(t *testing.T) {
 
 func TestGetKdfSalt(t *testing.T) {
 	slot := getAdminSlot()
+	t.Logf("Slot content: 0x%x", slot[:])
 	if !equalsTestDataSlot(kdfSaltSlot, slot.KdfSalt(), t) {
 		t.Fail()
 	}
@@ -83,6 +89,7 @@ func TestGetKdfSalt(t *testing.T) {
 
 func TestLockSlot(t *testing.T) {
 	slot := getLockedAdminSlot()
+	t.Logf("Locked slot content: 0x%x", slot[:])
 	for i := 0; i < 2; i++ {
 		if keyContentMatches(slot, slotIndex(i), t) {
 			t.Fail()
@@ -92,7 +99,9 @@ func TestLockSlot(t *testing.T) {
 
 func TestUnlockSlot(t *testing.T) {
 	slot := getLockedAdminSlot()
+	t.Logf("Locked slot content: 0x%x", slot[:])
 	slot.Unlock(pin[:], salt[:])
+	t.Logf("Unlocked slot content: 0x%x", slot[:])
 	for i := 0; i < 2; i++ {
 		if !keyContentMatches(slot, slotIndex(i), t) {
 			t.Fail()
