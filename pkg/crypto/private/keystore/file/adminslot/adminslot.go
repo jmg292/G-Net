@@ -40,7 +40,7 @@ func (slot *AdminSlot) Load(data []byte) error {
 	if len(data) < Size {
 		return fmt.Errorf(string(gnet.ErrorInvalidContentLength))
 	}
-	copy(slot[:], data[:24])
+	copy(slot[:], data[:Size])
 	return nil
 }
 
