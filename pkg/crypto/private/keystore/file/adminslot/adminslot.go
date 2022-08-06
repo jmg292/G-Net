@@ -3,7 +3,9 @@ package adminslot
 import (
 	"bytes"
 	"crypto/rand"
+	"fmt"
 
+	"github.com/jmg292/G-Net/pkg/gnet"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -32,6 +34,14 @@ func New() *AdminSlot {
 	var slot AdminSlot
 	rand.Read(slot[:])
 	return &slot
+}
+
+func (slot *AdminSlot) Load(data []byte) error {
+	if len(data) < Size {
+		return fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+	}
+	copy(slot[:], data[:24])
+	return nil
 }
 
 func (slot *AdminSlot) IsEmpty() bool {
