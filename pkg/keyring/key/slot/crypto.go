@@ -1,4 +1,4 @@
-package keyslot
+package slot
 
 import "golang.org/x/crypto/chacha20poly1305"
 

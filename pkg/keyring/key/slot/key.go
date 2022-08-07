@@ -1,4 +1,4 @@
-package keyslot
+package slot
 
 import (
 	"fmt"

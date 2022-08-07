@@ -1,4 +1,4 @@
-package keyslot
+package slot
 
 import (
 	"github.com/jmg292/G-Net/internal/utilities/convert"
