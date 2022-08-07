@@ -6,6 +6,12 @@ func (e ApplicationError) Error() string {
 	return string(e)
 }
 
+type KeystoreError ApplicationError
+
+func (e KeystoreError) Error() string {
+	return string(e)
+}
+
 type ItemNotFound ApplicationError
 
 func (e ItemNotFound) Error() string {
