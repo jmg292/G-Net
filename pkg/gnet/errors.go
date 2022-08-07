@@ -26,6 +26,7 @@ type CryptoError ValidationError
 
 const (
 	ErrorInvalidSigningKey              CryptoError = "invalid signing key"
+	ErrorInvalidPrivateKey              CryptoError = "invalid private key"
 	ErrorInvalidPublicKey               CryptoError = "invalid public key"
 	ErrorInvalidKeySlot                 CryptoError = "invalid key slot"
 	ErrorKeyAlreadyExists               CryptoError = "key already exists"
