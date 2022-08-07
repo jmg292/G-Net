@@ -10,7 +10,7 @@ import (
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
-const Size int = 100
+const Size int = 128
 const (
 	keyTypeOffset = 0
 	keyTypeSize   = 2

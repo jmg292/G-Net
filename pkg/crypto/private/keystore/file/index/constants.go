@@ -9,5 +9,5 @@ const (
 	salt            offset = 16
 	adminSlot       offset = 48
 	keySlotBase     offset = 112
-	certificateBase offset = 512
+	certificateBase offset = 624
 )
