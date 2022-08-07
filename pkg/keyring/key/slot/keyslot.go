@@ -3,7 +3,6 @@ package slot
 import (
 	"bytes"
 	"crypto"
-	"fmt"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
@@ -31,7 +30,7 @@ func NewEmpty() *KeySlot {
 
 func New(keyType keyring.SupportedKeyType, key crypto.PrivateKey, managementKey []byte) (slot *KeySlot, err error) {
 	slot = NewEmpty()
-	err = fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+	err = gnet.ErrorNotYetImplemented
 	return
 }
 

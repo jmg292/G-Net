@@ -1,7 +1,6 @@
 package header
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/jmg292/G-Net/internal/datagram"
@@ -19,7 +18,7 @@ func (h *header) ToBytes() []byte {
 
 func FromBytes(data []byte) (*header, error) {
 	if len(data) < 84 {
-		return nil, fmt.Errorf(string(gnet.ErrorInvalidHeader))
+		return nil, gnet.ErrorInvalidHeader
 	}
 	return &header{
 		CreationTime:  time.UnixMilli(int64(convert.BytesToUInt64(data[:8]))),

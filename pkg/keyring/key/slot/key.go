@@ -1,8 +1,6 @@
 package slot
 
 import (
-	"fmt"
-
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
@@ -16,7 +14,7 @@ func (slot *KeySlot) GetKey() []byte {
 
 func (slot *KeySlot) SetKey(key []byte) (err error) {
 	if len(key) > maxKeySize {
-		err = fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		err = gnet.ErrorInvalidContentLength
 	} else {
 		copy(slot[keyOffset:maxKeySize], key)
 	}

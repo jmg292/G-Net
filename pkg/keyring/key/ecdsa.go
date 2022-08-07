@@ -5,7 +5,6 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
-	"fmt"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
 	"github.com/jmg292/G-Net/pkg/gnet"
@@ -26,7 +25,7 @@ func DeserializeEcdsaKey(keyBytes []byte) (key *ecdsa.PrivateKey, err error) {
 	case 48:
 		publicKey, err = DeserializeP384PublicKey(keyBytes[keySize+2:])
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	if err == nil {
 		key = ecdsaDeserializePrivateKey(privateBytes, publicKey)
@@ -50,7 +49,7 @@ func ecdsaDeserializePublicKey(curve elliptic.Curve, keyBytes []byte) (*ecdsa.Pu
 	}
 	publicKey.X, publicKey.Y = elliptic.UnmarshalCompressed(curve, keyBytes)
 	if publicKey.X == nil {
-		return nil, fmt.Errorf(string(gnet.ErrorInvalidPublicKey))
+		return nil, gnet.ErrorInvalidPublicKey
 	}
 	return &publicKey, nil
 }
@@ -65,7 +64,7 @@ func ecdsaDeserializePrivateKey(keyBytes []byte, public *ecdsa.PublicKey) *ecdsa
 
 func ecdsaPrivateToBytes(key crypto.PrivateKey) (keyBytes []byte, err error) {
 	if ecdsaKey, ok := key.(*ecdsa.PrivateKey); !ok {
-		err = fmt.Errorf(string(gnet.ErrorInvalidPrivateKey))
+		err = gnet.ErrorInvalidPrivateKey
 	} else {
 		keyBytes = SerializeEcdsaKey(ecdsaKey)
 	}
@@ -74,7 +73,7 @@ func ecdsaPrivateToBytes(key crypto.PrivateKey) (keyBytes []byte, err error) {
 
 func ecdsaPublicToBytes(key crypto.PublicKey) (keyBytes []byte, err error) {
 	if ecdsaKey, ok := key.(*ecdsa.PublicKey); !ok {
-		err = fmt.Errorf(string(gnet.ErrorInvalidPublicKey))
+		err = gnet.ErrorInvalidPublicKey
 	} else {
 		switch ecdsaKey.Params().Name {
 		case "P-256":
@@ -82,7 +81,7 @@ func ecdsaPublicToBytes(key crypto.PublicKey) (keyBytes []byte, err error) {
 		case "P-384":
 			keyBytes = SerializeP384PublicKey(ecdsaKey)
 		default:
-			err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+			err = gnet.ErrorUnsupportedAlgorithm
 		}
 	}
 	return

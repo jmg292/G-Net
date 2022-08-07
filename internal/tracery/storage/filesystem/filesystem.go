@@ -28,9 +28,9 @@ func (storage *blockStorageDirectory) blockPath(blockId []byte) string {
 
 func (*blockStorageDirectory) error(err error) error {
 	if os.IsNotExist(err) {
-		err = fmt.Errorf(string(gnet.ErrorBlockNotFound))
+		err = gnet.ErrorBlockNotFound
 	} else if os.IsExist(err) {
-		err = fmt.Errorf(string(gnet.ErrorBlockExists))
+		err = gnet.ErrorBlockExists
 	}
 	return err
 }
@@ -38,7 +38,7 @@ func (*blockStorageDirectory) error(err error) error {
 func (storage *blockStorageDirectory) lock() error {
 	_, err := os.Create(storage.lockFile())
 	if os.IsExist(err) {
-		return fmt.Errorf(string(gnet.ErrorStorageLocked))
+		return gnet.ErrorStorageLocked
 	}
 	return err
 }

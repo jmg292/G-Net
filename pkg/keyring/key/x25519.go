@@ -4,7 +4,6 @@ import (
 	"crypto"
 	"crypto/rand"
 	"crypto/subtle"
-	"fmt"
 	"io"
 
 	"github.com/cloudflare/circl/dh/x25519"
@@ -59,7 +58,7 @@ func GenerateX25519KeyPair() (*X25519PublicKey, *X25519PrivateKey) {
 
 func DeserializeX25519Key(keyBytes []byte) (*X25519PrivateKey, error) {
 	if len(keyBytes) < (x25519.Size * 2) {
-		return nil, fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		return nil, gnet.ErrorInvalidContentLength
 	}
 	var key X25519PrivateKey
 	subtle.ConstantTimeCopy(1, keyBytes[:x25519.Size], key.private[:])
@@ -69,7 +68,7 @@ func DeserializeX25519Key(keyBytes []byte) (*X25519PrivateKey, error) {
 
 func DeserializeX25519PublicKey(keyBytes []byte) (*X25519PublicKey, error) {
 	if len(keyBytes) < x25519.Size {
-		return nil, fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		return nil, gnet.ErrorInvalidContentLength
 	}
 	var key x25519.Key
 	subtle.ConstantTimeCopy(1, keyBytes[:x25519.Size], key[:])

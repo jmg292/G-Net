@@ -1,7 +1,6 @@
 package filesystem
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/jmg292/G-Net/internal/tracery/sequencing/filesystem/entry"
@@ -40,7 +39,7 @@ func (f *sequenceMapFile) BlockCount() (uint64, error) {
 
 func (f *sequenceMapFile) PutBlockId(blockId []byte) (uint64, error) {
 	if _, ok := f.blockIdIndexMap[f.blockIdToString(blockId)]; ok {
-		return 0, fmt.Errorf(string(gnet.ErrorBlockExists))
+		return 0, gnet.ErrorBlockExists
 	}
 	handle, err := os.OpenFile(f.path, os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
@@ -78,5 +77,5 @@ func (f *sequenceMapFile) GetIndexFromBlockId(blockId []byte) (uint64, error) {
 	if index, ok := f.blockIdIndexMap[f.blockIdToString(blockId)]; ok {
 		return index, nil
 	}
-	return 0, fmt.Errorf(string(gnet.ErrorBlockNotFound))
+	return 0, gnet.ErrorBlockNotFound
 }

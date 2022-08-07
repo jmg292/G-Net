@@ -2,7 +2,6 @@ package key
 
 import (
 	"crypto"
-	"fmt"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
@@ -17,7 +16,7 @@ func GenerateKeyPair(keyType keyring.SupportedKeyType) (public crypto.PublicKey,
 	case keyring.X25519Key:
 		public, private = GenerateX25519KeyPair()
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	return
 }
@@ -30,12 +29,12 @@ func PrivateToBytes(keyType keyring.SupportedKeyType, key crypto.PrivateKey) (ke
 		keyBytes, err = ecdsaPrivateToBytes(key)
 	case keyring.X25519Key:
 		if x25519key, ok := key.(*X25519PrivateKey); !ok {
-			err = fmt.Errorf(string(gnet.ErrorInvalidPrivateKey))
+			err = gnet.ErrorInvalidPrivateKey
 		} else {
 			keyBytes = x25519key.Bytes()
 		}
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	return
 }
@@ -49,7 +48,7 @@ func BytesToPrivate(keyType keyring.SupportedKeyType, keyBytes []byte) (key cryp
 	case keyring.X25519Key:
 		key, err = DeserializeX25519Key(keyBytes)
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	return
 }
@@ -62,12 +61,12 @@ func PublicToBytes(keyType keyring.SupportedKeyType, key crypto.PublicKey) (keyB
 		keyBytes, err = ecdsaPublicToBytes(key)
 	case keyring.X25519Key:
 		if x25519key, ok := key.(*X25519PublicKey); !ok {
-			err = fmt.Errorf(string(gnet.ErrorInvalidPublicKey))
+			err = gnet.ErrorInvalidPublicKey
 		} else {
 			keyBytes = x25519key.Bytes()
 		}
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	return
 }
@@ -81,7 +80,7 @@ func BytesToPublic(keyType keyring.SupportedKeyType, keyBytes []byte) (key crypt
 	case keyring.X25519Key:
 		key, err = DeserializeX25519PublicKey(keyBytes)
 	default:
-		err = fmt.Errorf(string(gnet.ErrorUnsupportedAlgorithm))
+		err = gnet.ErrorUnsupportedAlgorithm
 	}
 	return
 }

@@ -17,7 +17,7 @@ const (
 
 func validatePin(pin string) error {
 	if len(pin) < PinMinLength || len(pin) > PinMaxLength {
-		return fmt.Errorf(string(gnet.ErrorInvalidPIN))
+		return gnet.ErrorInvalidPIN
 	}
 	return nil
 }

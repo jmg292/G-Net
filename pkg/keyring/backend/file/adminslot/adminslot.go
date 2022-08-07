@@ -3,7 +3,6 @@ package adminslot
 import (
 	"bytes"
 	"crypto/rand"
-	"fmt"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"golang.org/x/crypto/chacha20poly1305"
@@ -38,7 +37,7 @@ func New() *AdminSlot {
 
 func (slot *AdminSlot) Load(data []byte) error {
 	if len(data) < Size {
-		return fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		return gnet.ErrorInvalidContentLength
 	}
 	copy(slot[:], data[:Size])
 	return nil

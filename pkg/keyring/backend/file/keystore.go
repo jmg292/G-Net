@@ -1,8 +1,6 @@
 package file
 
 import (
-	"fmt"
-
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/file/adminslot"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/file/index"
@@ -27,5 +25,5 @@ type fileKeyStore struct {
 }
 
 func New(path string) (*fileKeyStore, error) {
-	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+	return nil, gnet.ErrorNotYetImplemented
 }

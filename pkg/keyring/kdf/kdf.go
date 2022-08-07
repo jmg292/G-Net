@@ -1,8 +1,6 @@
 package kdf
 
 import (
-	"fmt"
-
 	"github.com/cloudflare/circl/dh/x25519"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
@@ -19,7 +17,7 @@ func ExchangeKey(privateKey x25519.Key, publicKey x25519.Key) (key []byte, err e
 	if ok := x25519.Shared(&secret, &privateKey, &publicKey); !ok {
 		key = DeriveKey(secret[:], publicKey[:])
 	} else {
-		err = fmt.Errorf(string(gnet.ErrorKeyExchangeFailed))
+		err = gnet.ErrorKeyExchangeFailed
 	}
 	return
 }

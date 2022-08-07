@@ -2,7 +2,6 @@ package index
 
 import (
 	"bytes"
-	"fmt"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
 	"github.com/jmg292/G-Net/pkg/gnet"
@@ -32,7 +31,7 @@ func (i *Index) LoadOffsets(indexBytes []byte) (err error) {
 	if len(indexBytes) >= Size {
 		copy(i[:], indexBytes[:8])
 	} else {
-		err = fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		err = gnet.ErrorInvalidContentLength
 	}
 	return
 }

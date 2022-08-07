@@ -2,7 +2,6 @@ package private
 
 import (
 	"crypto"
-	"fmt"
 	"io"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
@@ -25,5 +24,5 @@ func (keyring *KeyRing) Public() crypto.PublicKey {
 
 // Implement crypto.Signer for private.KeyRing
 func (keyring *KeyRing) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts) (signature []byte, err error) {
-	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
+	return nil, gnet.ErrorNotYetImplemented
 }

@@ -2,7 +2,6 @@ package entry
 
 import (
 	"encoding/hex"
-	"fmt"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
 	"github.com/jmg292/G-Net/pkg/gnet"
@@ -25,7 +24,7 @@ func (f *FileEntry) BlockIdString() string {
 
 func New(entryBytes []byte) (*FileEntry, error) {
 	if len(entryBytes) != int(Size) {
-		return nil, fmt.Errorf(string(gnet.ErrorMalformedEntry))
+		return nil, gnet.ErrorMalformedEntry
 	}
 	return &FileEntry{
 		BlockIndex: convert.BytesToUInt64(entryBytes[:8]),

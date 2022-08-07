@@ -2,7 +2,6 @@ package certificates
 
 import (
 	"crypto/x509"
-	"fmt"
 
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
@@ -39,7 +38,7 @@ func (certstore *CertificateStore) ParseDER(derBytes []byte) (err error) {
 	if certs, e := x509.ParseCertificates(derBytes); e != nil {
 		err = e
 	} else if len(certs) < len(certstore) {
-		err = fmt.Errorf(string(gnet.ErrorInvalidContentLength))
+		err = gnet.ErrorInvalidContentLength
 	} else {
 		copy(certstore[:], certs)
 	}

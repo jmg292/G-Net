@@ -2,7 +2,6 @@ package filesystem
 
 import (
 	"encoding/hex"
-	"fmt"
 	"os"
 
 	"github.com/jmg292/G-Net/internal/tracery/sequencing/filesystem/entry"
@@ -29,7 +28,7 @@ func (*sequenceMapFile) validateManifestFile(handle *os.File) error {
 		return err
 	}
 	if stat.Size()%entry.Size != 0 {
-		return fmt.Errorf(string(gnet.ErrorManifestInvalidSize))
+		return gnet.ErrorManifestInvalidSize
 	}
 	return nil
 }
@@ -51,7 +50,7 @@ func (f *sequenceMapFile) getEntryAtIndex(handle *os.File, blockIndex uint64) (*
 		return nil, err
 	}
 	if blockIndex > blockCount {
-		return nil, fmt.Errorf(string(gnet.ErrorBlockIndexOutOfRange))
+		return nil, gnet.ErrorBlockIndexOutOfRange
 	}
 	entryBytes := make([]byte, entry.Size)
 	handle.Seek(int64(blockIndex)*entry.Size, 0)
