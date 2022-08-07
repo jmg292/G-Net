@@ -1,19 +1,13 @@
 package gnet
 
-type ApplicationError string
-
 const (
 	ErrorNotYetImplemented ApplicationError = "not yet implemented"
 	ErrorInvalidPIN        ApplicationError = "invalid pin"
 )
 
-type ItemNotFound ApplicationError
-
 const (
 	ErrorWarrantNotFound ItemNotFound = "warrant not found"
 )
-
-type ValidationError ApplicationError
 
 const (
 	ErrorInvalidSignature     ValidationError = "invalid signature"
@@ -22,8 +16,6 @@ const (
 	ErrorInvalidContentLength ValidationError = "invalid content length"
 )
 
-type CryptoError ValidationError
-
 const (
 	ErrorInvalidSigningKey              CryptoError = "invalid signing key"
 	ErrorInvalidPrivateKey              CryptoError = "invalid private key"
@@ -31,14 +23,11 @@ const (
 	ErrorInvalidKeySlot                 CryptoError = "invalid key slot"
 	ErrorKeyAlreadyExists               CryptoError = "key already exists"
 	ErrorKeyNotFound                    CryptoError = "key not found"
+	ErrorCertificateNotFound            CryptoError = "certificate not found"
 	ErrorKeyExchangeFailed              CryptoError = "key exchange failed"
 	ErrorUnsupportedAlgorithm           CryptoError = "unsupported algorithm"
 	ErrorUnsupportedAlgorithmForKeySlot CryptoError = "unsupported algorithm for key slot"
 )
-
-type TraceryError ApplicationError
-type ManifestError TraceryError
-type SequencingError TraceryError
 
 const (
 	ErrorStorageLocked        TraceryError    = "block storage is locked"
