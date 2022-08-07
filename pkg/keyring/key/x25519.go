@@ -54,10 +54,6 @@ func GenerateX25519KeyPair() (*X25519PublicKey, *X25519PrivateKey) {
 	return key.PublicKey().(*X25519PublicKey), &key
 }
 
-func SerializeX25519Key(key *X25519PrivateKey) []byte {
-	return key.Bytes()
-}
-
 func DeserializeX25519Key(keyBytes []byte) (*X25519PrivateKey, error) {
 	if len(keyBytes) < (x25519.Size * 2) {
 		return nil, fmt.Errorf(string(gnet.ErrorInvalidContentLength))
