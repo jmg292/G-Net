@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/adminslot"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/adminslot"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 

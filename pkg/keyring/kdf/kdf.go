@@ -4,14 +4,14 @@ import (
 	"fmt"
 
 	"github.com/cloudflare/circl/dh/x25519"
-	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 	"github.com/jmg292/G-Net/pkg/gnet"
+	"github.com/jmg292/G-Net/pkg/keyring"
 	"golang.org/x/crypto/pbkdf2"
 	"golang.org/x/crypto/sha3"
 )
 
 func DeriveKey(keyMaterial []byte, salt []byte) []byte {
-	return pbkdf2.Key(keyMaterial, salt, gcrypt.KdfIterations, int(gcrypt.SymmetricKeySize), sha3.New256)
+	return pbkdf2.Key(keyMaterial, salt, keyring.KdfIterations, int(keyring.SymmetricKeySize), sha3.New256)
 }
 
 func ExchangeKey(privateKey x25519.Key, publicKey x25519.Key) (key []byte, err error) {

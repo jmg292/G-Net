@@ -6,10 +6,10 @@ import (
 	"testing"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/index"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/index"
 )
 
-const certificateBaseOffset = 512
+const certificateBaseOffset = 624
 
 var testData [index.Size]byte
 var (

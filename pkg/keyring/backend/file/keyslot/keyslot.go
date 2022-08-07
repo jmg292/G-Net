@@ -5,8 +5,8 @@ import (
 	"crypto"
 	"fmt"
 
-	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
 	"github.com/jmg292/G-Net/pkg/gnet"
+	"github.com/jmg292/G-Net/pkg/keyring"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -15,7 +15,7 @@ const (
 	keyTypeOffset = 0
 	keyTypeSize   = 2
 	nonceOffset   = keyTypeSize
-	nonceSize     = gcrypt.NonceSize
+	nonceSize     = keyring.NonceSize
 	keyOffset     = nonceOffset + nonceSize
 	maxKeySize    = Size - keyOffset - chacha20poly1305.Overhead
 )
@@ -29,7 +29,7 @@ func NewEmpty() *KeySlot {
 	return &slot
 }
 
-func New(keyType gcrypt.SupportedKeyType, key crypto.PrivateKey, managementKey []byte) (slot *KeySlot, err error) {
+func New(keyType keyring.SupportedKeyType, key crypto.PrivateKey, managementKey []byte) (slot *KeySlot, err error) {
 	slot = NewEmpty()
 	err = fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 	return

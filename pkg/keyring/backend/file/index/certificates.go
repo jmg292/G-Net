@@ -2,10 +2,10 @@ package index
 
 import (
 	"github.com/jmg292/G-Net/internal/utilities/convert"
-	"github.com/jmg292/G-Net/pkg/crypto"
+	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (i *Index) getCertificateSize(keySlot crypto.KeySlot) int {
+func (i *Index) getCertificateSize(keySlot keyring.KeySlot) int {
 	relativeOffset := int(keySlot) * 2
 	return int(convert.BytesToUInt16(i[relativeOffset : relativeOffset+2]))
 }
@@ -15,7 +15,7 @@ func (*Index) SigningCertificateOffset() int {
 }
 
 func (i *Index) SigningCertificateSize() int {
-	return i.getCertificateSize(crypto.SigningKeySlot)
+	return i.getCertificateSize(keyring.SigningKeySlot)
 }
 
 func (i *Index) AuthenticationCertificateOffset() int {
@@ -23,7 +23,7 @@ func (i *Index) AuthenticationCertificateOffset() int {
 }
 
 func (i *Index) AuthenticationCertificateSize() int {
-	return i.getCertificateSize(crypto.AuthenticationKeySlot)
+	return i.getCertificateSize(keyring.AuthenticationKeySlot)
 }
 
 func (i *Index) EncryptionCertificateOffset() int {
@@ -31,7 +31,7 @@ func (i *Index) EncryptionCertificateOffset() int {
 }
 
 func (i *Index) EncryptionCertificateSize() int {
-	return i.getCertificateSize(crypto.EncryptionKeySlot)
+	return i.getCertificateSize(keyring.EncryptionKeySlot)
 }
 
 func (i *Index) DeviceCertificateOffset() int {
@@ -39,5 +39,5 @@ func (i *Index) DeviceCertificateOffset() int {
 }
 
 func (i *Index) DeviceCertificateSize() int {
-	return i.getCertificateSize(crypto.DeviceKeySlot)
+	return i.getCertificateSize(keyring.DeviceKeySlot)
 }

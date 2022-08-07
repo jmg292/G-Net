@@ -6,17 +6,16 @@ import (
 	"fmt"
 	"path/filepath"
 
-	gcrypt "github.com/jmg292/G-Net/pkg/crypto"
-	"github.com/jmg292/G-Net/pkg/crypto/kdf"
-	"github.com/jmg292/G-Net/pkg/crypto/public"
 	"github.com/jmg292/G-Net/pkg/gnet"
+	"github.com/jmg292/G-Net/pkg/keyring"
+	"github.com/jmg292/G-Net/pkg/keyring/kdf"
 )
 
 func (f *fileKeyStore) Name() string {
-	return filepath.Base(f.path)
+	return filepath.Base(f.metadata.Path())
 }
 
-func (f *fileKeyStore) GetKeyId(keyId gcrypt.KeySlot) ([]byte, error) {
+func (f *fileKeyStore) GetKeyId(keyId keyring.KeySlot) ([]byte, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
@@ -43,27 +42,23 @@ func (f *fileKeyStore) Lock() error {
 	return fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) DestroyKey(slot gcrypt.KeySlot) error {
+func (f *fileKeyStore) DestroyKey(slot keyring.KeySlot) error {
 	return fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) CreateKey(keyType gcrypt.SupportedKeyType, keySlot gcrypt.KeySlot) error {
+func (f *fileKeyStore) CreateKey(keyType keyring.SupportedKeyType, keySlot keyring.KeySlot) error {
 	return fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) GetPublicKey(keySlot gcrypt.KeySlot) (crypto.PublicKey, error) {
+func (f *fileKeyStore) GetPublicKey(keySlot keyring.KeySlot) (crypto.PublicKey, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) PublicKeyRing() (public.KeyRing, error) {
+func (f *fileKeyStore) GetPrivateKey(keySlot keyring.KeySlot) (crypto.PrivateKey, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) GetPrivateKey(keySlot gcrypt.KeySlot) (crypto.PrivateKey, error) {
-	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
-}
-
-func (f *fileKeyStore) GetPrivateKeyBytes(keySlot gcrypt.KeySlot) ([]byte, error) {
+func (f *fileKeyStore) GetPrivateKeyBytes(keySlot keyring.KeySlot) ([]byte, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
@@ -71,6 +66,6 @@ func (f *fileKeyStore) AttestationCertificate() (*x509.Certificate, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }
 
-func (f *fileKeyStore) Attest(gcrypt.KeySlot) (*x509.Certificate, error) {
+func (f *fileKeyStore) Attest(keyring.KeySlot) (*x509.Certificate, error) {
 	return nil, fmt.Errorf(string(gnet.ErrorNotYetImplemented))
 }

@@ -1,7 +1,7 @@
 package adminslot
 
 import (
-	"github.com/jmg292/G-Net/pkg/crypto/kdf"
+	"github.com/jmg292/G-Net/pkg/keyring/kdf"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 

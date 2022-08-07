@@ -3,11 +3,11 @@ package file
 import (
 	"fmt"
 
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/adminslot"
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/index"
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/keyslot"
-	"github.com/jmg292/G-Net/pkg/crypto/private/keystore/file/meta"
 	"github.com/jmg292/G-Net/pkg/gnet"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/adminslot"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/index"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/keyslot"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/file/meta"
 )
 
 // Exists to facilitate user identity backups
