@@ -2,8 +2,10 @@ package key
 
 import (
 	"crypto"
+	"crypto/rand"
 	"crypto/subtle"
 	"fmt"
+	"io"
 
 	"github.com/cloudflare/circl/dh/x25519"
 	"github.com/jmg292/G-Net/pkg/gnet"
@@ -50,7 +52,8 @@ func (key *X25519PublicKey) Equal(x crypto.PublicKey) (equal bool) {
 
 func GenerateX25519KeyPair() (*X25519PublicKey, *X25519PrivateKey) {
 	var key X25519PrivateKey
-	x25519.KeyGen(&key.private, &key.public)
+	io.ReadFull(rand.Reader, key.private[:])
+	x25519.KeyGen(&key.public, &key.private)
 	return key.PublicKey().(*X25519PublicKey), &key
 }
 
