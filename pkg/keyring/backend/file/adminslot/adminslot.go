@@ -29,10 +29,10 @@ func Empty() *AdminSlot {
 	return &slot
 }
 
-func New() *AdminSlot {
+func New() AdminSlot {
 	var slot AdminSlot
 	rand.Read(slot[:])
-	return &slot
+	return slot
 }
 
 func (slot *AdminSlot) Load(data []byte) error {

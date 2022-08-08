@@ -10,14 +10,14 @@ import (
 type Storage interface {
 	// Identification
 	Name() string
-	GetKeyId(keyring.KeySlot) ([]byte, error)
 
 	// Management
+	Open() error
 	Unlock([]byte) error
-	Validate() error
 	ManagementKey() ([]byte, error)
 	KeyEncryptionKey() ([]byte, error)
 	Lock() error
+	Close() error
 
 	// Key lifecycle
 	DestroyKey(keyring.KeySlot) error

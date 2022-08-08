@@ -1,10 +1,10 @@
 package meta
 
-func (m *Meta) ModifiedSection(section sectionFlag) {
+func (m *Meta) ModifiedSection(section Section) {
 	m.modifiedSections |= byte(section)
 }
 
-func (m *Meta) WasModified(section sectionFlag) bool {
+func (m *Meta) WasModified(section Section) bool {
 	return m.modifiedSections&byte(section) != 0
 }
 

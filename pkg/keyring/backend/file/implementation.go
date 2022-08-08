@@ -11,18 +11,15 @@ import (
 )
 
 func (f *fileKeyStore) Name() string {
-	return filepath.Base(f.metadata.Path())
+	filename := filepath.Base(f.metadata.Path())
+	return filename[:len(filename)-len(filepath.Ext(filename))]
 }
 
-func (f *fileKeyStore) GetKeyId(keyId keyring.KeySlot) ([]byte, error) {
-	return nil, gnet.ErrorNotYetImplemented
-}
-
-func (f *fileKeyStore) Unlock(pin []byte) error {
+func (f *fileKeyStore) Open() error {
 	return gnet.ErrorNotYetImplemented
 }
 
-func (f *fileKeyStore) Validate() error {
+func (f *fileKeyStore) Unlock(pin []byte) error {
 	return gnet.ErrorNotYetImplemented
 }
 

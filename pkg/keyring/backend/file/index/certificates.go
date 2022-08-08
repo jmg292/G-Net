@@ -41,3 +41,11 @@ func (i *Index) DeviceCertificateOffset() int {
 func (i *Index) DeviceCertificateSize() int {
 	return i.getCertificateSize(keyring.DeviceKeySlot)
 }
+
+func (*Index) CertificateStoreOffset() int {
+	return int(certificateBase)
+}
+
+func (i *Index) CertificateStoreSize() int {
+	return (i.DeviceCertificateOffset() + i.DeviceCertificateSize()) - i.CertificateStoreOffset()
+}

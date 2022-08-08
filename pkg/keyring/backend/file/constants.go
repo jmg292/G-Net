@@ -1,6 +1,6 @@
 package file
 
-const prelude string = "gnet.id"
+const preamble string = "gnet.id"
 
 const (
 	SupportedVersionMin byte = 1

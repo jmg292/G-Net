@@ -15,6 +15,7 @@ const (
 	ErrorInvalidKeySlot                 KeystoreError = "invalid key slot"
 	ErrorUnsupportedAlgorithmForKeySlot KeystoreError = "unsupported algorithm for key slot"
 	ErrorKeyAlreadyExists               KeystoreError = "key already exists"
+	ErrorFileAlreadyExists              KeystoreError = "file already exists"
 )
 
 const (

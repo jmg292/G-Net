@@ -1,14 +1,14 @@
 package meta
 
-func (m *Meta) LockSection(section sectionFlag) {
+func (m *Meta) LockSection(section Section) {
 	m.unlockedSections |= byte(section)
 }
 
-func (m *Meta) UnlockSection(section sectionFlag) {
+func (m *Meta) UnlockSection(section Section) {
 	m.unlockedSections &^= byte(section)
 }
 
-func (m *Meta) IsLocked(section sectionFlag) bool {
+func (m *Meta) IsLocked(section Section) bool {
 	return m.unlockedSections&byte(section) == 0
 }
 

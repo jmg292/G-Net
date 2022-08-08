@@ -1,9 +1,9 @@
 package meta
 
-type sectionFlag byte
+type Section byte
 
 const (
-	IndexSection sectionFlag = 1 << iota
+	IndexSection Section = 1 << iota
 	SaltSection
 	AdminSlotSection
 	SigningKeySlotSection
@@ -19,8 +19,8 @@ type Meta struct {
 	modifiedSections byte
 }
 
-func New(path string) *Meta {
-	return &Meta{path: path}
+func New(path string) Meta {
+	return Meta{path: path}
 }
 
 func (m *Meta) Path() string {
