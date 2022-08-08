@@ -14,13 +14,10 @@ type Storage interface {
 	// Management
 	Open() error
 	Unlock([]byte) error
-	ManagementKey() ([]byte, error)
-	KeyEncryptionKey() ([]byte, error)
 	Lock() error
 	Close() error
 
 	// Key lifecycle
-	DestroyKey(keyring.KeySlot) error
 	CreateKey(keyring.SupportedKeyType, keyring.KeySlot) error
 
 	// Key retrieval

@@ -1,6 +1,7 @@
 package file
 
 import (
+	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/file/adminslot"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/file/index"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/file/meta"
@@ -34,5 +35,5 @@ func New(path string, pin []byte) (*fileKeyStore, error) {
 		return nil, err
 	}
 	defer handle.Close()
-
+	return nil, gnet.ErrorNotYetImplemented
 }
