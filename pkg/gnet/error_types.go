@@ -6,43 +6,43 @@ func (e ApplicationError) Error() string {
 	return string(e)
 }
 
-type KeystoreError ApplicationError
+type KeystoreError string
 
 func (e KeystoreError) Error() string {
 	return string(e)
 }
 
-type ItemNotFound ApplicationError
+type ItemNotFound string
 
 func (e ItemNotFound) Error() string {
 	return string(e)
 }
 
-type ValidationError ApplicationError
+type ValidationError string
 
 func (e ValidationError) Error() string {
 	return string(e)
 }
 
-type CryptoError ValidationError
+type CryptoError string
 
 func (e CryptoError) Error() string {
 	return string(e)
 }
 
-type TraceryError ApplicationError
+type TraceryError string
 
 func (e TraceryError) Error() string {
 	return string(e)
 }
 
-type ManifestError TraceryError
+type ManifestError string
 
 func (e ManifestError) Error() string {
 	return string(e)
 }
 
-type SequencingError TraceryError
+type SequencingError string
 
 func (e SequencingError) Error() string {
 	return string(e)
