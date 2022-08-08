@@ -2,7 +2,6 @@ package gnet
 
 const (
 	ErrorNotYetImplemented ApplicationError = "not yet implemented"
-	ErrorInvalidPIN        ApplicationError = "invalid pin"
 )
 
 const (
@@ -12,10 +11,14 @@ const (
 )
 
 const (
-	ErrorInvalidKeySlot                 KeystoreError = "invalid key slot"
 	ErrorUnsupportedAlgorithmForKeySlot KeystoreError = "unsupported algorithm for key slot"
+	ErrorExportNotAllowed               KeystoreError = "export not allowed"
+	ErrorImportNotAllowed               KeystoreError = "import not allowed"
 	ErrorKeyAlreadyExists               KeystoreError = "key already exists"
 	ErrorFileAlreadyExists              KeystoreError = "file already exists"
+	ErrorUnableToOpenKeystore           KeystoreError = "unable to open keystore"
+	ErrorKeystoreNotFound               KeystoreError = "keystore not found"
+	ErrorKeystoreLocked                 KeystoreError = "keystore is locked"
 )
 
 const (
@@ -26,6 +29,9 @@ const (
 	ErrorInvalidSigningKey    ValidationError = "invalid signing key"
 	ErrorInvalidPrivateKey    ValidationError = "invalid private key"
 	ErrorInvalidPublicKey     ValidationError = "invalid public key"
+	ErrorInvalidPIN           ValidationError = "invalid pin"
+	ErrorInvalidKeySlot       ValidationError = "invalid key slot"
+	ErrorInvalidHandle        ValidationError = "invalid handle"
 )
 
 const (
