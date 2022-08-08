@@ -20,6 +20,10 @@ func (key *X25519PrivateKey) Bytes() []byte {
 	return append(key.private[:], key.public[:]...)
 }
 
+func (key *X25519PrivateKey) PublicBytes() []byte {
+	return key.public[:]
+}
+
 func (key *X25519PrivateKey) PublicKey() crypto.PublicKey {
 	return &X25519PublicKey{
 		public: &key.public,
@@ -47,6 +51,13 @@ func (key *X25519PublicKey) Equal(x crypto.PublicKey) (equal bool) {
 		equal = subtle.ConstantTimeCompare(key.Bytes(), unwrapped.Bytes()) == 1
 	}
 	return
+}
+
+func NewX25519PrivateKey(seed []byte) *X25519PrivateKey {
+	var key X25519PrivateKey
+	subtle.ConstantTimeCopy(1, seed, key.private[:])
+	x25519.KeyGen(&key.public, &key.private)
+	return &key
 }
 
 func GenerateX25519KeyPair() (*X25519PublicKey, *X25519PrivateKey) {
