@@ -32,6 +32,7 @@ const (
 	ErrorInvalidPIN           ValidationError = "invalid pin"
 	ErrorInvalidKeySlot       ValidationError = "invalid key slot"
 	ErrorInvalidHandle        ValidationError = "invalid handle"
+	ErrorInvalidCharacter     ValidationError = "invalid character: %s"
 )
 
 const (
