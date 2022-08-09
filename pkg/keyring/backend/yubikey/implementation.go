@@ -25,8 +25,11 @@ func (y *yubikeyStorageBackend) Open() (err error) {
 }
 
 func (y *yubikeyStorageBackend) Unlock(pin []byte) (err error) {
-	if err = y.assertOpen(); err == nil {
-		y.metadata, err = y.handle.Metadata(string(pin))
+	if handle, e := y.getHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
+		y.metadata, err = handle.Metadata(string(pin))
 	}
 	return
 }
@@ -40,7 +43,10 @@ func (y *yubikeyStorageBackend) Lock() (err error) {
 
 func (y *yubikeyStorageBackend) Close() (err error) {
 	y.Lock()
-	if err = y.assertOpen(); err == nil {
+	if _, e := y.getHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
 		err = y.handle.Close()
 		y.handle = nil
 	}
@@ -69,13 +75,16 @@ func (y *yubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keys
 }
 
 func (y *yubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
-	if err = y.assertOpenAndUnlocked(); err == nil {
+	if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
 		if slot, e := convertToPivSlot(keyslot); e != nil {
 			err = e
 		} else if public, e := y.GetPublicKey(keyslot); e != nil {
 			err = e
 		} else {
-			key, err = y.handle.PrivateKey(slot, public, piv.KeyAuth{PIN: string(y.metadata.ManagementKey[:])})
+			key, err = handle.PrivateKey(slot, public, piv.KeyAuth{PIN: string(managementKey[:])})
 		}
 	}
 	return
@@ -122,19 +131,25 @@ func (*yubikeyStorageBackend) PutPublicBytes(_ []byte, _ keyring.KeySlot, _ bool
 }
 
 func (y *yubikeyStorageBackend) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
-	if err = y.assertOpen(); err == nil {
+	if handle, e := y.getHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
 		if slot, e := convertToPivSlot(keyslot); e != nil {
 			err = e
 		} else {
-			cert, err = y.handle.Attest(slot)
+			cert, err = handle.Attest(slot)
 		}
 	}
 	return
 }
 
 func (y *yubikeyStorageBackend) AttestationCertificate() (cert *x509.Certificate, err error) {
-	if err = y.assertOpen(); err == nil {
-		cert, err = y.handle.AttestationCertificate()
+	if handle, e := y.getHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
+		cert, err = handle.AttestationCertificate()
 	}
 	return
 }

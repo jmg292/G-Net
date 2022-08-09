@@ -13,8 +13,11 @@ func (y *yubikeyStorageBackend) generateKey(slot piv.Slot, alg piv.Algorithm) (e
 		PINPolicy:   piv.PINPolicyAlways,
 		TouchPolicy: piv.TouchPolicyAlways,
 	}
-	if err = y.assertOpenAndUnlocked(); err == nil {
-		_, err = y.handle.GenerateKey(*y.metadata.ManagementKey, slot, keyTemplate)
+	if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
+		_, err = handle.GenerateKey(*managementKey, slot, keyTemplate)
 	}
 	return
 }
@@ -34,14 +37,17 @@ func (y *yubikeyStorageBackend) storeEncryptionKey(public x25519PublicBytes) (er
 		PINPolicy:   piv.PINPolicyAlways,
 		TouchPolicy: piv.TouchPolicyAlways,
 	}
-	if err = y.assertOpenAndUnlocked(); err != nil {
-		// This branch intentionally left blank :O
-	} else if slot1, ok := piv.RetiredKeyManagementSlot(0x95); !ok {
-		err = gnet.ErrorInvalidKeySlot
-	} else if slot2, ok := piv.RetiredKeyManagementSlot(0x94); !ok {
-		err = gnet.ErrorInvalidKeySlot
-	} else if err = y.handle.SetPrivateKeyInsecure(*y.metadata.ManagementKey, slot1, public[:24], keyPolicy); err == nil {
-		err = y.handle.SetPrivateKeyInsecure(*y.metadata.ManagementKey, slot2, public[24:], keyPolicy)
+	if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
+		if slot1, ok := piv.RetiredKeyManagementSlot(0x95); !ok {
+			err = gnet.ErrorInvalidKeySlot
+		} else if slot2, ok := piv.RetiredKeyManagementSlot(0x94); !ok {
+			err = gnet.ErrorInvalidKeySlot
+		} else if err = handle.SetPrivateKeyInsecure(*managementKey, slot1, public[:24], keyPolicy); err == nil {
+			err = handle.SetPrivateKeyInsecure(*managementKey, slot2, public[24:], keyPolicy)
+		}
 	}
 	return
 }
