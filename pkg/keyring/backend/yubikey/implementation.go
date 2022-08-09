@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"crypto/x509"
 
+	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
@@ -24,17 +25,26 @@ func (y *YubikeyStorageBackend) Open() (err error) {
 	return
 }
 
-func (y *YubikeyStorageBackend) Unlock(pin []byte) (err error) {
+func (y *YubikeyStorageBackend) Unlock(pin *memguard.Enclave) (err error) {
+	y.pin = pin
 	if handle, e := y.getHandle(); e != nil {
 		err = e
 	} else {
 		defer y.releaseHandle()
-		y.metadata, err = handle.Metadata(string(pin))
+		if pin, e := y.getPin(); e != nil {
+			err = e
+		} else {
+			y.metadata, err = handle.Metadata(pin.String())
+			if err != nil {
+				y.Lock()
+			}
+		}
 	}
 	return
 }
 
 func (y *YubikeyStorageBackend) Lock() (err error) {
+	err = y.clearPin()
 	if y.metadata != nil {
 		y.metadata = nil
 	}
@@ -81,17 +91,16 @@ func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keys
 }
 
 func (y *YubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
-	if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
-		err = e
-	} else {
-		defer y.releaseHandle()
-		if slot, e := convertToPivSlot(keyslot); e != nil {
-			err = e
-		} else if public, e := y.GetPublicKey(keyslot); e != nil {
+	if slot, e := convertToPivSlot(keyslot); e == nil {
+		if publickey, e := y.GetPublicKey(keyslot); e != nil {
 			err = e
 		} else {
-			key, err = handle.PrivateKey(slot, public, piv.KeyAuth{PIN: string(managementKey[:])})
+			key, err = y.getPivPrivateKey(slot, publickey)
 		}
+	} else if e == gnet.ErrorInvalidKeySlot && keyslot == keyring.EncryptionKeySlot {
+
+	} else {
+		err = e
 	}
 	return
 }
@@ -103,8 +112,10 @@ func (*YubikeyStorageBackend) GetPrivateBytes(_ keyring.KeySlot) ([]byte, error)
 func (y *YubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
 	if keyslot == keyring.EncryptionKeySlot {
 		err = gnet.ErrorNotYetImplemented
-	} else if cert, e := y.Attest(keyslot); e != nil {
+	} else if cert, e := y.Attest(keyslot); e != nil && e != piv.ErrNotFound {
 		err = e
+	} else if e != nil && e == piv.ErrNotFound {
+		err = gnet.ErrorKeyNotFound
 	} else {
 		key = cert.PublicKey
 	}

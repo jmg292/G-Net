@@ -3,17 +3,23 @@ package yubikey
 import (
 	"sync"
 
+	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
+	"github.com/jmg292/G-Net/pkg/keyring/key"
 )
 
 type YubikeyStorageBackend struct {
-	name     string
-	metadata *piv.Metadata
-	handle   *piv.YubiKey
-	mutex    sync.Mutex
+	name          string
+	pin           *memguard.Enclave
+	metadata      *piv.Metadata
+	handle        *piv.YubiKey
+	encryptionKey *key.X25519PrivateKey
+	mutex         sync.Mutex
 }
 
 func New() *YubikeyStorageBackend {
+	// Safely terminate in case of an interrupt signal
+	memguard.CatchInterrupt()
 	return &YubikeyStorageBackend{}
 }
 
