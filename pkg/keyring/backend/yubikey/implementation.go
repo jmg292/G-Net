@@ -64,6 +64,12 @@ func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keys
 		} else {
 			err = y.storeEncryptionKey(pubkey)
 		}
+	} else if keyslot == keyring.ManagementKeySlot && keytype != keyring.ManagementKey {
+		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
+	} else if keyslot != keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
+		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
+	} else if keyslot == keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
+		err = y.generateManagementKey()
 	} else if slot, e := convertToPivSlot(keyslot); e != nil {
 		err = e
 	} else if alg, e := convertToPivAlg(keytype); e != nil {
