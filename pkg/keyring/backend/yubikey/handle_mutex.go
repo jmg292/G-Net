@@ -17,8 +17,9 @@ func (y *YubikeyStorageBackend) releaseHandle() {
 func (y *YubikeyStorageBackend) getHandleAndManagementKey() (handle *piv.YubiKey, managementKey *[24]byte, err error) {
 	if err = y.assertOpenAndUnlocked(); err == nil {
 		if handle, err = y.getHandle(); err != nil {
-			handle = nil
 			y.releaseHandle()
+		} else if y.metadata == nil || y.metadata.ManagementKey == nil {
+			managementKey = &piv.DefaultManagementKey
 		} else {
 			managementKey = y.metadata.ManagementKey
 		}
