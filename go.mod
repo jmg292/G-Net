@@ -11,6 +11,11 @@ require (
 )
 
 require (
+	github.com/awnumar/memcall v0.1.2 // indirect
+	github.com/awnumar/memguard v0.22.3 // indirect
+)
+
+require (
 	github.com/aead/ecdh v0.2.0 // indirect
 	github.com/cloudflare/circl v1.2.0
 	golang.org/x/net v0.0.0-20220728211354-c7608f3a8462 // indirect
