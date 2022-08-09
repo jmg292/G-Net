@@ -34,8 +34,14 @@ func newX25519PublicBytes(b []byte) (publicbytes x25519PublicBytes, err error) {
 }
 
 func (y *YubikeyStorageBackend) deriveX25519PrivateKey(salt []byte) (private *key.X25519PrivateKey, err error) {
+	var managementkey *[24]byte
 	if err = y.assertOpenAndUnlocked(); err == nil {
-		private = key.NewX25519PrivateKey(kdf.DeriveKey(y.metadata.ManagementKey[:], salt))
+		if y.metadata == nil || y.metadata.ManagementKey == nil {
+			managementkey = &piv.DefaultManagementKey
+		} else {
+			managementkey = y.metadata.ManagementKey
+		}
+		private = key.NewX25519PrivateKey(kdf.DeriveKey(managementkey[:], salt))
 	}
 	return
 }
