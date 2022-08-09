@@ -14,6 +14,7 @@ const (
 	EC256Key
 	EC384Key
 	X25519Key
+	ManagementKey
 )
 
 type KeySlot uint8
@@ -23,13 +24,15 @@ const (
 	AuthenticationKeySlot
 	EncryptionKeySlot
 	DeviceKeySlot
+	ManagementKeySlot
 )
 
 type KeySizeBytes int
 
 const (
-	EC256KeySize     KeySizeBytes = 32
-	EC384KeySize     KeySizeBytes = 48
-	X25519KeySize    KeySizeBytes = 32
-	SymmetricKeySize KeySizeBytes = 32
+	EC256KeySize      KeySizeBytes = 32
+	EC384KeySize      KeySizeBytes = 48
+	X25519KeySize     KeySizeBytes = 32
+	SymmetricKeySize  KeySizeBytes = 32
+	ManagementKeySize KeySizeBytes = 24
 )
