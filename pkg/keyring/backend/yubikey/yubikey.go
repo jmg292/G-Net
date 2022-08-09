@@ -29,6 +29,29 @@ func (y *YubikeyStorageBackend) Reset() (err error) {
 	} else {
 		defer y.releaseHandle()
 		err = handle.Reset()
+		y.Lock()
+	}
+	return
+}
+
+func (y *YubikeyStorageBackend) UpdatePIN(newPin *memguard.Enclave) (err error) {
+	var oldPin *memguard.LockedBuffer
+	if oldPin, err = y.getPin(); err != nil {
+		oldPin = memguard.NewBufferFromBytes([]byte(piv.DefaultPIN))
+	}
+	defer oldPin.Destroy()
+	if handle, e := y.getHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseHandle()
+		if pin, e := newPin.Open(); e != nil {
+			err = e
+		} else {
+			defer pin.Destroy()
+			if err = handle.SetPIN(oldPin.String(), pin.String()); err != nil {
+				y.pin = newPin
+			}
+		}
 	}
 	return
 }
