@@ -9,11 +9,11 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (y *yubikeyStorageBackend) Name() string {
+func (y *YubikeyStorageBackend) Name() string {
 	return y.name
 }
 
-func (y *yubikeyStorageBackend) Open() (err error) {
+func (y *YubikeyStorageBackend) Open() (err error) {
 	if y.name, err = y.getCardName(); err == nil {
 		if y.handle, err = piv.Open(y.name); err == nil {
 			if y.handle == nil {
@@ -24,7 +24,7 @@ func (y *yubikeyStorageBackend) Open() (err error) {
 	return
 }
 
-func (y *yubikeyStorageBackend) Unlock(pin []byte) (err error) {
+func (y *YubikeyStorageBackend) Unlock(pin []byte) (err error) {
 	if handle, e := y.getHandle(); e != nil {
 		err = e
 	} else {
@@ -34,14 +34,14 @@ func (y *yubikeyStorageBackend) Unlock(pin []byte) (err error) {
 	return
 }
 
-func (y *yubikeyStorageBackend) Lock() (err error) {
+func (y *YubikeyStorageBackend) Lock() (err error) {
 	if y.metadata != nil {
 		y.metadata = nil
 	}
 	return
 }
 
-func (y *yubikeyStorageBackend) Close() (err error) {
+func (y *YubikeyStorageBackend) Close() (err error) {
 	y.Lock()
 	if _, e := y.getHandle(); e != nil {
 		err = e
@@ -53,7 +53,7 @@ func (y *yubikeyStorageBackend) Close() (err error) {
 	return
 }
 
-func (y *yubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keyslot keyring.KeySlot) (err error) {
+func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keyslot keyring.KeySlot) (err error) {
 	if keyslot == keyring.EncryptionKeySlot && keytype != keyring.X25519Key {
 		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
 	} else if keyslot != keyring.EncryptionKeySlot && keytype == keyring.X25519Key {
@@ -74,7 +74,7 @@ func (y *yubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keys
 	return
 }
 
-func (y *yubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
+func (y *YubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
 	if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
 		err = e
 	} else {
@@ -90,11 +90,11 @@ func (y *yubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key cryp
 	return
 }
 
-func (*yubikeyStorageBackend) GetPrivateBytes(_ keyring.KeySlot) ([]byte, error) {
+func (*YubikeyStorageBackend) GetPrivateBytes(_ keyring.KeySlot) ([]byte, error) {
 	return nil, gnet.ErrorExportNotAllowed
 }
 
-func (y *yubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
+func (y *YubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
 	if keyslot == keyring.EncryptionKeySlot {
 		err = gnet.ErrorNotYetImplemented
 	} else if cert, e := y.Attest(keyslot); e != nil {
@@ -105,7 +105,7 @@ func (y *yubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypt
 	return
 }
 
-func (y *yubikeyStorageBackend) GetPublicBytes(keyslot keyring.KeySlot) (keyBytes []byte, err error) {
+func (y *YubikeyStorageBackend) GetPublicBytes(keyslot keyring.KeySlot) (keyBytes []byte, err error) {
 	if _, e := y.GetPublicKey(keyslot); e != nil {
 		err = e
 	} else {
@@ -114,23 +114,23 @@ func (y *yubikeyStorageBackend) GetPublicBytes(keyslot keyring.KeySlot) (keyByte
 	return
 }
 
-func (*yubikeyStorageBackend) PutPrivateKey(_ crypto.PrivateKey, _ keyring.KeySlot) error {
+func (*YubikeyStorageBackend) PutPrivateKey(_ crypto.PrivateKey, _ keyring.KeySlot) error {
 	return gnet.ErrorImportNotAllowed
 }
 
-func (*yubikeyStorageBackend) PutPrivateBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
+func (*YubikeyStorageBackend) PutPrivateBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
 	return gnet.ErrorImportNotAllowed
 }
 
-func (*yubikeyStorageBackend) PutPublicKey(_ crypto.PublicKey, _ keyring.KeySlot, _ bool) error {
+func (*YubikeyStorageBackend) PutPublicKey(_ crypto.PublicKey, _ keyring.KeySlot, _ bool) error {
 	return gnet.ErrorImportNotAllowed
 }
 
-func (*yubikeyStorageBackend) PutPublicBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
+func (*YubikeyStorageBackend) PutPublicBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
 	return gnet.ErrorImportNotAllowed
 }
 
-func (y *yubikeyStorageBackend) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
+func (y *YubikeyStorageBackend) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
 	if handle, e := y.getHandle(); e != nil {
 		err = e
 	} else {
@@ -144,7 +144,7 @@ func (y *yubikeyStorageBackend) Attest(keyslot keyring.KeySlot) (cert *x509.Cert
 	return
 }
 
-func (y *yubikeyStorageBackend) AttestationCertificate() (cert *x509.Certificate, err error) {
+func (y *YubikeyStorageBackend) AttestationCertificate() (cert *x509.Certificate, err error) {
 	if handle, e := y.getHandle(); e != nil {
 		err = e
 	} else {

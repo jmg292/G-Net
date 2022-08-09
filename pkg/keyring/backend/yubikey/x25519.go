@@ -21,7 +21,7 @@ func (p *x25519PublicBytes) GenerateSalt() {
 	rand.Read(p.Salt())
 }
 
-func (y *yubikeyStorageBackend) deriveX25519PrivateKey(salt []byte) (private key.X25519PrivateKey, err error) {
+func (y *YubikeyStorageBackend) deriveX25519PrivateKey(salt []byte) (private key.X25519PrivateKey, err error) {
 	if err = y.assertOpenAndUnlocked(); err == nil {
 		private = *key.NewX25519PrivateKey(kdf.DeriveKey(y.metadata.ManagementKey[:], salt))
 	}

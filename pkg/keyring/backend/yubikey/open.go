@@ -7,7 +7,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-func (y *yubikeyStorageBackend) getCardName() (name string, err error) {
+func (y *YubikeyStorageBackend) getCardName() (name string, err error) {
 	if names, e := piv.Cards(); err != nil {
 		err = e
 	} else {
@@ -24,14 +24,14 @@ func (y *yubikeyStorageBackend) getCardName() (name string, err error) {
 	return
 }
 
-func (y *yubikeyStorageBackend) assertOpen() (err error) {
+func (y *YubikeyStorageBackend) assertOpen() (err error) {
 	if y.handle == nil {
 		err = gnet.ErrorInvalidHandle
 	}
 	return
 }
 
-func (y *yubikeyStorageBackend) assertOpenAndUnlocked() (err error) {
+func (y *YubikeyStorageBackend) assertOpenAndUnlocked() (err error) {
 	if err = y.assertOpen(); err == nil {
 		if y.metadata == nil {
 			err = gnet.ErrorKeystoreLocked

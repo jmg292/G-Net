@@ -7,7 +7,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-func (y *yubikeyStorageBackend) generateKey(slot piv.Slot, alg piv.Algorithm) (err error) {
+func (y *YubikeyStorageBackend) generateKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 	keyTemplate := piv.Key{
 		Algorithm:   alg,
 		PINPolicy:   piv.PINPolicyAlways,
@@ -22,7 +22,7 @@ func (y *yubikeyStorageBackend) generateKey(slot piv.Slot, alg piv.Algorithm) (e
 	return
 }
 
-func (y *yubikeyStorageBackend) generateEncryptionKey() (publicBytes x25519PublicBytes, err error) {
+func (y *YubikeyStorageBackend) generateEncryptionKey() (publicBytes x25519PublicBytes, err error) {
 	publicBytes.GenerateSalt()
 	if privateKey, e := y.deriveX25519PrivateKey(publicBytes.Salt()); e != nil {
 		err = e
@@ -32,7 +32,7 @@ func (y *yubikeyStorageBackend) generateEncryptionKey() (publicBytes x25519Publi
 	return
 }
 
-func (y *yubikeyStorageBackend) storeEncryptionKey(public x25519PublicBytes) (err error) {
+func (y *YubikeyStorageBackend) storeEncryptionKey(public x25519PublicBytes) (err error) {
 	keyPolicy := piv.Key{
 		PINPolicy:   piv.PINPolicyAlways,
 		TouchPolicy: piv.TouchPolicyAlways,
