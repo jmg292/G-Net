@@ -23,19 +23,3 @@ func (y *YubikeyStorageBackend) getCardName() (name string, err error) {
 	}
 	return
 }
-
-func (y *YubikeyStorageBackend) assertOpen() (err error) {
-	if y.handle == nil {
-		err = gnet.ErrorInvalidHandle
-	}
-	return
-}
-
-func (y *YubikeyStorageBackend) assertOpenAndUnlocked() (err error) {
-	if err = y.assertOpen(); err == nil {
-		if y.metadata == nil {
-			err = gnet.ErrorKeystoreLocked
-		}
-	}
-	return
-}

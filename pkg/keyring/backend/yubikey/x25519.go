@@ -20,6 +20,12 @@ func (p *x25519PublicBytes) Key() []byte {
 	return p[16:]
 }
 
+func (p *x25519PublicBytes) AsManagementKeys() (key1 [24]byte, key2 [24]byte) {
+	copy(key1[:], p[:24])
+	copy(key2[:], p[24:])
+	return
+}
+
 func (p *x25519PublicBytes) GenerateSalt() {
 	rand.Read(p.Salt())
 }
@@ -47,12 +53,12 @@ func (y *YubikeyStorageBackend) deriveX25519PrivateKey(salt []byte) (private *ke
 }
 
 func (y *YubikeyStorageBackend) getX25519KeySlots() (slot1 piv.Slot, slot2 piv.Slot, err error) {
-	if slot0x95, ok := piv.RetiredKeyManagementSlot(0x95); !ok {
+	if slot0x82, ok := piv.RetiredKeyManagementSlot(0x82); !ok {
 		err = gnet.ErrorInvalidKeySlot
-	} else if slot0x94, ok := piv.RetiredKeyManagementSlot(0x94); !ok {
+	} else if slot0x83, ok := piv.RetiredKeyManagementSlot(0x83); !ok {
 		err = gnet.ErrorInvalidKeySlot
 	} else {
-		slot1, slot2 = slot0x94, slot0x95
+		slot1, slot2 = slot0x82, slot0x83
 	}
 	return
 }

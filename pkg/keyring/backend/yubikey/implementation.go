@@ -64,7 +64,9 @@ func (y *YubikeyStorageBackend) Close() (err error) {
 }
 
 func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keyslot keyring.KeySlot) (err error) {
-	if keyslot == keyring.EncryptionKeySlot && keytype != keyring.X25519Key {
+	if empty, e := y.assertKeySlotIsEmpty(keyslot); e != nil {
+		err = e
+	} else if keyslot == keyring.EncryptionKeySlot && keytype != keyring.X25519Key {
 		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
 	} else if keyslot != keyring.EncryptionKeySlot && keytype == keyring.X25519Key {
 		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
@@ -84,6 +86,8 @@ func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keys
 		err = e
 	} else if alg, e := convertToPivAlg(keytype); e != nil {
 		err = e
+	} else if !empty {
+		err = gnet.ErrorKeyAlreadyExists
 	} else {
 		err = y.generateKey(slot, alg)
 	}
@@ -98,7 +102,7 @@ func (y *YubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key cryp
 			key, err = y.getPivPrivateKey(slot, publickey)
 		}
 	} else if e == gnet.ErrorInvalidKeySlot && keyslot == keyring.EncryptionKeySlot {
-
+		key, err = y.getX25519PrivateKey()
 	} else {
 		err = e
 	}
@@ -111,7 +115,7 @@ func (*YubikeyStorageBackend) GetPrivateBytes(_ keyring.KeySlot) ([]byte, error)
 
 func (y *YubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
 	if keyslot == keyring.EncryptionKeySlot {
-		err = gnet.ErrorNotYetImplemented
+		key, err = y.getX25519PublicKey()
 	} else if cert, e := y.Attest(keyslot); e != nil && e != piv.ErrNotFound {
 		err = e
 	} else if e != nil && e == piv.ErrNotFound {

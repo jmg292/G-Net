@@ -16,11 +16,17 @@ func (y *YubikeyStorageBackend) generateManagementKey() (err error) {
 		err = gnet.ErrorKeyAlreadyExists
 	} else if handle, managementKey, e := y.getHandleAndManagementKey(); e != nil {
 		err = e
-	} else {
+	} else if e == nil {
 		defer y.releaseHandle()
+	} else if pin, e := y.getPin(); e != nil {
+		err = e
+	} else {
+		defer pin.Destroy()
 		var newKey [24]byte
 		if _, err = io.ReadFull(rand.Reader, newKey[:]); err == nil {
-			err = handle.SetManagementKey(*managementKey, newKey)
+			if err = handle.SetManagementKey(*managementKey, newKey); err == nil {
+				err = handle.SetMetadata(newKey, &piv.Metadata{ManagementKey: &newKey})
+			}
 		}
 	}
 	return
