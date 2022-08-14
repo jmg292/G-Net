@@ -6,7 +6,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
 
-func newOpenAndUnlockedYubikey(pin []byte, t *testing.T) (yk *Yubikey, err error) {
+func newOpenAndUnlockedYubikey(pin []byte, t *testing.T) (yk *yubikey.Yubikey, err error) {
 	if yk, err = yubikey.New(); err != nil {
 		t.Errorf("failed to get new yubikey: %s", err)
 	} else if err = yk.Open(); err != nil {
