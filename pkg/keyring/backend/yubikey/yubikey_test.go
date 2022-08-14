@@ -22,7 +22,13 @@ func TestCreateKey(t *testing.T) {
 	if yk, err := newOpenAndUnlockedYubikey([]byte(piv.DefaultPIN), t); err == nil {
 		defer yk.Close()
 		for _, params := range keyGenTestParams {
-			if err := yk.CreateKey()
+			if err := yk.CreateKey(params.Slot, params.Type); err != nil && params.ExpectSuccess {
+				t.Errorf("KeyGen of type %d on slot %d failed with error: %s (expected success)", params.Type, params.Slot, err)
+			} else if err == nil && !params.ExpectSuccess {
+				t.Errorf("KeyGen of type %d on slot %d succeeded. (expected failure)", params.Type, params.Slot)
+			} else {
+				t.Logf("KeyGen of type %d on slot %d succeeded!", params.Type, params.Slot)
+			}
 		}
 	}
 }
