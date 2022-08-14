@@ -7,8 +7,6 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
 
-const pin []byte = []byte(piv.DefaultPIN)
-
 func TestGetName(t *testing.T) {
 	if yk, err := yubikey.New(); err != nil {
 		t.Errorf("failed to open yubikey: %s", err)
@@ -22,6 +20,9 @@ func TestGetName(t *testing.T) {
 
 func TestCreateKey(t *testing.T) {
 	if yk, err := newOpenAndUnlockedYubikey([]byte(piv.DefaultPIN), t); err == nil {
-
+		defer yk.Close()
+		for _, params := range keyGenTestParams {
+			if err := yk.CreateKey()
+		}
 	}
 }
