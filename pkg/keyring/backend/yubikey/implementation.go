@@ -4,173 +4,66 @@ import (
 	"crypto"
 	"crypto/x509"
 
-	"github.com/awnumar/memguard"
-	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (y *YubikeyStorageBackend) Name() string {
-	return y.name
+func (y *Yubikey) Name() (string, error) {
+	return "", gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) Open() (err error) {
-	if y.name, err = y.getCardName(); err == nil {
-		if y.handle, err = piv.Open(y.name); err == nil {
-			if y.handle == nil {
-				err = gnet.ErrorUnableToOpenKeystore
-			}
-		}
-	}
-	return
+func (y *Yubikey) Open() error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) Unlock(pin *memguard.Enclave) (err error) {
-	y.pin = pin
-	if handle, e := y.getHandle(); e != nil {
-		err = e
-	} else {
-		defer y.releaseHandle()
-		if pin, e := y.getPin(); e != nil {
-			err = e
-		} else {
-			y.metadata, err = handle.Metadata(pin.String())
-			if err != nil {
-				y.Lock()
-			}
-		}
-	}
-	return
+func (y *Yubikey) Unlock(pin []byte) error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) Lock() (err error) {
-	err = y.clearPin()
-	if y.metadata != nil {
-		y.metadata = nil
-	}
-	return
+func (y *Yubikey) Lock() error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) Close() (err error) {
-	y.Lock()
-	if _, e := y.getHandle(); e != nil {
-		err = e
-	} else {
-		defer y.releaseHandle()
-		err = y.handle.Close()
-		y.handle = nil
-	}
-	return
+func (y *Yubikey) Close() error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) CreateKey(keytype keyring.SupportedKeyType, keyslot keyring.KeySlot) (err error) {
-	if empty, e := y.assertKeySlotIsEmpty(keyslot); e != nil {
-		err = e
-	} else if keyslot == keyring.EncryptionKeySlot && keytype != keyring.X25519Key {
-		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
-	} else if keyslot != keyring.EncryptionKeySlot && keytype == keyring.X25519Key {
-		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
-	} else if keyslot == keyring.EncryptionKeySlot && keytype == keyring.X25519Key {
-		if pubkey, e := y.generateEncryptionKey(); e != nil {
-			err = e
-		} else {
-			err = y.storeEncryptionKey(pubkey)
-		}
-	} else if keyslot == keyring.ManagementKeySlot && keytype != keyring.ManagementKey {
-		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
-	} else if keyslot != keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
-		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
-	} else if keyslot == keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
-		err = y.generateManagementKey()
-	} else if slot, e := convertToPivSlot(keyslot); e != nil {
-		err = e
-	} else if alg, e := convertToPivAlg(keytype); e != nil {
-		err = e
-	} else if !empty {
-		err = gnet.ErrorKeyAlreadyExists
-	} else {
-		err = y.generateKey(slot, alg)
-	}
-	return
+func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
-	if slot, e := convertToPivSlot(keyslot); e == nil {
-		if publickey, e := y.GetPublicKey(keyslot); e != nil {
-			err = e
-		} else {
-			key, err = y.getPivPrivateKey(slot, publickey)
-		}
-	} else if e == gnet.ErrorInvalidKeySlot && keyslot == keyring.EncryptionKeySlot {
-		key, err = y.getX25519PrivateKey()
-	} else {
-		err = e
-	}
-	return
+func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (crypto.PrivateKey, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (*YubikeyStorageBackend) GetPrivateBytes(_ keyring.KeySlot) ([]byte, error) {
-	return nil, gnet.ErrorExportNotAllowed
+func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (crypto.PublicKey, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
-	if keyslot == keyring.EncryptionKeySlot {
-		key, err = y.getX25519PublicKey()
-	} else if cert, e := y.Attest(keyslot); e != nil && e != piv.ErrNotFound {
-		err = e
-	} else if e != nil && e == piv.ErrNotFound {
-		err = gnet.ErrorKeyNotFound
-	} else {
-		key = cert.PublicKey
-	}
-	return
+func (y *Yubikey) GetPublicBytes(keyslot keyring.KeySlot) ([]byte, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) GetPublicBytes(keyslot keyring.KeySlot) (keyBytes []byte, err error) {
-	if _, e := y.GetPublicKey(keyslot); e != nil {
-		err = e
-	} else {
-		err = gnet.ErrorNotYetImplemented
-	}
-	return
+func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (*YubikeyStorageBackend) PutPrivateKey(_ crypto.PrivateKey, _ keyring.KeySlot) error {
-	return gnet.ErrorImportNotAllowed
+func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.CertPool) error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (*YubikeyStorageBackend) PutPrivateBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
-	return gnet.ErrorImportNotAllowed
+func (y *Yubikey) CreateCSR(keyslot keyring.KeySlot) (*x509.Certificate, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (*YubikeyStorageBackend) PutPublicKey(_ crypto.PublicKey, _ keyring.KeySlot, _ bool) error {
-	return gnet.ErrorImportNotAllowed
+func (y *Yubikey) SignCSR(keyslot keyring.KeySlot, csr *x509.CertificateRequest) error {
+	return gnet.ErrorNotYetImplemented
 }
 
-func (*YubikeyStorageBackend) PutPublicBytes(_ []byte, _ keyring.KeySlot, _ bool) error {
-	return gnet.ErrorImportNotAllowed
+func (y *Yubikey) AttestationCertificate() (*x509.Certificate, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (y *YubikeyStorageBackend) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
-	if handle, e := y.getHandle(); e != nil {
-		err = e
-	} else {
-		defer y.releaseHandle()
-		if slot, e := convertToPivSlot(keyslot); e != nil {
-			err = e
-		} else {
-			cert, err = handle.Attest(slot)
-		}
-	}
-	return
-}
-
-func (y *YubikeyStorageBackend) AttestationCertificate() (cert *x509.Certificate, err error) {
-	if handle, e := y.getHandle(); e != nil {
-		err = e
-	} else {
-		defer y.releaseHandle()
-		cert, err = handle.AttestationCertificate()
-	}
-	return
+func (y *Yubikey) Attest(keyslot keyring.KeySlot) (*x509.Certificate, error) {
+	return nil, gnet.ErrorNotYetImplemented
 }

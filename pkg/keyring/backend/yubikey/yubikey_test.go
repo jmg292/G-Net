@@ -1,42 +1,27 @@
 package yubikey_test
 
 import (
-	"fmt"
 	"testing"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
+	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
 
-const resetAllowed bool = true
+const pin []byte = []byte(piv.DefaultPIN)
 
-func TestMain(m *testing.M) {
-	yk := yubikey.New()
-	if err := yk.Open(); err != nil && err != gnet.ErrorKeystoreNotFound {
-		panic(err)
-	} else if err != nil && err == gnet.ErrorKeystoreNotFound {
-		fmt.Println("Yubikey is not connected.  Skipping tests.")
+func TestGetName(t *testing.T) {
+	if yk, err := yubikey.New(); err != nil {
+		t.Errorf("failed to open yubikey: %s", err)
+	} else if name, err := yk.Name(); err != nil {
+		t.Errorf("failed to get name: %s", err)
 	} else {
-		yk.Close()
-		m.Run()
+		t.Logf("Yubikey name: %s", name)
 	}
+	return
 }
 
-func TestKeyGeneration(t *testing.T) {
-	if !resetAllowed {
-		t.Skip("Reset not authorized.")
-	} else {
-		t.Run("InvalidTypeCombinations", func(t *testing.T) {
-			tests := ResetAuthorized{Test: t, yk: yubikey.New()}
-			tests.TestInvalidKeyGeneration()
-		})
-		t.Run("ValidTypeCombinations", func(t *testing.T) {
-			tests := ResetAuthorized{Test: t, yk: yubikey.New()}
-			tests.TestValidKeyGeneration()
-		})
-		t.Run("ErrorKeyAlreadyExists", func(t *testing.T) {
-			tests := ResetAuthorized{Test: t, yk: yubikey.New()}
-			tests.TestKeyAlreadyExists()
-		})
+func TestCreateKey(t *testing.T) {
+	if yk, err := newOpenAndUnlockedYubikey([]byte(piv.DefaultPIN), t); err == nil {
+
 	}
 }
