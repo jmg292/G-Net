@@ -40,12 +40,8 @@ func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (crypto.PublicKey, error
 	return nil, gnet.ErrorNotYetImplemented
 }
 
-func (y *Yubikey) GetPublicBytes(keyslot keyring.KeySlot) ([]byte, error) {
+func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (*x509.Certificate, error) {
 	return nil, gnet.ErrorNotYetImplemented
-}
-
-func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) error {
-	return gnet.ErrorNotYetImplemented
 }
 
 func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.CertPool) error {

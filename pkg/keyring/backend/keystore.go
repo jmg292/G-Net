@@ -23,7 +23,6 @@ type Storage interface {
 	// Key retrieval
 	GetPrivateKey(keyring.KeySlot) (crypto.PrivateKey, error)
 	GetPublicKey(keyring.KeySlot) (crypto.PublicKey, error)
-	GetPublicBytes(keyring.KeySlot) ([]byte, error)
 
 	// Certificate Management
 	GetCertificate(keyring.KeySlot) error
