@@ -65,7 +65,7 @@ func TestGetPublicKey(t *testing.T) {
 	}
 }
 
-func TestGetCertiicate(t *testing.T) {
+func TestGetCertificate(t *testing.T) {
 	if yk, err := openYubikey(t); err == nil {
 		defer yk.Close()
 		for i := 0; i < 5; i++ {
