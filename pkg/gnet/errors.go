@@ -19,6 +19,7 @@ const (
 	ErrorUnableToOpenKeystore           KeystoreError = "unable to open keystore"
 	ErrorKeystoreNotFound               KeystoreError = "keystore not found"
 	ErrorKeystoreLocked                 KeystoreError = "keystore is locked"
+	ErrorKeystoreHandleClosed           KeystoreError = "keystore handle is closed"
 	ErrorResetNotAllowed                KeystoreError = "reset not allowed"
 )
 

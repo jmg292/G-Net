@@ -5,18 +5,31 @@ import (
 	"sync"
 
 	"github.com/go-piv/piv-go/piv"
+	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-func getYubikeyHandle() (handle *piv.YubiKey, err error) {
+func getYubikeyName() (name string, err error) {
 	if cards, e := piv.Cards(); e != nil {
-		e = err
+		err = e
 	} else {
-		for _, name := range cards {
-			if strings.Contains(strings.ToLower(name), "yubikey") {
-				handle, err = piv.Open(name)
+		for _, cardName := range cards {
+			if strings.Contains(strings.ToLower(cardName), "yubikey") {
+				name = cardName
 				break
 			}
 		}
+	}
+	if name == "" {
+		err = gnet.ErrorKeystoreNotFound
+	}
+	return
+}
+
+func openYubikeyHandle() (handle *piv.YubiKey, err error) {
+	if name, e := getYubikeyName(); e != nil {
+		err = e
+	} else {
+		handle, err = piv.Open(name)
 	}
 	return
 }
@@ -26,7 +39,7 @@ func New() (backend *Yubikey, err error) {
 	defer instanceMutex.Unlock()
 
 	if instance == nil {
-		if handle, e := getYubikeyHandle(); e != nil {
+		if handle, e := openYubikeyHandle(); e != nil {
 			err = e
 		} else {
 			instance = &Yubikey{

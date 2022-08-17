@@ -8,12 +8,9 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (y *Yubikey) Name() (string, error) {
-	return "", gnet.ErrorNotYetImplemented
-}
-
-func (y *Yubikey) Open() error {
-	return gnet.ErrorNotYetImplemented
+func (y *Yubikey) Name() (name string, err error) {
+	name, err = getYubikeyName()
+	return
 }
 
 func (y *Yubikey) Unlock(pin []byte) error {
