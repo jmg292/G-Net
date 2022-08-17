@@ -3,6 +3,7 @@ package yubikey
 import (
 	"sync"
 
+	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
 )
 
@@ -15,4 +16,5 @@ var (
 type Yubikey struct {
 	handle *piv.YubiKey
 	mutex  *sync.Mutex
+	pin    *memguard.Enclave
 }

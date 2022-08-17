@@ -29,12 +29,22 @@ func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKe
 	return gnet.ErrorNotYetImplemented
 }
 
-func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (crypto.PrivateKey, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
+	if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
+		key, err = y.getPrivateKey(slot)
+	} else {
+		err = e
+	}
+	return
 }
 
-func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (crypto.PublicKey, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
+	if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
+		key, err = y.getPublicKey(slot)
+	} else {
+		err = e
+	}
+	return
 }
 
 func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (*x509.Certificate, error) {
