@@ -109,6 +109,7 @@ func (y *Yubikey) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
+		defer y.releaseYubikeyHandle()
 		cert, err = handle.Attest(slot)
 	}
 	return
