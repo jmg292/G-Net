@@ -2,7 +2,6 @@ package yubikey
 
 import (
 	"crypto"
-	"crypto/x509"
 
 	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
@@ -43,14 +42,17 @@ func (y *Yubikey) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) 
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		if key, err = handle.Attest(slot); err != nil {
-			if err == piv.ErrNotFound {
+		if cert, e := handle.Attest(slot); e != nil {
+			if e == piv.ErrNotFound {
 				err = gnet.ErrorKeyNotFound
+			} else {
+				err = e
 			}
-		} else if key == nil {
+		} else if cert == nil {
 			err = gnet.ErrorKeyNotFound
+		} else {
+			key = cert.PublicKey
 		}
-		key = key.(x509.Certificate).PublicKey
 	}
 	return
 }
