@@ -43,8 +43,9 @@ func New() (backend *Yubikey, err error) {
 			err = e
 		} else {
 			instance = &Yubikey{
-				handle: handle,
-				mutex:  &sync.Mutex{},
+				handle:      handle,
+				handleMutex: &sync.Mutex{},
+				pinMutex:    &sync.Mutex{},
 			}
 		}
 	}
