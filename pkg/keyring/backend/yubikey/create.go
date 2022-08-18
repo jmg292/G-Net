@@ -13,13 +13,13 @@ func (y *Yubikey) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 		err = e
 	} else if mk, e := y.GetPrivateKey(keyring.ManagementKeySlot); e != nil {
 		err = e
-	} else if managementKey, ok := mk.([24]byte); !ok {
+	} else if managementKey, ok := mk.(*[24]byte); !ok {
 		err = gnet.ErrorInvalidManagementKey
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		_, err = handle.GenerateKey(managementKey, slot, piv.Key{
+		_, err = handle.GenerateKey(*managementKey, slot, piv.Key{
 			PINPolicy:   piv.PINPolicyAlways,
 			TouchPolicy: piv.TouchPolicyAlways,
 			Algorithm:   alg,
