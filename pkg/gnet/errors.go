@@ -31,6 +31,7 @@ const (
 	ErrorInvalidSigningKey    ValidationError = "invalid signing key"
 	ErrorInvalidPrivateKey    ValidationError = "invalid private key"
 	ErrorInvalidPublicKey     ValidationError = "invalid public key"
+	ErrorInvalidManagementKey ValidationError = "invalid management key"
 	ErrorInvalidPIN           ValidationError = "invalid pin"
 	ErrorInvalidKeySlot       ValidationError = "invalid key slot"
 	ErrorInvalidHandle        ValidationError = "invalid handle"

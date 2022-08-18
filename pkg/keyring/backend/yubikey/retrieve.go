@@ -4,9 +4,19 @@ import (
 	"crypto"
 	"crypto/x509"
 
+	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
+
+func (y *Yubikey) getPin() (pin *memguard.LockedBuffer, err error) {
+	if y.pin == nil {
+		err = gnet.ErrorKeystoreLocked
+	} else {
+		pin, err = y.pin.Open()
+	}
+	return
+}
 
 func (y *Yubikey) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {

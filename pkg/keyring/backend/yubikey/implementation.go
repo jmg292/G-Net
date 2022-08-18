@@ -25,8 +25,15 @@ func (y *Yubikey) Close() error {
 	return gnet.ErrorNotYetImplemented
 }
 
-func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) error {
-	return gnet.ErrorNotYetImplemented
+func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
+	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
+		err = e
+	} else if alg, e := convertKeytypeToPivAlg(keytype); e != nil {
+		err = e
+	} else {
+		err = y.createPivKey(slot, alg)
+	}
+	return
 }
 
 func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
