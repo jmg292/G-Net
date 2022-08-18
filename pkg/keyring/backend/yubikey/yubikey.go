@@ -24,6 +24,7 @@ func (y *Yubikey) Reset() (err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
+		defer y.releaseYubikeyHandle()
 		err = handle.Reset()
 	}
 	return
