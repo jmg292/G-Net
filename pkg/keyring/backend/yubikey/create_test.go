@@ -2,6 +2,7 @@ package yubikey_test
 
 import (
 	"github.com/jmg292/G-Net/pkg/keyring"
+	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
 
 type KeyGenTestParams struct {
@@ -36,4 +37,17 @@ var keyGenTestParams []*KeyGenTestParams = []*KeyGenTestParams{
 	{Slot: keyring.ManagementKeySlot, Type: keyring.EC384Key, ExpectSuccess: false},
 	{Slot: keyring.ManagementKeySlot, Type: keyring.X25519Key, ExpectSuccess: false},
 	{Slot: keyring.ManagementKeySlot, Type: keyring.ManagementKey, ExpectSuccess: true},
+}
+
+func generatePrivateKeys(yk *yubikey.Yubikey) (err error) {
+	if err = yk.Reset(); err == nil {
+		if err = yk.CreateKey(keyring.ManagementKeySlot, keyring.ManagementKey); err == nil {
+			for i := keyring.SigningKeySlot; i < keyring.ManagementKeySlot; i++ {
+				if err = yk.CreateKey(i, keyring.EC384Key); err != nil {
+					break
+				}
+			}
+		}
+	}
+	return
 }
