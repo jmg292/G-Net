@@ -19,3 +19,12 @@ type Yubikey struct {
 	pin         *memguard.Enclave
 	pinMutex    *sync.Mutex
 }
+
+func (y *Yubikey) Reset() (err error) {
+	if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		err = handle.Reset()
+	}
+	return
+}
