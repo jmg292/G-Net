@@ -138,14 +138,20 @@ func TestAttestationCertificate(t *testing.T) {
 func TestAttest(t *testing.T) {
 	if yk, err := openYubikey(t); err == nil {
 		defer yk.Close()
-		for i := 0; i < 5; i++ {
-			if cert, err := yk.Attest(keyring.KeySlot(i)); err != nil {
-				t.Errorf("failed to get attestation certificate. error: %s", err)
-			} else if cert == nil {
-				t.Logf("got nil attestation cert for slot %d", i)
-			} else {
-				t.Logf("slot %d passed", i)
+		if err := generatePrivateKeys(yk); err == nil {
+			for slot := keyring.SigningKeySlot; slot < keyring.ManagementKeySlot; slot++ {
+				if cert, err := yk.Attest(slot); err != nil {
+					t.Errorf("failed to get attestation certificate. error: %s", err)
+				} else if cert == nil {
+					t.Logf("got nil attestation cert for slot %d", slot)
+				} else {
+					t.Logf("slot %d passed", slot)
+				}
 			}
+		} else {
+			t.Errorf("failed to generate new private keys. Error: %s", err)
 		}
+	} else {
+		t.Errorf("failed to open yubikey.  error: %s", err)
 	}
 }
