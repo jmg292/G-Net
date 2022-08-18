@@ -44,7 +44,9 @@ func (y *Yubikey) createManagementKey() (err error) {
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		err = handle.SetManagementKey(*managmentKey, newKey)
+		if err = handle.SetManagementKey(*managmentKey, newKey); err == nil {
+			err = handle.SetMetadata(newKey, &piv.Metadata{ManagementKey: &newKey})
+		}
 	}
 	return
 }
