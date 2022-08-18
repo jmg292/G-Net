@@ -93,10 +93,23 @@ func (y *Yubikey) SignCSR(keyslot keyring.KeySlot, csr *x509.CertificateRequest)
 	return gnet.ErrorNotYetImplemented
 }
 
-func (y *Yubikey) AttestationCertificate() (*x509.Certificate, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func (y *Yubikey) AttestationCertificate() (cert *x509.Certificate, err error) {
+	if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseYubikeyHandle()
+		cert, err = handle.AttestationCertificate()
+	}
+	return
 }
 
-func (y *Yubikey) Attest(keyslot keyring.KeySlot) (*x509.Certificate, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func (y *Yubikey) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
+	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
+		err = e
+	} else if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		cert, err = handle.Attest(slot)
+	}
+	return
 }
