@@ -37,7 +37,9 @@ func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKe
 }
 
 func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
-	if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
+	if keyslot == keyring.ManagementKeySlot {
+		key, err = y.getManagementKey()
+	} else if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
 		key, err = y.getPrivateKey(slot)
 	} else {
 		err = e

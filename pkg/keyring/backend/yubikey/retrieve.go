@@ -18,6 +18,21 @@ func (y *Yubikey) getPin() (pin *memguard.LockedBuffer, err error) {
 	return
 }
 
+func (y *Yubikey) getManagementKey() (managementKey *[24]byte, err error) {
+	if pin, e := y.getPin(); e != nil {
+		err = e
+	} else if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else if metadata, e := handle.Metadata(pin.String()); e != nil {
+		err = e
+	} else if metadata == nil {
+		err = gnet.ErrorKeyNotFound
+	} else {
+		managementKey = metadata.ManagementKey
+	}
+	return
+}
+
 func (y *Yubikey) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
