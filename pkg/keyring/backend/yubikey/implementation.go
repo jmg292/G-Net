@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"crypto/x509"
 
+	"github.com/awnumar/memguard"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
@@ -13,12 +14,26 @@ func (y *Yubikey) Name() (name string, err error) {
 	return
 }
 
-func (y *Yubikey) Unlock(pin []byte) error {
-	return gnet.ErrorNotYetImplemented
+func (y *Yubikey) Unlock(pin []byte) (err error) {
+	y.pinMutex.Lock()
+	defer y.pinMutex.Unlock()
+	if y.pin == nil {
+		y.pin = memguard.NewEnclave(pin)
+	}
+	// Validate PIN by using it
+	_, err = y.getManagementKey()
+	return
 }
 
-func (y *Yubikey) Lock() error {
-	return gnet.ErrorNotYetImplemented
+func (y *Yubikey) Lock() (err error) {
+	y.pinMutex.Lock()
+	defer y.pinMutex.Unlock()
+	if y.pin != nil {
+		y.pin = nil
+	} else {
+		err = gnet.ErrorKeystoreLocked
+	}
+	return nil
 }
 
 func (y *Yubikey) Close() error {

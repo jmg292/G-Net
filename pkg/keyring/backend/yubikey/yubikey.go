@@ -14,7 +14,8 @@ var (
 )
 
 type Yubikey struct {
-	handle *piv.YubiKey
-	mutex  *sync.Mutex
-	pin    *memguard.Enclave
+	handle      *piv.YubiKey
+	handleMutex *sync.Mutex
+	pin         *memguard.Enclave
+	pinMutex    *sync.Mutex
 }

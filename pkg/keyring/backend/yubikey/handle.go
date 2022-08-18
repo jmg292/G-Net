@@ -9,12 +9,12 @@ func (y *Yubikey) getYubikeyHandle() (handle *piv.YubiKey, err error) {
 	if y.handle == nil {
 		err = gnet.ErrorKeystoreHandleClosed
 	} else {
-		y.mutex.Lock()
+		y.handleMutex.Lock()
 		handle = y.handle
 	}
 	return
 }
 
 func (y *Yubikey) releaseYubikeyHandle() {
-	y.mutex.Unlock()
+	y.handleMutex.Unlock()
 }
