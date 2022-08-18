@@ -58,14 +58,18 @@ func TestCreateKey(t *testing.T) {
 func TestGetPrivateKey(t *testing.T) {
 	if yk, err := newOpenAndUnlockedYubikey([]byte(piv.DefaultPIN), t); err == nil {
 		defer yk.Close()
-		for i := 0; i < 5; i++ {
-			if key, err := yk.GetPrivateKey(keyring.KeySlot(i)); err != nil {
-				t.Errorf("failed to get private key for slot %d. error: %s", key, err)
-			} else if key == nil {
-				t.Logf("got nil key from slot: %d", i)
-			} else {
-				t.Logf("slot %d passed", i)
+		if err := generatePrivateKeys(yk); err == nil {
+			for slot := keyring.SigningKeySlot; slot <= keyring.ManagementKeySlot; slot++ {
+				if key, err := yk.GetPrivateKey(slot); err != nil {
+					t.Errorf("failed to get private key for slot %d. error: %s", slot, err)
+				} else if key == nil {
+					t.Logf("got nil key from slot: %d", slot)
+				} else {
+					t.Logf("slot %d passed", slot)
+				}
 			}
+		} else {
+			t.Errorf("failed to generate new private keys.  Error: %s", err)
 		}
 	} else {
 		t.Errorf("failed to open yubikey.  Error: %s", err)
