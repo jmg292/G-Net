@@ -16,10 +16,10 @@ func (y *Yubikey) Name() (name string, err error) {
 
 func (y *Yubikey) Unlock(pin []byte) (err error) {
 	y.pinMutex.Lock()
-	defer y.pinMutex.Unlock()
 	if y.pin == nil {
 		y.pin = memguard.NewEnclave(pin)
 	}
+	y.pinMutex.Unlock()
 	// Validate PIN by using it
 	_, err = y.getManagementKey()
 	return
