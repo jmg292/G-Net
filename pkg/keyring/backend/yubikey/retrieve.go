@@ -30,6 +30,8 @@ func (y *Yubikey) getManagementKey() (managementKey *[24]byte, err error) {
 			err = e
 		} else if metadata == nil {
 			err = gnet.ErrorKeyNotFound
+		} else if metadata.ManagementKey == nil {
+			managementKey = &piv.DefaultManagementKey
 		} else {
 			managementKey = metadata.ManagementKey
 		}
