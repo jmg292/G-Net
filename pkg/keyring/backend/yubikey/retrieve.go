@@ -10,6 +10,8 @@ import (
 )
 
 func (y *Yubikey) getPin() (pin *memguard.LockedBuffer, err error) {
+	y.pinMutex.Lock()
+	defer y.pinMutex.Unlock()
 	if y.pin == nil {
 		err = gnet.ErrorKeystoreLocked
 	} else {
