@@ -1,6 +1,8 @@
 package yubikey
 
 import (
+	"crypto/rand"
+
 	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
@@ -24,6 +26,25 @@ func (y *Yubikey) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 			TouchPolicy: piv.TouchPolicyAlways,
 			Algorithm:   alg,
 		})
+	}
+	return
+}
+
+func (y *Yubikey) createManagementKey() (err error) {
+	var newKey [keyring.ManagementKeySize]byte
+	if bytesRead, e := rand.Read(newKey[:]); e != nil {
+		err = e
+	} else if bytesRead != int(keyring.ManagementKeySize) {
+		err = gnet.ErrorKeyGenFailed
+	} else if managmentKey, e := y.GetPrivateKey(keyring.ManagementKeySlot); e != nil {
+		err = e
+	} else if managmentKey, ok := managmentKey.(*[24]byte); !ok {
+		err = gnet.ErrorInvalidManagementKey
+	} else if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseYubikeyHandle()
+		err = handle.SetManagementKey(*managmentKey, newKey)
 	}
 	return
 }

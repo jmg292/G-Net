@@ -41,7 +41,11 @@ func (y *Yubikey) Close() error {
 }
 
 func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
-	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
+	if keyslot == keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
+		err = y.createManagementKey()
+	} else if keyslot == keyring.ManagementKeySlot || keytype == keyring.ManagementKey {
+		err = gnet.ErrorUnsupportedAlgorithmForKeySlot
+	} else if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
 		err = e
 	} else if alg, e := convertKeytypeToPivAlg(keytype); e != nil {
 		err = e
