@@ -36,13 +36,18 @@ func TestCreateKey(t *testing.T) {
 		t.Logf("Opened Yubikey handle.")
 		defer yk.Close()
 		for _, params := range keyGenTestParams {
-			t.Logf("Attempting to create key of type %d in slot %d.  Success expected? %t", params.Type, params.Slot, params.ExpectSuccess)
-			if err := yk.CreateKey(params.Slot, params.Type); err != nil && params.ExpectSuccess {
-				t.Errorf("KeyGen of type %d on slot %d failed with error: %s (expected success)", params.Type, params.Slot, err)
-			} else if err == nil && !params.ExpectSuccess {
-				t.Errorf("KeyGen of type %d on slot %d succeeded. (expected failure)", params.Type, params.Slot)
+			if err := yk.Reset(); err == nil {
+				t.Logf("Attempting to create key of type %d in slot %d.  Success expected? %t", params.Type, params.Slot, params.ExpectSuccess)
+				if err := yk.CreateKey(params.Slot, params.Type); err != nil && params.ExpectSuccess {
+					t.Errorf("--- FAIL: keygen of type %d on slot %d failed with error: %s (expected success)", params.Type, params.Slot, err)
+				} else if err == nil && !params.ExpectSuccess {
+					t.Errorf("--- FAIL: keygen of type %d on slot %d succeeded. (expected failure)", params.Type, params.Slot)
+				} else {
+					t.Logf("--- PASS: keygen of type %d on slot %d succeeded!", params.Type, params.Slot)
+				}
 			} else {
-				t.Logf("KeyGen of type %d on slot %d succeeded!", params.Type, params.Slot)
+				t.Errorf("--- FAIL: reset failed, skipping...")
+				break
 			}
 		}
 	} else {
