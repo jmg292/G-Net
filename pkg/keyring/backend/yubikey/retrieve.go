@@ -25,12 +25,15 @@ func (y *Yubikey) getManagementKey() (managementKey *[24]byte, err error) {
 		err = e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
-	} else if metadata, e := handle.Metadata(pin.String()); e != nil {
-		err = e
-	} else if metadata == nil {
-		err = gnet.ErrorKeyNotFound
 	} else {
-		managementKey = metadata.ManagementKey
+		defer y.releaseYubikeyHandle()
+		if metadata, e := handle.Metadata(pin.String()); e != nil {
+			err = e
+		} else if metadata == nil {
+			err = gnet.ErrorKeyNotFound
+		} else {
+			managementKey = metadata.ManagementKey
+		}
 	}
 	return
 }
@@ -59,10 +62,9 @@ func (y *Yubikey) getPrivateKey(slot piv.Slot) (key crypto.PrivateKey, err error
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		if pin, e := y.pin.Open(); e != nil {
+		if pin, e := y.getPin(); e != nil {
 			err = e
 		} else {
-			defer pin.Wipe()
 			key, err = handle.PrivateKey(slot, pubkey, piv.KeyAuth{PIN: pin.String()})
 		}
 	}
