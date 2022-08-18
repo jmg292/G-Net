@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/go-piv/piv-go/piv"
+	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
@@ -79,14 +80,24 @@ func TestGetPrivateKey(t *testing.T) {
 func TestGetPublicKey(t *testing.T) {
 	if yk, err := openYubikey(t); err == nil {
 		defer yk.Close()
-		for i := 0; i < 5; i++ {
-			if pubkey, err := yk.GetPublicKey(keyring.KeySlot(i)); err != nil {
-				t.Errorf("failed to get public key for slot %d. error: %s", i, err)
-			} else if pubkey == nil {
-				t.Logf("got nil public key from slot: %d", i)
+		if err := generatePrivateKeys(yk); err == nil {
+			if _, err := yk.GetPublicKey(keyring.ManagementKeySlot); err != nil && err == gnet.ErrorExportNotAllowed {
+				for slot := keyring.SigningKeySlot; slot < keyring.ManagementKeySlot; slot++ {
+					if pubkey, err := yk.GetPublicKey(keyring.KeySlot(slot)); err != nil {
+						t.Errorf("failed to get public key for slot %d. error: %s", slot, err)
+					} else if pubkey == nil {
+						t.Logf("got nil public key from slot: %d", slot)
+					} else {
+						t.Logf("slot %d passed", slot)
+					}
+				}
+			} else if err != nil {
+				t.Errorf("GetPublicKey(keyring.ManagementKey) threw unexpected error: %s", err)
 			} else {
-				t.Logf("slot %d passed", i)
+				t.Errorf("GetPublicKey(keyring.ManagementKey) did not throw an error")
 			}
+		} else {
+			t.Errorf("failed to generate new private keys.  Error: %s", err)
 		}
 	} else {
 		t.Errorf("failed to open yubikey.  Error: %s", err)
