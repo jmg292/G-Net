@@ -21,6 +21,7 @@ const (
 	ErrorKeystoreLocked                 KeystoreError = "keystore is locked"
 	ErrorKeystoreHandleClosed           KeystoreError = "keystore handle is closed"
 	ErrorResetNotAllowed                KeystoreError = "reset not allowed"
+	ErrorKeyGenFailed                   KeystoreError = "key generation failed"
 )
 
 const (
