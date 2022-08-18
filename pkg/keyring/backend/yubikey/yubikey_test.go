@@ -20,8 +20,10 @@ func TestGetName(t *testing.T) {
 
 func TestCreateKey(t *testing.T) {
 	if yk, err := newOpenAndUnlockedYubikey([]byte(piv.DefaultPIN), t); err == nil {
+		t.Logf("Opened Yubikey handle.")
 		defer yk.Close()
 		for _, params := range keyGenTestParams {
+			t.Logf("Attempting to create key of type %d in slot %d.  Success expected? %t", params.Type, params.Slot, params.ExpectSuccess)
 			if err := yk.CreateKey(params.Slot, params.Type); err != nil && params.ExpectSuccess {
 				t.Errorf("KeyGen of type %d on slot %d failed with error: %s (expected success)", params.Type, params.Slot, err)
 			} else if err == nil && !params.ExpectSuccess {
@@ -30,6 +32,8 @@ func TestCreateKey(t *testing.T) {
 				t.Logf("KeyGen of type %d on slot %d succeeded!", params.Type, params.Slot)
 			}
 		}
+	} else {
+		t.Errorf("failed to open yubikey.  Error: %s", err)
 	}
 }
 
@@ -45,6 +49,8 @@ func TestGetPrivateKey(t *testing.T) {
 				t.Logf("slot %d passed", i)
 			}
 		}
+	} else {
+		t.Errorf("failed to open yubikey.  Error: %s", err)
 	}
 }
 
@@ -61,7 +67,7 @@ func TestGetPublicKey(t *testing.T) {
 			}
 		}
 	} else {
-		t.Errorf("Failed to open yubikey.  Error: %s", err)
+		t.Errorf("failed to open yubikey.  Error: %s", err)
 	}
 }
 
