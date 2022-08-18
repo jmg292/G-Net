@@ -48,7 +48,9 @@ func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey,
 }
 
 func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
-	if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
+	if keyslot == keyring.ManagementKeySlot {
+		err = gnet.ErrorExportNotAllowed
+	} else if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
 		key, err = y.getPublicKey(slot)
 	} else {
 		err = e
