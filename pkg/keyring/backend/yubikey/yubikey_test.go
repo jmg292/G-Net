@@ -82,6 +82,7 @@ func TestGetPublicKey(t *testing.T) {
 		defer yk.Close()
 		if err := generatePrivateKeys(yk); err == nil {
 			if _, err := yk.GetPublicKey(keyring.ManagementKeySlot); err != nil && err == gnet.ErrorExportNotAllowed {
+				t.Logf("slot %d passed", keyring.ManagementKeySlot)
 				for slot := keyring.SigningKeySlot; slot < keyring.ManagementKeySlot; slot++ {
 					if pubkey, err := yk.GetPublicKey(keyring.KeySlot(slot)); err != nil {
 						t.Errorf("failed to get public key for slot %d. error: %s", slot, err)
