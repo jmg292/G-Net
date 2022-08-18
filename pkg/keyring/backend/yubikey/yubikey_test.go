@@ -1,12 +1,25 @@
 package yubikey_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/keyring"
 	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
 )
+
+func TestMain(m *testing.M) {
+	if yk, err := yubikey.New(); err != nil {
+		panic(fmt.Errorf("Test setup failed with error: %s", err))
+	} else {
+		if err = yk.Reset(); err != nil {
+			panic(fmt.Errorf("Yubikey reset failed with error: %s", err))
+		} else {
+			m.Run()
+		}
+	}
+}
 
 func TestGetName(t *testing.T) {
 	if yk, err := yubikey.New(); err != nil {
