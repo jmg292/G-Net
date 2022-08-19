@@ -44,6 +44,7 @@ func (y *Yubikey) Close() error {
 	// Intentionally left locked
 	y.handleMutex.Lock()
 	y.handle = nil
+	instance = nil
 	return nil
 }
 
