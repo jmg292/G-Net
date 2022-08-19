@@ -3,6 +3,7 @@ package yubikey
 import (
 	"crypto"
 	"crypto/x509"
+	"errors"
 
 	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
@@ -43,7 +44,10 @@ func (y *Yubikey) Close() error {
 	y.Lock()
 	// Intentionally left locked
 	y.handleMutex.Lock()
-	y.handle = nil
+	if y.handle != nil {
+		y.handle.Close()
+		y.handle = nil
+	}
 	instance = nil
 	return nil
 }
@@ -92,7 +96,7 @@ func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (cert *x509.Certificat
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		if cert, err = handle.Certificate(slot); err != nil && err == piv.ErrNotFound {
+		if cert, err = handle.Certificate(slot); errors.Is(err, piv.ErrNotFound) {
 			err = gnet.ErrorCertificateNotFound
 		}
 	}
