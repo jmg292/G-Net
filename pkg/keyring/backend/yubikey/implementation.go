@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 
 	"github.com/awnumar/memguard"
+	"github.com/go-piv/piv-go/piv"
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
@@ -77,12 +78,38 @@ func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, e
 	return
 }
 
-func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (*x509.Certificate, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
+	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
+		err = e
+	} else if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseYubikeyHandle()
+		if cert, err = handle.Certificate(slot); err != nil && err == piv.ErrNotFound {
+			err = gnet.ErrorCertificateNotFound
+		}
+	}
+	return
 }
 
-func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.CertPool) error {
-	return gnet.ErrorNotYetImplemented
+func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate) (err error) {
+	if currentCert, e := y.GetCertificate(keyslot); e != nil && e != gnet.ErrorCertificateNotFound {
+		err = e
+	} else if e == nil || currentCert != nil {
+		err = gnet.ErrorCertAlreadyExists
+	} else if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
+		err = e
+	} else if key, e := y.GetPrivateKey(keyring.ManagementKeySlot); e != nil {
+		err = e
+	} else if managementKey, ok := key.([keyring.ManagementKeySize]byte); !ok {
+		err = gnet.ErrorInvalidManagementKey
+	} else if handle, e := y.getYubikeyHandle(); e != nil {
+		err = e
+	} else {
+		defer y.releaseYubikeyHandle()
+		err = handle.SetCertificate(managementKey, slot, cert)
+	}
+	return
 }
 
 func (y *Yubikey) CreateCSR(keyslot keyring.KeySlot) (*x509.Certificate, error) {
