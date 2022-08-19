@@ -8,6 +8,7 @@ const (
 	ErrorWarrantNotFound     ItemNotFound = "warrant not found"
 	ErrorKeyNotFound         ItemNotFound = "key not found"
 	ErrorCertificateNotFound ItemNotFound = "certificate not found"
+	ErrorKeystoreNotFound    ItemNotFound = "keystore not found"
 )
 
 const (
@@ -16,8 +17,8 @@ const (
 	ErrorImportNotAllowed               KeystoreError = "import not allowed"
 	ErrorKeyAlreadyExists               KeystoreError = "key already exists"
 	ErrorFileAlreadyExists              KeystoreError = "file already exists"
+	ErrorCertAlreadyExists              KeystoreError = "certificate already exists"
 	ErrorUnableToOpenKeystore           KeystoreError = "unable to open keystore"
-	ErrorKeystoreNotFound               KeystoreError = "keystore not found"
 	ErrorKeystoreLocked                 KeystoreError = "keystore is locked"
 	ErrorKeystoreHandleClosed           KeystoreError = "keystore handle is closed"
 	ErrorResetNotAllowed                KeystoreError = "reset not allowed"
