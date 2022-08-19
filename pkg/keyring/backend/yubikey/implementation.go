@@ -38,7 +38,13 @@ func (y *Yubikey) Lock() (err error) {
 }
 
 func (y *Yubikey) Close() error {
-	return gnet.ErrorNotYetImplemented
+	instanceMutex.Lock()
+	defer instanceMutex.Unlock()
+	y.Lock()
+	// Intentionally left locked
+	y.handleMutex.Lock()
+	y.handle = nil
+	return nil
 }
 
 func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
