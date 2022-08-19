@@ -105,6 +105,10 @@ func TestGetPublicKey(t *testing.T) {
 	}
 }
 
+func TestSetCertificate(t *testing.T) {
+	t.Errorf("%s", gnet.ErrorNotYetImplemented)
+}
+
 func TestGetCertificate(t *testing.T) {
 	if yk, err := openYubikey(t); err == nil {
 		defer yk.Close()
