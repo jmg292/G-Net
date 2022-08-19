@@ -27,8 +27,6 @@ type Storage interface {
 	// Certificate Management
 	GetCertificate(keyring.KeySlot) error
 	SetCertificate(keyring.KeySlot, *x509.Certificate) error
-	CreateCSR(keyring.KeySlot) (*x509.CertificateRequest, error)
-	SignCSR(keyring.KeySlot, *x509.CertificateRequest) error
 
 	// Attestation functions
 	AttestationCertificate() (*x509.Certificate, error)

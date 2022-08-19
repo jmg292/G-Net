@@ -112,14 +112,6 @@ func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate
 	return
 }
 
-func (y *Yubikey) CreateCSR(keyslot keyring.KeySlot) (*x509.Certificate, error) {
-	return nil, gnet.ErrorNotYetImplemented
-}
-
-func (y *Yubikey) SignCSR(keyslot keyring.KeySlot, csr *x509.CertificateRequest) error {
-	return gnet.ErrorNotYetImplemented
-}
-
 func (y *Yubikey) AttestationCertificate() (cert *x509.Certificate, err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
