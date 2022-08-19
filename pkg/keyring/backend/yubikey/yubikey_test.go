@@ -108,13 +108,13 @@ func TestGetPublicKey(t *testing.T) {
 func TestGetCertificate(t *testing.T) {
 	if yk, err := openYubikey(t); err == nil {
 		defer yk.Close()
-		for i := 0; i < 5; i++ {
-			if cert, err := yk.GetCertificate(keyring.KeySlot(i)); err != nil {
-				t.Errorf("failed to get public key for slot %d. error: %s", i, err)
+		for slot := keyring.SigningKeySlot; slot < keyring.ManagementKeySlot; slot++ {
+			if cert, err := yk.GetCertificate(slot); err != nil {
+				t.Errorf("failed to get certificate for slot %d. error: %s", slot, err)
 			} else if cert == nil {
-				t.Logf("got nil cert key from slot: %d", i)
+				t.Logf("got nil cert key from slot: %d", slot)
 			} else {
-				t.Logf("slot %d passed", i)
+				t.Logf("slot %d passed", slot)
 			}
 		}
 	} else {
