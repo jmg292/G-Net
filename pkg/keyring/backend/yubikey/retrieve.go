@@ -8,7 +8,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/gnet"
 )
 
-func (y *Yubikey) getPin() (pin *memguard.LockedBuffer, err error) {
+func (y *Backend) getPin() (pin *memguard.LockedBuffer, err error) {
 	y.pinMutex.Lock()
 	defer y.pinMutex.Unlock()
 	if y.pin == nil {
@@ -19,7 +19,7 @@ func (y *Yubikey) getPin() (pin *memguard.LockedBuffer, err error) {
 	return
 }
 
-func (y *Yubikey) getManagementKey() (managementKey *[24]byte, err error) {
+func (y *Backend) getManagementKey() (managementKey *[24]byte, err error) {
 	if pin, e := y.getPin(); e != nil {
 		err = e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
@@ -39,7 +39,7 @@ func (y *Yubikey) getManagementKey() (managementKey *[24]byte, err error) {
 	return
 }
 
-func (y *Yubikey) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) {
+func (y *Backend) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
@@ -59,7 +59,7 @@ func (y *Yubikey) getPublicKey(slot piv.Slot) (key crypto.PublicKey, err error) 
 	return
 }
 
-func (y *Yubikey) getPrivateKey(slot piv.Slot) (key crypto.PrivateKey, err error) {
+func (y *Backend) getPrivateKey(slot piv.Slot) (key crypto.PrivateKey, err error) {
 	if pubkey, e := y.getPublicKey(slot); e != nil {
 		err = e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {

@@ -10,17 +10,17 @@ import (
 var instanceMutex = &sync.Mutex{}
 
 var (
-	instance *Yubikey
+	instance *Backend
 )
 
-type Yubikey struct {
+type Backend struct {
 	handle      *piv.YubiKey
 	handleMutex *sync.Mutex
 	pin         *memguard.Enclave
 	pinMutex    *sync.Mutex
 }
 
-func (y *Yubikey) Reset() (err error) {
+func (y *Backend) Reset() (err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {

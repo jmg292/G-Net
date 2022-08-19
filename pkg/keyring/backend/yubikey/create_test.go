@@ -39,7 +39,7 @@ var keyGenTestParams []*KeyGenTestParams = []*KeyGenTestParams{
 	{Slot: keyring.ManagementKeySlot, Type: keyring.ManagementKey, ExpectSuccess: true},
 }
 
-func generatePrivateKeys(yk *yubikey.Yubikey) (err error) {
+func generatePrivateKeys(yk *yubikey.Backend) (err error) {
 	if err = yk.Reset(); err == nil {
 		if err = yk.CreateKey(keyring.ManagementKeySlot, keyring.ManagementKey); err == nil {
 			for i := keyring.SigningKeySlot; i < keyring.ManagementKeySlot; i++ {

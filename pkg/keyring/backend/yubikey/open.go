@@ -34,7 +34,7 @@ func openYubikeyHandle() (handle *piv.YubiKey, err error) {
 	return
 }
 
-func New() (backend *Yubikey, err error) {
+func New() (backend *Backend, err error) {
 	instanceMutex.Lock()
 	defer instanceMutex.Unlock()
 
@@ -42,7 +42,7 @@ func New() (backend *Yubikey, err error) {
 		if handle, e := openYubikeyHandle(); e != nil {
 			err = e
 		} else {
-			instance = &Yubikey{
+			instance = &Backend{
 				handle:      handle,
 				handleMutex: &sync.Mutex{},
 				pinMutex:    &sync.Mutex{},

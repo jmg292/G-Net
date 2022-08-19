@@ -8,23 +8,23 @@ import (
 	"github.com/google/go-tpm/tpmutil"
 )
 
-type Tpm2IdentityProvider struct {
+type Backend struct {
 	ownerAuth  []byte
 	tpmHandle  io.ReadWriteCloser
 	primaryKey tpmutil.Handle
 	publicKey  tpm2.Public
 }
 
-func NewTpm2IdentityProvider(ownerAuth []byte) (*Tpm2IdentityProvider, error) {
+func NewTpm2IdentityProvider(ownerAuth []byte) (*Backend, error) {
 	if ownerAuth == nil {
 		return nil, fmt.Errorf("no OwnerAuth value provided")
 	}
-	return &Tpm2IdentityProvider{
+	return &Backend{
 		ownerAuth: ownerAuth,
 	}, nil
 }
 
-func (idProvider *Tpm2IdentityProvider) Open() error {
+func (idProvider *Backend) Open() error {
 	var err error = nil
 	idProvider.tpmHandle, err = tpm2.OpenTPM()
 	if err != nil {
@@ -33,7 +33,7 @@ func (idProvider *Tpm2IdentityProvider) Open() error {
 	return err
 }
 
-func (idProvider *Tpm2IdentityProvider) Close() error {
+func (idProvider *Backend) Close() error {
 	var err error = nil
 	idProvider.primaryKey = tpm2.HandleNull
 	if idProvider.tpmHandle != nil {
@@ -43,11 +43,11 @@ func (idProvider *Tpm2IdentityProvider) Close() error {
 	return err
 }
 
-func (idProvider *Tpm2IdentityProvider) GenerateKey() error {
+func (idProvider *Backend) GenerateKey() error {
 	return nil
 }
 
-func (idProvider *Tpm2IdentityProvider) Certificate() ([]byte, error) {
+func (idProvider *Backend) Certificate() ([]byte, error) {
 	// var err error
 	// idProvider.publicKey, _, _, err = tpm2.ReadPublic(idProvider.tpmHandle, idProvider.primaryKey)
 	/*
@@ -63,6 +63,6 @@ func (idProvider *Tpm2IdentityProvider) Certificate() ([]byte, error) {
 	return nil, nil
 }
 
-func (idProvider *Tpm2IdentityProvider) Sign(data []byte) ([]byte, error) {
+func (idProvider *Backend) Sign(data []byte) ([]byte, error) {
 	return nil, nil
 }

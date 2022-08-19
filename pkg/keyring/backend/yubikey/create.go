@@ -8,7 +8,7 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (y *Yubikey) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
+func (y *Backend) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 	if key, e := y.getPrivateKey(slot); key != nil {
 		err = gnet.ErrorKeyAlreadyExists
 	} else if e != nil && e != gnet.ErrorKeyNotFound {
@@ -30,7 +30,7 @@ func (y *Yubikey) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 	return
 }
 
-func (y *Yubikey) createManagementKey() (err error) {
+func (y *Backend) createManagementKey() (err error) {
 	var newKey [keyring.ManagementKeySize]byte
 	if bytesRead, e := rand.Read(newKey[:]); e != nil {
 		err = e

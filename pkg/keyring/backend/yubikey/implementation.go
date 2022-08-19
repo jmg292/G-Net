@@ -11,12 +11,12 @@ import (
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
-func (y *Yubikey) Name() (name string, err error) {
+func (y *Backend) Name() (name string, err error) {
 	name, err = getYubikeyName()
 	return
 }
 
-func (y *Yubikey) Unlock(pin []byte) (err error) {
+func (y *Backend) Unlock(pin []byte) (err error) {
 	y.pinMutex.Lock()
 	if y.pin == nil {
 		y.pin = memguard.NewEnclave(pin)
@@ -27,7 +27,7 @@ func (y *Yubikey) Unlock(pin []byte) (err error) {
 	return
 }
 
-func (y *Yubikey) Lock() (err error) {
+func (y *Backend) Lock() (err error) {
 	y.pinMutex.Lock()
 	defer y.pinMutex.Unlock()
 	if y.pin != nil {
@@ -38,7 +38,7 @@ func (y *Yubikey) Lock() (err error) {
 	return nil
 }
 
-func (y *Yubikey) Close() error {
+func (y *Backend) Close() error {
 	instanceMutex.Lock()
 	defer instanceMutex.Unlock()
 	y.Lock()
@@ -52,7 +52,7 @@ func (y *Yubikey) Close() error {
 	return nil
 }
 
-func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
+func (y *Backend) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
 	if keyslot == keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
 		err = y.createManagementKey()
 	} else if keyslot == keyring.ManagementKeySlot || keytype == keyring.ManagementKey {
@@ -67,7 +67,7 @@ func (y *Yubikey) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKe
 	return
 }
 
-func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
+func (y *Backend) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey, err error) {
 	if keyslot == keyring.ManagementKeySlot {
 		key, err = y.getManagementKey()
 	} else if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
@@ -78,7 +78,7 @@ func (y *Yubikey) GetPrivateKey(keyslot keyring.KeySlot) (key crypto.PrivateKey,
 	return
 }
 
-func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
+func (y *Backend) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, err error) {
 	if keyslot == keyring.ManagementKeySlot {
 		err = gnet.ErrorExportNotAllowed
 	} else if slot, e := convertKeyslotToPivSlot(keyslot); e == nil {
@@ -89,7 +89,7 @@ func (y *Yubikey) GetPublicKey(keyslot keyring.KeySlot) (key crypto.PublicKey, e
 	return
 }
 
-func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
+func (y *Backend) GetCertificate(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
 	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
 		err = e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
@@ -103,7 +103,7 @@ func (y *Yubikey) GetCertificate(keyslot keyring.KeySlot) (cert *x509.Certificat
 	return
 }
 
-func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate) (err error) {
+func (y *Backend) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate) (err error) {
 	if currentCert, e := y.GetCertificate(keyslot); e != nil && e != gnet.ErrorCertificateNotFound {
 		err = e
 	} else if e == nil || currentCert != nil {
@@ -123,7 +123,7 @@ func (y *Yubikey) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate
 	return
 }
 
-func (y *Yubikey) AttestationCertificate() (cert *x509.Certificate, err error) {
+func (y *Backend) AttestationCertificate() (cert *x509.Certificate, err error) {
 	if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
@@ -133,7 +133,7 @@ func (y *Yubikey) AttestationCertificate() (cert *x509.Certificate, err error) {
 	return
 }
 
-func (y *Yubikey) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
+func (y *Backend) Attest(keyslot keyring.KeySlot) (cert *x509.Certificate, err error) {
 	if slot, e := convertKeyslotToPivSlot(keyslot); e != nil {
 		err = e
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
