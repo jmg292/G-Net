@@ -36,3 +36,12 @@ const (
 	SymmetricKeySize  KeySizeBytes = 32
 	ManagementKeySize KeySizeBytes = 24
 )
+
+type IdentityType uint8
+
+const (
+	CertificateAuthority IdentityType = 1 << iota
+	Administrator
+	User
+	Device
+)
