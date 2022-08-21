@@ -26,19 +26,21 @@ const (
 )
 
 const (
-	ErrorInvalidSignature       ValidationError = "invalid signature"
-	ErrorInvalidMessageDigest   ValidationError = "invalid message digest"
-	ErrorInvalidHeader          ValidationError = "invalid header"
-	ErrorInvalidContentLength   ValidationError = "invalid content length"
-	ErrorInvalidSigningKey      ValidationError = "invalid signing key"
-	ErrorInvalidPrivateKey      ValidationError = "invalid private key"
-	ErrorInvalidPublicKey       ValidationError = "invalid public key"
-	ErrorInvalidAttestationCert ValidationError = "invalid attestation certificate"
-	ErrorInvalidManagementKey   ValidationError = "invalid management key"
-	ErrorInvalidPIN             ValidationError = "invalid pin"
-	ErrorInvalidKeySlot         ValidationError = "invalid key slot"
-	ErrorInvalidHandle          ValidationError = "invalid handle"
-	ErrorInvalidCharacter       ValidationError = "invalid character: %s"
+	ErrorInvalidSignature           ValidationError = "invalid signature"
+	ErrorInvalidMessageDigest       ValidationError = "invalid message digest"
+	ErrorInvalidHeader              ValidationError = "invalid header"
+	ErrorInvalidContentLength       ValidationError = "invalid content length"
+	ErrorInvalidSigningKey          ValidationError = "invalid signing key"
+	ErrorInvalidPrivateKey          ValidationError = "invalid private key"
+	ErrorInvalidPublicKey           ValidationError = "invalid public key"
+	ErrorInvalidCertificateTemplate ValidationError = "invalid certificate template"
+	ErrorInvalidCSR                 ValidationError = "invalid certificate signing request"
+	ErrorInvalidAttestationCert     ValidationError = "invalid attestation certificate"
+	ErrorInvalidManagementKey       ValidationError = "invalid management key"
+	ErrorInvalidPIN                 ValidationError = "invalid pin"
+	ErrorInvalidKeySlot             ValidationError = "invalid key slot"
+	ErrorInvalidHandle              ValidationError = "invalid handle"
+	ErrorInvalidCharacter           ValidationError = "invalid character: %s"
 )
 
 const (
