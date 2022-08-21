@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"crypto/x509"
 	"errors"
+	"fmt"
 
 	"github.com/awnumar/memguard"
 	"github.com/go-piv/piv-go/piv"
@@ -12,7 +13,14 @@ import (
 )
 
 func (y *Backend) Name() (name string, err error) {
-	name, err = getYubikeyName()
+	if name, err = getYubikeyName(); err == nil {
+		if handle, e := y.getYubikeyHandle(); e == nil {
+			defer y.releaseYubikeyHandle()
+			if serialnum, e := handle.Serial(); e == nil {
+				name = fmt.Sprintf("%s (S/N: %d)", name, serialnum)
+			}
+		}
+	}
 	return
 }
 
