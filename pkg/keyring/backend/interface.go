@@ -25,7 +25,7 @@ type Storage interface {
 	GetPublicKey(keyring.KeySlot) (crypto.PublicKey, error)
 
 	// Certificate Management
-	GetCertificate(keyring.KeySlot) error
+	GetCertificate(keyring.KeySlot) (*x509.Certificate, error)
 	SetCertificate(keyring.KeySlot, *x509.Certificate) error
 
 	// Attestation functions
