@@ -1,6 +1,8 @@
 package certificate
 
 import (
+	"crypto/x509"
+
 	"github.com/jmg292/G-Net/pkg/gnet"
 	"github.com/jmg292/G-Net/pkg/keyring"
 	"github.com/jmg292/G-Net/pkg/keyring/certificate/extensions"
@@ -19,6 +21,17 @@ func (identity *Identity) GetCertificateBySlot(keyslot keyring.KeySlot) (cert *h
 		err = gnet.ErrorCertificateNotFound
 	} else {
 		cert, err = parseHardwareBackedCertificate(certExtension.Value)
+	}
+	return
+}
+
+func (identity *Identity) AttestationCertificate() (cert *x509.Certificate, err error) {
+	if extAttestationCert, e := findExtensionByOID(identity, extensions.OIDVerifyProofOfOrigin); e != nil {
+		err = e
+	} else if extAttestationCert.Value == nil {
+		err = gnet.ErrorInvalidAttestationCert
+	} else {
+		cert, err = x509.ParseCertificate(extAttestationCert.Value)
 	}
 	return
 }
