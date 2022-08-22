@@ -30,6 +30,12 @@ func (e CryptoError) Error() string {
 	return string(e)
 }
 
+type CertificateError string
+
+func (e CertificateError) Error() string {
+	return string(e)
+}
+
 type TraceryError string
 
 func (e TraceryError) Error() string {
@@ -45,11 +51,5 @@ func (e ManifestError) Error() string {
 type SequencingError string
 
 func (e SequencingError) Error() string {
-	return string(e)
-}
-
-type CertificateError string
-
-func (e CertificateError) Error() string {
 	return string(e)
 }
