@@ -11,10 +11,10 @@ import (
 
 type Extensible interface {
 	Certificate() *x509.Certificate
-	Extensions() map[string]pkix.Extension
+	Extensions() *map[string]pkix.Extension
 }
 
-func parseExtensions(extended Extensible) (extensions map[string]pkix.Extension, err error) {
+func parseExtensions(extended Extensible) (extensions *map[string]pkix.Extension, err error) {
 	var unhandledExtensions []pkix.Extension
 	if extended.Certificate() == nil {
 		err = gnet.ErrorInvalidCertificate
@@ -25,14 +25,18 @@ func parseExtensions(extended Extensible) (extensions map[string]pkix.Extension,
 		if extended.Certificate().ExtraExtensions != nil {
 			unhandledExtensions = append(unhandledExtensions, extended.Certificate().ExtraExtensions...)
 		}
-	}
-	for _, extension := range unhandledExtensions {
-		oid := extension.Id.String()
-		if _, keyExists := extensions[oid]; keyExists {
-			err = fmt.Errorf(gnet.ErrorDuplicateExtension.Error(), oid)
-			break
-		} else {
-			extensions[oid] = extension
+		extensionMap := make(map[string]pkix.Extension, len(unhandledExtensions))
+		for _, extension := range unhandledExtensions {
+			oid := extension.Id.String()
+			if _, keyExists := extensionMap[oid]; keyExists {
+				err = fmt.Errorf(gnet.ErrorDuplicateExtension.Error(), oid)
+				break
+			} else {
+				extensionMap[oid] = extension
+			}
+		}
+		if err == nil {
+			extensions = &extensionMap
 		}
 	}
 	return
@@ -41,7 +45,7 @@ func parseExtensions(extended Extensible) (extensions map[string]pkix.Extension,
 func findExtensionByOID(cert Extensible, oid asn1.ObjectIdentifier) (extension *pkix.Extension, err error) {
 	if cert.Extensions() == nil {
 		err = gnet.ErrorInvalidCertificate
-	} else if value, exists := cert.Extensions()[oid.String()]; !exists {
+	} else if value, exists := (*cert.Extensions())[oid.String()]; !exists {
 		err = fmt.Errorf(gnet.ErrorNoSuchExtension.Error(), oid.String())
 	} else {
 		extension = &value
