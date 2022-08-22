@@ -36,6 +36,7 @@ const (
 	ErrorInvalidCertificateTemplate ValidationError = "invalid certificate template"
 	ErrorInvalidCSR                 ValidationError = "invalid certificate signing request"
 	ErrorInvalidAttestationCert     ValidationError = "invalid attestation certificate"
+	ErrorInvalidCertificate         ValidationError = "invalid certificate"
 	ErrorInvalidManagementKey       ValidationError = "invalid management key"
 	ErrorInvalidPIN                 ValidationError = "invalid pin"
 	ErrorInvalidKeySlot             ValidationError = "invalid key slot"
@@ -46,6 +47,11 @@ const (
 const (
 	ErrorKeyExchangeFailed    CryptoError = "key exchange failed"
 	ErrorUnsupportedAlgorithm CryptoError = "unsupported algorithm"
+)
+
+const (
+	ErrorDuplicateExtension CertificateError = "duplicate extension (asn.1 OID: %s)"
+	ErrorNoSuchExtension    CertificateError = "no such extension (asn.1 OID: %s)"
 )
 
 const (
