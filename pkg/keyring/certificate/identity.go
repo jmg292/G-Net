@@ -11,7 +11,7 @@ type Identity struct {
 }
 
 func (identity *Identity) GetCertificateBySlot(keyslot keyring.KeySlot) (cert *hardwareBackedCertificate, err error) {
-	if extensionOid, e := extensions.GetOIDByKeyslot(keyslot); e != nil {
+	if extensionOid, e := extensions.GetSlotExtensionOID(keyslot); e != nil {
 		err = e
 	} else if certExtension, e := findExtensionByOID(identity, extensionOid); e != nil {
 		err = e
