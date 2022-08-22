@@ -47,3 +47,9 @@ type SequencingError string
 func (e SequencingError) Error() string {
 	return string(e)
 }
+
+type CertificateError string
+
+func (e CertificateError) Error() string {
+	return string(e)
+}
