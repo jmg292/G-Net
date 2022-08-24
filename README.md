@@ -16,6 +16,6 @@ It draws inspiration from a number of similar projects, including:
 
 G-Net was designed to bring zero trust network access to SOHO networks without introducing a third party or any centralized infrastructure.  Device identities are created using coprocessors such as the [TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/), and user identities are created using PIV-capable security tokens such as the [Yubikey](https://www.yubico.com/). 
 
-This project is not yet ready for release.  Code is available in the development branch. 
+This project is not yet ready for release.  Code is available in the development branch. The project roadmap, planned development, and overall progress are available in the [G-Net Project](https://github.com/users/jmg292/projects/1).
 
 Technical documentation is made available in the [Wiki](https://github.com/jmg292/G-Net/wiki) as this project develops.
