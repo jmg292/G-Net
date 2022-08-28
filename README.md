@@ -18,8 +18,11 @@ There are a number of core components in various stages of active and planned de
 
 The project roadmap, planned development, and overall progress are available within [G-Net's Project Page](https://github.com/users/jmg292/projects/1)
 
+## Key Components
 
-## Distributed Identity Platform
+Below you'll find a brief overview of the key functionality provided by core G-Net components.
+
+### Distributed Identity Platform
 
 Existing zero trust network solutions rely on centralized identity providers to handle user authentication and access control. This has created a gap between free solutions capable of authenticating a personal user (e.g. `Log In With [GitHub | Google | Facebook]`) and expensive enterprise IAM solutions (e.g. Active Directory, Okta).  There are plenty of open source identity platforms available to fill the gap, but these solutions often fall short of enterprise products when it comes to device identity management and attestation.
 
