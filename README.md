@@ -34,7 +34,7 @@ G-Net's Distributed Identity Provider is designed to allow a network administrat
 
 To do this while achieving its design goals, G-Net's IDP:
 
-* Leverages widely available, low-cost commodity hardware security modules ([TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/, [Yubikey](https://www.yubico.com/), etc.) to perform secure, reliable identification of users and devices<sup>[2](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.201-3.pdf)</sup>
+* Leverages widely available, low-cost commodity hardware security modules ([TPM](https://trustedcomputinggroup.org/resource/tpm-library-specification/), [Yubikey](https://www.yubico.com/), etc.) to perform secure, reliable identification of users and devices<sup>[2](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.201-3.pdf)</sup>
 * Uses a Proof of Authority blockchain to securely decentralize and distribute its identity database
 * Provides a standard interface to integrate its identity database with existing industry standards such as LDAP and OIDC
 
