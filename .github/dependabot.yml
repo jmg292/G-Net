@@ -1,0 +1,10 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  schedule:
+    interval: daily
+  assignees:
+    - "jmg292"
+  labels:
+    - "dependabot" 
+    - "update"
