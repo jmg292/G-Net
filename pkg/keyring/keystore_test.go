@@ -3,8 +3,11 @@ package keyring_test
 import (
 	"crypto"
 	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
 	"crypto/x509"
 	"errors"
+	"io"
 
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
@@ -16,7 +19,6 @@ type testKeyInfo struct {
 	slot keyring.KeySlot
 }
 
-// Dummy implementation of
 func (info *testKeyInfo) KeySlot() keyring.KeySlot {
 	return info.slot
 }
@@ -33,8 +35,27 @@ func (info *testKeyInfo) KeySecurityPolicy() []byte {
 	return []byte("Test Key")
 }
 
+// Dummy implementation of crypto.Decrypter
+type testDecryptWrapper struct {
+	key *ecdsa.PrivateKey
+}
+
+func (t *testDecryptWrapper) Public() crypto.PublicKey {
+	return t.key.Public()
+}
+
+func (t *testDecryptWrapper) Decrypt(_ io.Reader, _ []byte, _ crypto.DecrypterOpts) ([]byte, error) {
+	return nil, nil
+}
+
+// Dummy implementation of KeyStore
 type testKeyStore struct {
 	privateKey *ecdsa.PrivateKey
+}
+
+func NewTestKeyStore() *testKeyStore {
+	key, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	return &testKeyStore{privateKey: key}
 }
 
 func (*testKeyStore) KeyInfo(slot keyring.KeySlot) (keyring.KeyInfo, error) {
@@ -63,7 +84,12 @@ func (*testKeyStore) CreateKey(_ keyring.KeySlot, _ keyring.KeyType) error {
 	// Not used in this package
 	return ErrNotImplemented
 }
-func (t *testKeyStore) GetPrivateKey(_ keyring.KeySlot) (crypto.PrivateKey, error) {
+func (t *testKeyStore) GetPrivateKey(slot keyring.KeySlot) (key crypto.PrivateKey, err error) {
+	if slot == keyring.EncryptionKeySlot {
+		key = testDecryptWrapper{key: t.privateKey}
+	} else {
+		key = t.privateKey
+	}
 	return t.privateKey, nil
 }
 func (t *testKeyStore) GetPublicKey(_ keyring.KeySlot) (crypto.PublicKey, error) {
