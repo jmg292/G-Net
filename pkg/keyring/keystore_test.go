@@ -86,7 +86,7 @@ func (*testKeyStore) CreateKey(_ keyring.KeySlot, _ keyring.KeyType) error {
 }
 func (t *testKeyStore) GetPrivateKey(slot keyring.KeySlot) (key crypto.PrivateKey, err error) {
 	if slot == keyring.EncryptionKeySlot {
-		key = testDecryptWrapper{key: t.privateKey}
+		key = &testDecryptWrapper{key: t.privateKey}
 	} else {
 		key = t.privateKey
 	}
