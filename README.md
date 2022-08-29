@@ -1,5 +1,7 @@
 # Decentralize Zero Trust
 
+If you'd like a glipse into why I started this project and where it's heading, check out my blog post "[The Many Whys of G-Net](https://www.gnzlabs.io/gnzlabs-blog/many-whys-g-net/)".  There will be a new blog post coinciding with each release over the next couple months!
+
 G-Net provides the core identity management, verification, and access control funtionality that defines Zero Trust<sup>[1](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/43231.pdf)</sup> with an approach that strives to be:
 
 * Distributed & Decentralized
