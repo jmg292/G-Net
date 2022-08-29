@@ -9,6 +9,7 @@ import (
 // It implements crypto.PrivateKey, crypto.Signer and crypto.Decrypter
 type Private struct {
 	Keyring Keystore
+	public  *Public
 }
 
 // NewPrivate creates and returns a new instance of Private using the provided Backend
@@ -16,6 +17,7 @@ type Private struct {
 func NewPrivate(backend Keystore) (keyring *Private, err error) {
 	if err = VerifyKeyAvailability(backend, true); err == nil {
 		keyring = &Private{Keyring: backend}
+		keyring.public, err = NewPublic(backend)
 	}
 	return
 }
