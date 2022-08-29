@@ -44,7 +44,7 @@ func (private Private) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpt
 // Decrypt implements crypto.Decrypter for Private
 // It uses the Backend's encryption key to decrypt the provided msg
 func (private Private) Decrypt(rand io.Reader, msg []byte, opts crypto.DecrypterOpts) (plaintext []byte, err error) {
-	if encryptionKey, e := private.Keyring.GetPrivateKey(SigningKeySlot); e != nil {
+	if encryptionKey, e := private.Keyring.GetPrivateKey(EncryptionKeySlot); e != nil {
 		err = e
 	} else if decrypter, ok := encryptionKey.(crypto.Decrypter); !ok {
 		err = ErrInvalidDecryptionKey
