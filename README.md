@@ -10,12 +10,12 @@ G-Net provides the core identity management, verification, and access control fu
 * Low maintenance
 * Open & Compatible
 
-It's designed to use this core IAM framework to expose domain management, device administration, and peer-to-peer network access functionality. Its target goal is to reduce the overall barrier to entry into modern enterprise-grade security by reducing the complexity zero trust network architecture and eliminating third party dependencies.
+It's designed to use this core IAM framework to expose domain management, device administration, and peer-to-peer network access functionality. Its target goal is to reduce the overall barrier to entry into modern enterprise-grade security by reducing the complexity of zero trust network architecture.
 
 There are a number of core components in various stages of active and planned development, including:
 
-* peer-to-peer distributed device administration tools,
-* peer-to-peer distributed network connectivity tools, and
+* peer-to-peer distributed device administration tools
+* peer-to-peer distributed network connectivity tools
 * interfaces between G-Net components and the existing standards in security and technology
 
 The project roadmap, planned development, and overall progress are available within [G-Net's Project Page](https://github.com/users/jmg292/projects/1)
@@ -23,7 +23,7 @@ The project roadmap, planned development, and overall progress are available wit
 
 ## Distributed Identity Platform
 
-Existing zero trust network solutions rely on centralized identity providers to handle user authentication and access control. This has created a gap between free solutions capable of authenticating a personal user (e.g. `Log In With [GitHub | Google | Facebook]`) and expensive enterprise IAM solutions (e.g. Active Directory, Okta).  There are plenty of open source identity platforms available to fill the gap, but these solutions often fall short of enterprise products when it comes to device identity management and attestation.
+Existing zero trust network solutions rely on centralized identity providers to handle user authentication and access control. This has created a gap between free solutions capable of authenticating a personal user (e.g. `Log In With [GitHub | Google | Facebook]`) and cumbersome enterprise IAM solutions (e.g. Active Directory, Okta).  There are plenty of open source identity platforms available to fill the gap, but these solutions often fall short of enterprise products when it comes to device identity management and attestation.
 
 G-Net's Distributed Identity Provider is designed to allow a network administrator to:
 
