@@ -44,7 +44,7 @@ func (t *testDecryptWrapper) Public() crypto.PublicKey {
 	return t.key.Public()
 }
 
-func (t *testDecryptWrapper) Decrypt(_ io.Reader, _ []byte, _ crypto.DecrypterOpts) ([]byte, error) {
+func (t *testDecryptWrapper) Decrypt(rand io.Reader, msg []byte, opts crypto.DecrypterOpts) (plaintext []byte, err error) {
 	return nil, nil
 }
 
@@ -90,7 +90,7 @@ func (t *testKeyStore) GetPrivateKey(slot keyring.KeySlot) (key crypto.PrivateKe
 	} else {
 		key = t.privateKey
 	}
-	return t.privateKey, nil
+	return
 }
 func (t *testKeyStore) GetPublicKey(_ keyring.KeySlot) (crypto.PublicKey, error) {
 	return t.privateKey.PublicKey, nil
