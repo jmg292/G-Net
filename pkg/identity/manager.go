@@ -1,5 +1,7 @@
 package identity
 
+import "github.com/jmg292/G-Net/pkg/keyring"
+
 // CertificateManager is responsible for managing a keyring's identity certificate.
 // Identity certificates are used to uniquely identify and interact with hardware keyrings.
 // They are comprised of multiple component certificates, derived from keys stored within the keyring
@@ -18,11 +20,11 @@ package identity
 // signing requests, which are used by a certificate authority to tie a keyring's identity
 // into broader public key infrastructure.
 type CertificateManager struct {
-	keyring keyring.Storage
+	keyring keyring.HardwareKeyRing
 }
 
-func New(keyring backend.Storage) (certman *CertificateManager, err error) {
-	if _, err = keyring.Name(); err == nil {
+func New(keyring keyring.HardwareKeyRing) (certman *CertificateManager, err error) {
+	if err = keyring.Open(); err == nil {
 		certman = &CertificateManager{keyring: keyring}
 	}
 	return
