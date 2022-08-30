@@ -13,8 +13,6 @@ Once upon a time I set out to build a VR-native, Windows-based, bare metal malwa
 
 Since then, I've spent a lot of time conducting research on everything I'd need to build in order to realize my cyberpunk dreams.
 
-If you'd like a glipse into why I started this project and where it's heading, check out the series "[The Many Whys of G-Net](https://www.gnzlabs.io/gnzlabs-blog/many-whys-g-net/)" on my blog!
-
 ## Research Foundation
 
 I learned a _ton_ while I was working on G-Net's design, specifically in the areas of:
@@ -109,3 +107,5 @@ If you'd like to learn more about G-Net's VPN design, see: [Networking: Topology
 The project is under active development, with a few additional G-Net components still stuck in the design phase.
 
 The project roadmap, planned development, and overall progress are available within [G-Net's Project Page](https://github.com/users/jmg292/projects/1)
+
+If you'd like a glipse into why I started this project and where it's heading, check out the series "[The Many Whys of G-Net](https://www.gnzlabs.io/gnzlabs-blog/many-whys-g-net/)" on my blog!
