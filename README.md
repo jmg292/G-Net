@@ -13,7 +13,7 @@ Once upon a time I set out to build a VR-native, Windows-based, bare metal malwa
 
 Since then, I've spent a lot of time conducting research on everything I'd need to build in order to realize my cyberpunk dreams.
 
-If you'd like a glipse into why I started this project and where it's heading, check out the series "[The Many Whys of G-Net](https://www.gnzlabs.io/gnzlabs-blog/many-whys-g-net/)" on my blog! I have a new post planned to coinciding with each release over the next few weeks.
+If you'd like a glipse into why I started this project and where it's heading, check out the series "[The Many Whys of G-Net](https://www.gnzlabs.io/gnzlabs-blog/many-whys-g-net/)" on my blog!
 
 ## Research Foundation
 
