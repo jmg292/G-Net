@@ -1,4 +1,4 @@
-package yubikey
+package yubikeyring
 
 import (
 	"github.com/go-piv/piv-go/piv"
@@ -22,7 +22,7 @@ func convertKeyslotToPivSlot(keyslot keyring.KeySlot) (slot piv.Slot, err error)
 	return
 }
 
-func convertKeytypeToPivAlg(keytype keyring.SupportedKeyType) (alg piv.Algorithm, err error) {
+func convertKeytypeToPivAlg(keytype keyring.KeyType) (alg piv.Algorithm, err error) {
 	switch keytype {
 	case keyring.EC256Key:
 		alg = piv.AlgorithmEC256

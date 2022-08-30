@@ -1,4 +1,4 @@
-package yubikey
+package yubikeyring
 
 import (
 	"crypto"
@@ -60,7 +60,7 @@ func (y *Backend) Close() error {
 	return nil
 }
 
-func (y *Backend) CreateKey(keyslot keyring.KeySlot, keytype keyring.SupportedKeyType) (err error) {
+func (y *Backend) CreateKey(keyslot keyring.KeySlot, keytype keyring.KeyType) (err error) {
 	if keyslot == keyring.ManagementKeySlot && keytype == keyring.ManagementKey {
 		err = y.createManagementKey()
 	} else if keyslot == keyring.ManagementKeySlot || keytype == keyring.ManagementKey {
@@ -120,13 +120,15 @@ func (y *Backend) SetCertificate(keyslot keyring.KeySlot, cert *x509.Certificate
 		err = e
 	} else if key, e := y.GetPrivateKey(keyring.ManagementKeySlot); e != nil {
 		err = e
-	} else if managementKey, ok := key.([keyring.ManagementKeySize]byte); !ok {
+	} else if managementKey, ok := key.([]byte); !ok {
 		err = gnet.ErrorInvalidManagementKey
 	} else if handle, e := y.getYubikeyHandle(); e != nil {
 		err = e
 	} else {
 		defer y.releaseYubikeyHandle()
-		err = handle.SetCertificate(managementKey, slot, cert)
+		var mk [24]byte
+		copy(mk[:], managementKey)
+		err = handle.SetCertificate(mk, slot, cert)
 	}
 	return
 }

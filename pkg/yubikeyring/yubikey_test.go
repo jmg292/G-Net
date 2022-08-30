@@ -1,4 +1,4 @@
-package yubikey_test
+package yubikeyring_test
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 	"github.com/go-piv/piv-go/piv"
 	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 	"github.com/jmg292/G-Net/pkg/keyring"
-	"github.com/jmg292/G-Net/pkg/keyring/backend/yubikey"
+	"github.com/jmg292/G-Net/pkg/yubikeyring"
 )
 
 func TestMain(m *testing.M) {
-	if yk, err := yubikey.New(); err != nil {
+	if yk, err := yubikeyring.New(); err != nil {
 		panic(fmt.Errorf("Test setup failed with error: %s", err))
 	} else {
 		if err = yk.Reset(); err != nil {
@@ -23,7 +23,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestGetName(t *testing.T) {
-	if yk, err := yubikey.New(); err != nil {
+	if yk, err := yubikeyring.New(); err != nil {
 		t.Errorf("failed to open yubikey: %s", err)
 	} else if name, err := yk.Name(); err != nil {
 		t.Errorf("failed to get name: %s", err)

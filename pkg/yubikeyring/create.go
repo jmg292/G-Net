@@ -1,4 +1,4 @@
-package yubikey
+package yubikeyring
 
 import (
 	"crypto/rand"
@@ -31,10 +31,10 @@ func (y *Backend) createPivKey(slot piv.Slot, alg piv.Algorithm) (err error) {
 }
 
 func (y *Backend) createManagementKey() (err error) {
-	var newKey [keyring.ManagementKeySize]byte
+	var newKey [ManagementKeySize]byte
 	if bytesRead, e := rand.Read(newKey[:]); e != nil {
 		err = e
-	} else if bytesRead != int(keyring.ManagementKeySize) {
+	} else if bytesRead != int(ManagementKeySize) {
 		err = gnet.ErrorKeyGenFailed
 	} else if managmentKey, e := y.GetPrivateKey(keyring.ManagementKeySlot); e != nil {
 		err = e

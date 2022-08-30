@@ -1,4 +1,4 @@
-package yubikey
+package yubikeyring
 
 import (
 	"sync"
