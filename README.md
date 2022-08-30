@@ -52,7 +52,7 @@ I didn't actually set out to get involved in the "Zero Trust" game at all. G-Net
 
 Searching for related work led me to [Google's BeyondCorp](https://storage.googleapis.com/pub-tools-public-publication-data/pdf/43231.pdf) implementation, which ultimately led me to [NIST.SP.800-207 - Zero Trust](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf). I was pleasantly surprised to find an industry standard solution to my specific problems and decided to adopt ZTNA tenets as a part of this project.
 
-## Identity & Access Management
+### Identity & Access Management
 
 I thoroughly evaluated every IDP, PDP, and VPN available to me during the research phase of this project. During this evaluation I was unable to find simple way to identity and authenticate devices using a TPM.  All of the products I evaluated:
 
@@ -63,7 +63,7 @@ I thoroughly evaluated every IDP, PDP, and VPN available to me during the resear
 
 I decided to build my own identity engine - one with a bit more flexibility.
 
-### Network Blockchain
+#### Network Blockchain
 
 At its heart, the G-Net uses a Proof of Authority blockchain (called a [Tracery](https://github.com/jmg292/G-Net/wiki/Traceries:-The-Network-Configuration-Blockchain)) as an identity database.  Other components use the Tracery for domain configuration, device management, authorization, and access control.
 
@@ -81,7 +81,7 @@ And:
 
 That opens up some pretty neat policy options for airgapped devices.
 
-### Distributed Identity Platform
+#### Distributed Identity Platform
 
 G-Net's dIDP is designed to provide the identity verification and authentication functionality required to adopt the "Tenets of Zero Trust" described in [NIST.SP.800-207](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-207.pdf). It mandates the use of security tokens (such as the Yubikey) or commodity HSMs (such as the TPM) for:
 
