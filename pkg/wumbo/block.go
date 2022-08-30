@@ -1,7 +1,7 @@
 package wumbo
 
 import (
-	"github.com/jmg292/G-Net/pkg/crypto/public"
+	"github.com/jmg292/G-Net/pkg/keyring"
 	"github.com/jmg292/G-Net/pkg/wumbo/header"
 	"golang.org/x/crypto/sha3"
 )
@@ -18,6 +18,6 @@ func (block *Block) Digest() []byte {
 	return digestFunction.Sum(block.Content)
 }
 
-func (block *Block) Validate(issuer any) error {
-	return issuer.(public.KeyRing).VerifySignature(block.Digest(), block.Signature)
+func (block *Block) Validate(issuer any) bool {
+	return issuer.(keyring.PublicKeyRing).VerifySignature(block.Digest(), block.Signature)
 }

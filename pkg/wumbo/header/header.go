@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jmg292/G-Net/internal/datagram"
-	"github.com/jmg292/G-Net/pkg/crypto/public"
+	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
 const ByteCount int = 82
@@ -21,7 +21,7 @@ type Header struct {
 func New(precedingBlockId []byte, blockType datagram.Type, contentLength int, issuer any) *Header {
 	Header := Header{
 		PrecedingBlockDigest: precedingBlockId,
-		IssuerFingerprint:    issuer.(public.KeyRing).Fingerprint(),
+		IssuerFingerprint:    issuer.(keyring.PublicKeyRing).Identifier(),
 		CreationTime:         time.Now(),
 		BlockType:            blockType,
 		ContentLength:        uint32(contentLength),

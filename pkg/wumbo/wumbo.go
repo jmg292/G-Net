@@ -1,8 +1,10 @@
 package wumbo
 
 import (
+	"crypto/rand"
+
 	"github.com/jmg292/G-Net/internal/datagram"
-	"github.com/jmg292/G-Net/pkg/crypto/private"
+	"github.com/jmg292/G-Net/pkg/keyring"
 	"github.com/jmg292/G-Net/pkg/wumbo/header"
 )
 
@@ -16,7 +18,7 @@ func New(precedingBlockId []byte, data any, issuer any) (*Block, error) {
 		Header:  header.New(precedingBlockId, contentType, len(blockContent), issuer),
 		Content: blockContent,
 	}
-	if newBlock.Signature, err = issuer.(private.KeyRing).Sign(newBlock.Digest()); err != nil {
+	if newBlock.Signature, err = issuer.(keyring.PrivateKeyRing).Sign(rand.Reader, newBlock.Digest(), nil); err != nil {
 		return nil, err
 	}
 	return &newBlock, nil
