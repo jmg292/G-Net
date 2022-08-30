@@ -15,6 +15,7 @@ func NewPublic(backend Keystore) (keyring *Public, err error) {
 }
 
 type PublicKeyRing interface {
+	DeviceInfo
 	// VerifySignature uses a certificate's public
 	// signing key to verify signed data
 	VerifySignature(data, signature []byte) bool

@@ -1,5 +1,7 @@
 # Peer-to-Peer Distributed, Decentralized Zero Trust Toolkit
 
+![CodeQL Analysis](https://github.com/jmg292/G-Net/actions/workflows/codeql-analysis.yml/badge.svg)
+
 Once upon a time I set out to build a VR-native, Windows-based, bare metal malware analysis lab capable of:
 
 1. Dynamically generating a force-directed, 3D Virtual Reality node map of every device on my network

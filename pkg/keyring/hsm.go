@@ -1,14 +1,14 @@
 package keyring
 
 type DeviceInfo interface {
-	DeviceVendor() string
-	DeviceIdentifier() []byte
-	DeviceVersion() string
+	Vendor() string
+	Identifier() []byte
+	Version() string
 }
 
 type HardwareKeyRing interface {
 	DeviceInfo
 	Keystore
 	PublicKeyRing
-	Private
+	PrivateKeyRing
 }

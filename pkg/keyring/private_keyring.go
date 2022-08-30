@@ -5,6 +5,13 @@ import (
 	"io"
 )
 
+type PrivateKeyRing interface {
+	DeviceInfo
+	crypto.PrivateKey
+	crypto.Signer
+	crypto.Decrypter
+}
+
 // Private is a crypto.PrivateKey implementation for keyring.Backend.
 // It implements crypto.PrivateKey, crypto.Signer and crypto.Decrypter
 type Private struct {
