@@ -63,9 +63,11 @@ I decided to build my own identity engine - one with a bit more flexibility.
 
 #### Network Blockchain
 
-At its heart, the G-Net uses a Proof of Authority blockchain (called a [Tracery](https://github.com/jmg292/G-Net/wiki/Traceries:-The-Network-Configuration-Blockchain)) as an identity database.  Other components use the Tracery for domain configuration, device management, authorization, and access control.
+At its heart, the G-Net uses a Proof of Authority blockchain (called a [Tracery](https://github.com/jmg292/G-Net/wiki/Traceries:-The-Network-Configuration-Blockchain)) as an identity database.  Other components use the Tracery for domain configuration, device management, authorization, and access control. The Tracery is a core component of G-Net.  
 
-The Tracery is a core component of G-Net.  Incorporating the Tracery into the design means G-Net can store full copy of this tamper-proof database is stored on every node, which allows a node to act as its own IDP, PDP, and Certificate Authority.
+Incorporating the Tracery into the design allows G-Net to store a full, tamper-proof copy of its database on every node in a network. Traceries provide strong guarantees of integrity and non-repudiation, allowing authoritative services to store their databases on user-owned endpoint devices without any concern of unauthorized modification. 
+
+Since the database is stored locally, G-Net nodes provide their own authoritative IDP and PDP services. Additionally, any and every node is allowed (even encouraged!) to host its own authoritative directory server, domain controller, and certificate authority. These services are logically federated under a single domain and securely managed by a central Network Authority.
 
 This is only possible thanks to a PoA blockchain's natural tamper-resistance. Modifying a locally stored copy of the Tracery without delegated authority from the network's Founder will cause validation checks to _fail_. G-Net's core network services will cease to function if an invalid Tracery is detected, preventing the node from communicating with the rest of the network (unless the unauthorized modification can be reverted).
 
