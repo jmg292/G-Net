@@ -52,7 +52,7 @@ Searching for related work led me to [Google's BeyondCorp](https://storage.googl
 
 ### Identity & Access Management
 
-I thoroughly evaluated every IDP, PDP, and VPN available to me during the research phase of this project. During this evaluation I was unable to find simple way to identity and authenticate devices using a TPM.  All of the products I evaluated:
+I thoroughly evaluated every IDP, PDP, and VPN available to me during the research phase of this project. During this evaluation I was unable to find simple way to identify and authenticate devices using a TPM.  All of the products I evaluated:
 
 1. Either required a _ton_ of additional PKI to enable certificate-based authentication (see: [Okta Device Trust](https://help.okta.com/en-us/Content/Topics/Mobile/Okta_Mobile_Device_Trust_Windows-desktop.htm)), or
 2. Offered no support for the TPM at all
@@ -77,7 +77,7 @@ The Tracery's fail-secure tamper detection allowed me to design some pretty cool
 
 And:
 
-> Even in this configuration, a node is unable to make changes to the domain domain without authorization from a central Network Authority.
+> Even in this configuration, a node is unable to make changes to the domain without authorization from a central Network Authority.
 
 That opens up some pretty neat policy options for airgapped devices.
 
