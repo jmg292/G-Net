@@ -1,1 +1,0 @@
-package slot_test
