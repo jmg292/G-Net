@@ -5,7 +5,7 @@ import (
 
 	"github.com/jmg292/G-Net/internal/datagram"
 	"github.com/jmg292/G-Net/internal/utilities/convert"
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 func (h *header) ToBytes() []byte {

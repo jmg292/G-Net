@@ -3,7 +3,7 @@ package identity
 import (
 	"crypto/x509"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 func mapCertMemberstoCSR(cert *x509.Certificate) (csr *x509.CertificateRequest, err error) {

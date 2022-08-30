@@ -3,8 +3,8 @@ package certificate
 import (
 	"crypto/x509"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
-	"github.com/jmg292/G-Net/pkg/keyring/certificate/extensions"
+	"github.com/jmg292/G-Net/pkg/certificate/extensions"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 type ProvableOrigin interface {

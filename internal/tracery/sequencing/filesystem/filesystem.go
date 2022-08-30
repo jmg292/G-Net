@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/jmg292/G-Net/internal/tracery/sequencing/filesystem/entry"
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 type sequenceMapFile struct {

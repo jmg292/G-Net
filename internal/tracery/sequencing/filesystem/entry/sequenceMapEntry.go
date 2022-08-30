@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 
 	"github.com/jmg292/G-Net/internal/utilities/convert"
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 const Size int64 = 40

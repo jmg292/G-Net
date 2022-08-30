@@ -6,7 +6,7 @@ import (
 	"encoding/asn1"
 	"fmt"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 type Extensible interface {

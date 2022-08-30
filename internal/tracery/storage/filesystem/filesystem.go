@@ -6,7 +6,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
 type blockStorageDirectory struct {

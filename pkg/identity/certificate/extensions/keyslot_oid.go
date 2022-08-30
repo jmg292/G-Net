@@ -3,7 +3,7 @@ package extensions
 import (
 	"encoding/asn1"
 
-	"github.com/jmg292/G-Net/pkg/gnet"
+	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 	"github.com/jmg292/G-Net/pkg/keyring"
 )
 
