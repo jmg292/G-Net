@@ -1,4 +1,4 @@
-# A Peer-to-Peer Distributed, Decentralized Zero Trust Toolkit
+# Peer-to-Peer Distributed, Decentralized Zero Trust Toolkit
 
 Once upon a time I set out to build a VR-native, Windows-based, bare metal malware analysis lab capable of:
 
