@@ -1,0 +1,51 @@
+-----BEGIN PGP SIGNED DOCUMENT-----
+
+############################################################################################
+#                                                                                          #
+#                          GNZ LABS : G-NET : DOMAIN VERIFICATION                          #
+#                                                                                          #
+############################################################################################
+
+The following domain names were registered as a way to learn more about distributed network 
+service design and distribution models in use by existing peer-to-peer networks.  
+G-Net's Tracery design is derived from the work done here: https://unstoppabledomains.com/
+
+============================================================================================
+
+                                - G-Net Cloud Network - 
+
+Domain Name:            gnet-cloud.network
+Domain Registrar:       Google
+Registration Date:      02/08/2022
+Use case:               Peer-to-Peer VPN with Central DNS
+CT Logs:                https://crt.sh/?q=gnet-cloud.network
+
+============================================================================================
+
+                                  - Cloud Complex -
+
+Domain Name:            cloud-comple.x
+Registrar:              Unstoppable Domains
+Registration Date:      04/28/2022
+Use case:               Peer-to-Peer Distributed DNS on the Polygon Network
+Transaction Hash:       0x05f842fb847b3da4ca9592298d5d0a700caadc01853faa0011d688ab866e83ab
+
+============================================================================================
+
+Signer:                 root@gnet-cloud.network (a.k.a: jeff@gnzlabs.com)
+Fingerprint:            9346 70A5 5A62 28A2 8933 5E02 57F3 FE60 DA83 B3BE
+Public Keyserver:       hkps://keyserver.ubuntu.com
+PGP Key URL:            https://github.com/jmg292.gpg
+Timestamp:              2022-08-31T15:55:40Z
+
+============================================================================================
+
+-----END PGP SIGNED DOCUMENT-----
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSTRnClWmIoookzXgJX8/5g2oOzvgUCYw+GnwAKCRBX8/5g2oOz
+vnKkAQCWxji+g9MqfzGMmjaxkRHfv9r3eLlo6BTQxcQEZ0rysgD/Y+7S0WECcqPs
+hIQc1q7qh5oZ/t5wHQ9ZlZyOdbGm/gQ=
+=p39f
+-----END PGP SIGNATURE-----
