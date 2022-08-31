@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/awnumar/memguard v0.22.3
-	github.com/go-piv/piv-go v1.9.0
+	github.com/go-piv/piv-go v1.10.0
 	github.com/google/go-tpm v0.3.3
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 )
