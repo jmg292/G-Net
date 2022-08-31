@@ -41,7 +41,7 @@ I haven't just spent all my time on research!  Over the years I've tinkered with
 * [wumbo-scale (alternately: JeffScale)](https://github.com/jmg292/wumbo-scale): A deep dive into [Tailscale](https://tailscale.com/) - A zero-configuration peer-to-peer VPN built on Wireguard
 * [G-Net Citadel](https://github.com/jmg292/G-Net_Archive/tree/main/CitadelNetworkManager): My first crack at building a peer-to-peer VPN on top of Wireguard
 
-#### Previous work
+### Previous work
 
 Some of G-Net's design is inspired by unrelated development projects written earlier in my career.
 
