@@ -33,7 +33,7 @@ I learned a _ton_ while I was working on G-Net's design, specifically in the are
 
 If you'd like to learn more about G-Net's research foundation, check out the [Foundational Research, Inspiration, and Credits](https://github.com/jmg292/G-Net/wiki/Foundational-Research,-Inspiration,-and-Credits) page on the wiki!
 
-## Exploratory Projects
+### Exploratory Projects
 
 I haven't just spent all my time on research!  Over the years I've tinkered with a few other projects to understand the various technologies that would be involved in this effort to achieve my cyberpunk dreams.
 
@@ -41,7 +41,7 @@ I haven't just spent all my time on research!  Over the years I've tinkered with
 * [wumbo-scale (alternately: JeffScale)](https://github.com/jmg292/wumbo-scale): A deep dive into [Tailscale](https://tailscale.com/) - A zero-configuration peer-to-peer VPN built on Wireguard
 * [G-Net Citadel](https://github.com/jmg292/G-Net_Archive/tree/main/CitadelNetworkManager): My first crack at building a peer-to-peer VPN on top of Wireguard
 
-### Previous work
+#### Previous work
 
 Some of G-Net's design is inspired by unrelated development projects written earlier in my career.
 
