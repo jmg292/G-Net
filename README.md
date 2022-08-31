@@ -13,6 +13,13 @@ Once upon a time I set out to build a VR-native, Windows-based, bare metal malwa
 7. Viewing the captured information in 3D Virtual Reality
 8. Performing static binary analysis in 3D virtual reality
 
+I quickly learned one simple truth: before a person is able to build a new type of tool, they have to solve a whole bunch of brand new types of problems.  The first problem I had to solve can be seen below (the gif is big and ~30 seconds long, but it's worth it):
+
+![https://drive.google.com/file/d/1xxahxgfnG4kLWt2-jULwId8oCu7bISe4](https://github.com/jmg292/G-Net/blob/main/assets/radare2vr-fs-explosion.gif?raw=true)
+
+_It's a really bad idea to integrate a filesystem with a physics engine_
+
+
 Since then, I've spent a lot of time conducting research on everything I'd need to build in order to realize my cyberpunk dreams.
 
 ## Research Foundation
