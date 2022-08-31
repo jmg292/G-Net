@@ -19,9 +19,6 @@ I quickly learned one simple truth: before a person is able to build a new type 
 
 _It's a really bad idea to integrate a filesystem with a physics engine_
 
-
-Since then, I've spent a lot of time conducting research on everything I'd need to build in order to realize my cyberpunk dreams.
-
 ## Research Foundation
 
 I learned a _ton_ while I was working on G-Net's design, specifically in the areas of:
@@ -35,6 +32,21 @@ I learned a _ton_ while I was working on G-Net's design, specifically in the are
 * Cryptographic coprocessors and security tokens
 
 If you'd like to learn more about G-Net's research foundation, check out the [Foundational Research, Inspiration, and Credits](https://github.com/jmg292/G-Net/wiki/Foundational-Research,-Inspiration,-and-Credits) page on the wiki!
+
+## Exploratory Projects
+
+I haven't just spent all my time on research!  Over the years I've tinkered with a few other projects to understand the various technologies that would be involved in this effort to achieve my cyberpunk dreams.
+
+* [PyArmoryCtl](https://github.com/jmg292/pyarmoryctl): Learning more about [Bluetooth's multipoint mesh](https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/mesh/mesh-faq/) through implementing an AT interface for the [ANNA-B112](https://www.u-blox.com/en/product/anna-b112-open-cpu) on the [USB Armory Mk. 2](https://github.com/usbarmory/usbarmory)
+* [wumbo-scale (alternately: JeffScale)](https://github.com/jmg292/wumbo-scale): A deep dive into [Tailscale](https://tailscale.com/) - A zero-configuration peer-to-peer VPN built on Wireguard
+* [G-Net Citadel](https://github.com/jmg292/G-Net_Archive/tree/main/CitadelNetworkManager): My first crack at building a peer-to-peer VPN on top of Wireguard
+
+### Previous work
+
+Some of G-Net's design is inspired by unrelated development projects written earlier in my career.
+
+* [TORComm](https://github.com/jmg292/TORComm): Learning more about the TOR network by re-implementing its protocol from scratch
+* [PyArmory](https://github.com/jmg292/PyArmory): Exploring the various communications protocols available on the [USB Armory Mk. 2](https://github.com/usbarmory/usbarmory)
 
 ## Design Overview
 
