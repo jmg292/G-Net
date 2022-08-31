@@ -125,6 +125,21 @@ G-Net's VPN exists as a byproduct of the network and routing services available 
 
 If you'd like to learn more about G-Net's VPN design, see: [Networking: Topology, Routing, and Packet Delivery](https://github.com/jmg292/G-Net/wiki/Networking:-Topology,-Routing,-and-Packet-Delivery)
 
+### Transparency & Auditability
+
+G-Net's [core design philosophies](https://github.com/jmg292/G-Net/wiki/Design-Philosophies/5bd3c88cfe156c24f1a48c59e0f57068959bd569) have _always_ involved the two fundamental beliefs that:
+
+* A device's owner should always have a say in its configuration
+* Identities should be permanent, immutable, and cryptographically verifiable
+
+G-Net is able to guarantee _complete Transparency and Auditability_ of a node's _locally stored configuration_ by combining these two philosophies in the form of a [Tracery](https://github.com/jmg292/G-Net/wiki/Traceries:-The-Network-Configuration-Blockchain). This is [briefly described in the existing article](https://github.com/jmg292/G-Net/wiki/WUMBO-Format-Overview):
+
+> WUMBO is designed with security in mind. The authenticity, integrity, and origin of each WUMBO'd packet is cryptographically guaranteed, and that guarantee can be verified by any node in a G-Net network. Additionally, a WUMBO'd packet will fail verification if it's processed out of sequence, which protects against accidental misconfiguration.
+
+> WUMBO formatting prevents unauthorized modification of a G-Net network's configuration by linking the integrity of each control packet to the integrity of control packet before it. Additionally, the process of WUMBO-ing a packet requires the packet to be signed by an authorized network administrator. This creates a fully transparent change management process by creating a public, irrevocable link between a network administrator and the configuration changes that they implement.
+
+A deep dive into the way these link together is available in a new Wiki titled [Transparency & Auditability: A Functional Overview](https://github.com/jmg292/G-Net/wiki/Transparency-&-Auditability:-A-Functional-Overview).  This article combines [existing](https://github.com/jmg292/G-Net/wiki/WUMBO-Format-Overview) [specification](https://github.com/jmg292/G-Net/wiki/Format-Specification---Warrant-&-Update-Management-Block-Object) documentation to illustrate how _G-Net's Transparency & Immutability_ are _cryptographically verifiable byproducts_ derived by _each node individually_ through the simple act of _loading its locally stored configuration_ from a Tracery.
+
 ### Additional Components
 
 The project is under active development, with a few additional G-Net components still stuck in the design phase.
