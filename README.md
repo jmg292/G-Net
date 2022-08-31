@@ -37,7 +37,7 @@ If you'd like to learn more about G-Net's research foundation, check out the [Fo
 
 I haven't just spent all my time on research!  Over the years I've tinkered with a few other projects to understand the various technologies that would be involved in this effort to achieve my cyberpunk dreams.
 
-* [PyArmoryCtl](https://github.com/jmg292/pyarmoryctl): Learning more about [Bluetooth's multipoint mesh](https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/mesh/mesh-faq/) through implementing an AT interface for the [ANNA-B112](https://www.u-blox.com/en/product/anna-b112-open-cpu) on the [USB Armory Mk. 2](https://github.com/usbarmory/usbarmory)
+* [PyArmoryCtl](https://github.com/jmg292/pyarmoryctl): Learning more about [Bluetooth's multipoint mesh](https://www.bluetooth.com/learn-about-bluetooth/recent-enhancements/mesh/mesh-faq/) by tinkering with the [ANNA-B112](https://www.u-blox.com/en/product/anna-b112-open-cpu)'s AT interface
 * [wumbo-scale (alternately: JeffScale)](https://github.com/jmg292/wumbo-scale): A deep dive into [Tailscale](https://tailscale.com/) - A zero-configuration peer-to-peer VPN built on Wireguard
 * [G-Net Citadel](https://github.com/jmg292/G-Net_Archive/tree/main/CitadelNetworkManager): My first crack at building a peer-to-peer VPN on top of Wireguard
 
