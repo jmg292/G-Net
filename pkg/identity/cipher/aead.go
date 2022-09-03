@@ -26,6 +26,7 @@ func New(pubkey crypto.PublicKey, alg x509.PublicKeyAlgorithm, signingKey crypto
 			signer:    signingKey,
 		}
 	}
+	return
 }
 
 func NewPivAead(peer certificate.Identity, signingKey crypto.Signer) (aead cipher.AEAD, err error) {
