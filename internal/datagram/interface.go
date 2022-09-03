@@ -1,7 +1,7 @@
 package datagram
 
 type Opaque interface {
-	Type() Type
+	Type() string
 	Data() []byte
 }
 
