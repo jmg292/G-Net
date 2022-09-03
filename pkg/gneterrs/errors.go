@@ -47,6 +47,7 @@ const (
 const (
 	ErrorKeyExchangeFailed    CryptoError = "key exchange failed"
 	ErrorUnsupportedAlgorithm CryptoError = "unsupported algorithm"
+	ErrorUnsupportedSigScheme CryptoError = "unsupported signature scheme"
 )
 
 const (
