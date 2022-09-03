@@ -1,4 +1,4 @@
-package entries
+package entry
 
 import (
 	"time"
