@@ -13,6 +13,7 @@ require github.com/awnumar/memcall v0.1.2 // indirect
 
 require (
 	github.com/VirusTotal/gyp v0.8.0 // indirect
+	github.com/aead/ecdh v0.2.0 // indirect
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
