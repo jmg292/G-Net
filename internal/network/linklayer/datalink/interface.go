@@ -1,11 +1,11 @@
-package linklayer
+package datalink
 
 import (
 	"github.com/jmg292/G-Net/internal/datagram"
 	"github.com/jmg292/G-Net/internal/datagram/management/edict"
 )
 
-type Link interface {
+type Connection interface {
 	Name() string
 	Configure([]*edict.NetworkRoute) error
 	ModifyConfiguration(*edict.NetworkRoute) error

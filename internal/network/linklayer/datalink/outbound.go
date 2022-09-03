@@ -1,4 +1,4 @@
-package linklayer
+package datalink
 
 import (
 	"github.com/jmg292/G-Net/internal/datagram"
@@ -6,24 +6,23 @@ import (
 	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 )
 
-// output.Link
-type Link struct {
+type Outbound struct {
 	name  string
 	rules []*edict.NetworkRoute
 }
 
-func (o *Link) Name() string {
+func (o *Outbound) Name() string {
 	return o.name
 }
 
-func (o *Link) Configure(routes *[]edict.NetworkRoute) error {
+func (o *Outbound) Configure(routes *[]edict.NetworkRoute) error {
 	return gnet.ErrorNotYetImplemented
 }
 
-func (o *Link) ModifyConfiguration(route *edict.NetworkRoute) error {
+func (o *Outbound) ModifyConfiguration(route *edict.NetworkRoute) error {
 	return gnet.ErrorNotYetImplemented
 }
 
-func (o *Link) Handle(packet *datagram.Sealed) error {
+func (o *Outbound) Handle(packet *datagram.Sealed) error {
 	return gnet.ErrorNotYetImplemented
 }
