@@ -14,7 +14,11 @@ require github.com/awnumar/memcall v0.1.2 // indirect
 require (
 	github.com/VirusTotal/gyp v0.8.0 // indirect
 	github.com/golang/protobuf v1.5.0 // indirect
+	github.com/google/uuid v1.3.0 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/sethvargo/go-envconfig v0.6.0 // indirect
 	github.com/suborbital/grav v0.5.1 // indirect
+	github.com/suborbital/vektor v0.6.0 // indirect
 	golang.org/x/sys v0.0.0-20220731174439-a90be440212d // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 )
