@@ -10,6 +10,7 @@ type PrivateKeyRing interface {
 	crypto.PrivateKey
 	crypto.Signer
 	crypto.Decrypter
+	Authenticate(io.Reader, []byte, crypto.SignerOpts) ([]byte, error)
 }
 
 // Private is a crypto.PrivateKey implementation for keyring.Backend.
