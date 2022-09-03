@@ -7,35 +7,36 @@ import (
 
 	gnet "github.com/jmg292/G-Net/pkg/gneterrs"
 	"github.com/jmg292/G-Net/pkg/identity/certificate"
+	"github.com/jmg292/G-Net/pkg/keyring"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
 type Aead struct {
 	symmetric []byte
 	ephemeral crypto.PublicKey
-	signer    crypto.Signer
+	hsm       keyring.HardwareKeyRing
 }
 
-func New(pubkey crypto.PublicKey, alg x509.PublicKeyAlgorithm, signingKey crypto.Signer) (aead cipher.AEAD, err error) {
+func New(pubkey crypto.PublicKey, alg x509.PublicKeyAlgorithm, hsm keyring.HardwareKeyRing) (aead cipher.AEAD, err error) {
 	if symmetric, pub, e := exchangeKey(pubkey, alg); e != nil {
 		err = e
 	} else {
 		aead = &Aead{
 			symmetric: symmetric,
 			ephemeral: pub,
-			signer:    signingKey,
+			hsm:       hsm,
 		}
 	}
 	return
 }
 
-func NewPivAead(peer certificate.Identity, signingKey crypto.Signer) (aead cipher.AEAD, err error) {
+func NewPivAead(peer certificate.Identity, hsm keyring.HardwareKeyRing) (aead cipher.AEAD, err error) {
 	if cert, e := peer.EncryptionCertificate(); e != nil {
 		err = e
 	} else if cert != nil {
 		err = gnet.ErrorInvalidCertificate
 	} else if cert.Certificate().PublicKey != nil {
-		aead, err = New(peer.Certificate().PublicKey, peer.Certificate().PublicKeyAlgorithm, signingKey)
+		aead, err = New(peer.Certificate().PublicKey, peer.Certificate().PublicKeyAlgorithm, hsm)
 	}
 	return
 }
