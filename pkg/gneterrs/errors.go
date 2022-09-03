@@ -26,6 +26,7 @@ const (
 )
 
 const (
+	ErrorInvalidDatagram            ValidationError = "invalid datagram"
 	ErrorInvalidSignature           ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest       ValidationError = "invalid message digest"
 	ErrorInvalidHeader              ValidationError = "invalid header"
