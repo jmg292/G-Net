@@ -1,6 +1,6 @@
 package datagram
 
-type Datagram interface {
+type Opaque interface {
 	Type() Type
 }
 
