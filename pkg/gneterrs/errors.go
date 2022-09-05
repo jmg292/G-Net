@@ -53,6 +53,12 @@ const (
 )
 
 const (
+	ErrorDropped      ConnectionError = "connection dropped"
+	ErrorEvalFailed   ConnectionError = "rule evaluation failed (Layer: %s) - %s"
+	ErrorHandleFailed ConnectionError = "connection handling failed (Layer: %s) - %s"
+)
+
+const (
 	ErrorDuplicateExtension CertificateError = "duplicate extension (asn.1 OID: %s)"
 	ErrorNoSuchExtension    CertificateError = "no such extension (asn.1 OID: %s)"
 )
