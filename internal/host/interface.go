@@ -1,7 +1,5 @@
 package host
 
-import gnet "github.com/jmg292/G-Net/pkg/gneterrs"
-
 type LogLevel uint8
 
 const (
@@ -15,8 +13,8 @@ const (
 	Panic
 )
 
-func GetHost() (Host, error) {
-	return nil, gnet.ErrorNotYetImplemented
+func GetHost() Host {
+	return nil
 }
 
 type Host interface {
