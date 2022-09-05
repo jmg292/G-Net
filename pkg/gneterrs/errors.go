@@ -26,6 +26,7 @@ const (
 )
 
 const (
+	ErrorInvalidDataframe           ValidationError = "invalid dataframe"
 	ErrorInvalidDatagram            ValidationError = "invalid datagram"
 	ErrorInvalidSignature           ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest       ValidationError = "invalid message digest"
