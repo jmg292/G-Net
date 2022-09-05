@@ -1,13 +1,13 @@
 package datalink
 
 import (
-	"github.com/jmg292/G-Net/internal/datagram"
 	"github.com/jmg292/G-Net/internal/datagram/management/edict"
+	"github.com/jmg292/G-Net/internal/network/linklayer/packet"
 )
 
 type Connection interface {
 	Name() string
-	Configure([]*edict.NetworkRoute) error
+	Direction() ConnectionDirection
 	ModifyConfiguration(*edict.NetworkRoute) error
-	Handle(*datagram.Sealed) error
+	Handle(*packet.DataFrame) error
 }
