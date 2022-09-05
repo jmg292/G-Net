@@ -1,4 +1,4 @@
-package linklayer
+package packet
 
 import "time"
 

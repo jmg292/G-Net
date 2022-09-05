@@ -1,4 +1,4 @@
-package linklayer
+package packet
 
 import (
 	"encoding/json"
@@ -31,32 +31,37 @@ func Frame(from, to string, payload datagram.ContentType) *DataFrame {
 }
 
 // UUID implements LinkLayer for DataFrame
-func (packet *DataFrame) UUID() string {
+func (packet DataFrame) UUID() string {
 	return string(packet.EphemeralKey)
 }
 
 // ParentID implements LinkLayer for DataFrame
-func (packet *DataFrame) ParentID() string {
+func (packet DataFrame) ParentID() string {
 	return packet.Sender
 }
 
 // ReplyTo implements LinkLayer for DataFrame
-func (packet *DataFrame) ReplyTo() string {
+func (packet DataFrame) ReplyTo() string {
 	return packet.Recipient
 }
 
 // SetReplyTo implements LinkLayer for DataFrame
-func (packet *DataFrame) SetReplyTo() time.Time {
-	return packet.Timestamp
+func (packet DataFrame) SetReplyTo(recipient string) {
+	packet.Recipient = recipient
+}
+
+// Timestamp implements LinkLayer for DataFrame
+func (packet DataFrame) Timestamp() time.Time {
+	return packet.Header.Timestamp
 }
 
 // Type implements datagram.Opaque for DataFrame
-func (packet *DataFrame) Type() string {
+func (packet DataFrame) Type() string {
 	return string(packet.contentType)
 }
 
 // Data implements datagram.Opaque for DataFrame
-func (packet *DataFrame) Data() (sealed []byte) {
+func (packet DataFrame) Data() (sealed []byte) {
 	sealed = append(sealed, packet.EphemeralKey...)
 	sealed = append(sealed, packet.Payload...)
 	sealed = append(sealed, packet.Signature...)
@@ -64,17 +69,17 @@ func (packet *DataFrame) Data() (sealed []byte) {
 }
 
 // Marshal implements datagram.Opaque for DataFrame
-func (packet *DataFrame) Marshal() ([]byte, error) {
+func (packet DataFrame) Marshal() ([]byte, error) {
 	return json.Marshal(packet)
 }
 
 // Unmarshal implements datagram.Opaque for DataFrame
-func (packet *DataFrame) Unmarshal(data []byte) (err error) {
-	return json.Unmarshal(data, packet)
+func (packet DataFrame) Unmarshal(data []byte) (err error) {
+	return json.Unmarshal(data, &packet)
 }
 
 // UnmarshalData implements datagram.Content for DataFrame
-func (packet *DataFrame) UnmarshalData(data any) (err error) {
+func (packet DataFrame) UnmarshalData(data any) (err error) {
 	if sealed, ok := data.(datagram.Sealed); !ok {
 		err = gnet.ErrorInvalidDatagram
 	} else {
