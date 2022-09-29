@@ -1,9 +1,12 @@
 package datagram
 
-type Datagram interface {
-	Type() Type
+type Opaque interface {
+	Type() string
+	Data() []byte
+	Marshal() ([]byte, error)
+	Unmarshal([]byte) error
 }
 
-type DatagramContent interface {
-	Type() ContentType
+type Content interface {
+	UnmarshalData(any) error
 }

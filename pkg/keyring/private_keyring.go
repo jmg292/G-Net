@@ -10,6 +10,7 @@ type PrivateKeyRing interface {
 	crypto.PrivateKey
 	crypto.Signer
 	crypto.Decrypter
+	Authenticate(io.Reader, []byte, crypto.SignerOpts) ([]byte, error)
 }
 
 // Private is a crypto.PrivateKey implementation for keyring.Backend.
@@ -29,6 +30,15 @@ func NewPrivate(backend Keystore) (keyring *Private, err error) {
 	return
 }
 
+func (private Private) signWithKey(key crypto.PrivateKey, rand io.Reader, digest []byte, opts crypto.SignerOpts) (signature []byte, err error) {
+	if signer, ok := key.(crypto.Signer); !ok {
+		err = ErrInvalidSigningKey
+	} else {
+		signature, err = signer.Sign(rand, digest, opts)
+	}
+	return
+}
+
 // Public implements crypto.PrivateKey for Private.
 // It returns the public key associated with this private key.
 func (private Private) Public() crypto.PublicKey {
@@ -40,10 +50,8 @@ func (private Private) Public() crypto.PublicKey {
 func (private Private) Sign(rand io.Reader, digest []byte, opts crypto.SignerOpts) (signature []byte, err error) {
 	if signingKey, e := private.Keyring.GetPrivateKey(SigningKeySlot); e != nil {
 		err = e
-	} else if signer, ok := signingKey.(crypto.Signer); !ok {
-		err = ErrInvalidSigningKey
 	} else {
-		signature, err = signer.Sign(rand, digest, opts)
+		signature, err = private.signWithKey(signingKey, rand, digest, opts)
 	}
 	return
 }
@@ -57,6 +65,17 @@ func (private Private) Decrypt(rand io.Reader, msg []byte, opts crypto.Decrypter
 		err = ErrInvalidDecryptionKey
 	} else {
 		plaintext, err = decrypter.Decrypt(rand, msg, opts)
+	}
+	return
+}
+
+// Authenticate provides a convenience wrapper around retrieving
+// and signing a digest with a stored Authentication key
+func (private Private) Authenticate(rand io.Reader, digest []byte, opts crypto.SignerOpts) (signature []byte, err error) {
+	if authKey, e := private.Keyring.GetPrivateKey(AuthenticationKeySlot); e != nil {
+		err = e
+	} else {
+		signature, err = private.signWithKey(authKey, rand, digest, opts)
 	}
 	return
 }

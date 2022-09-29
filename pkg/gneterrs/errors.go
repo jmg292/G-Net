@@ -26,6 +26,8 @@ const (
 )
 
 const (
+	ErrorInvalidDataframe           ValidationError = "invalid dataframe"
+	ErrorInvalidDatagram            ValidationError = "invalid datagram"
 	ErrorInvalidSignature           ValidationError = "invalid signature"
 	ErrorInvalidMessageDigest       ValidationError = "invalid message digest"
 	ErrorInvalidHeader              ValidationError = "invalid header"
@@ -47,6 +49,13 @@ const (
 const (
 	ErrorKeyExchangeFailed    CryptoError = "key exchange failed"
 	ErrorUnsupportedAlgorithm CryptoError = "unsupported algorithm"
+	ErrorUnsupportedSigScheme CryptoError = "unsupported signature scheme"
+)
+
+const (
+	ErrorDropped      ConnectionError = "connection dropped"
+	ErrorEvalFailed   ConnectionError = "rule evaluation failed (Layer: %s) - %s"
+	ErrorHandleFailed ConnectionError = "connection handling failed (Layer: %s) - %s"
 )
 
 const (

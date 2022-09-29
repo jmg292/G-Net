@@ -9,7 +9,7 @@ import (
 )
 
 func New(precedingBlockId []byte, data any, issuer any) (*Block, error) {
-	contentType := data.(datagram.Datagram).Type()
+	contentType := data.(datagram.Opaque).Type()
 	blockContent, err := MarshalContent(data)
 	if err != nil {
 		return nil, err

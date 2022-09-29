@@ -30,6 +30,12 @@ func (e CryptoError) Error() string {
 	return string(e)
 }
 
+type ConnectionError string
+
+func (e ConnectionError) Error() string {
+	return string(e)
+}
+
 type CertificateError string
 
 func (e CertificateError) Error() string {
