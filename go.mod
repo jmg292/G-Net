@@ -20,6 +20,7 @@ require (
 	github.com/sethvargo/go-envconfig v0.6.0 // indirect
 	github.com/suborbital/grav v0.5.1 // indirect
 	github.com/suborbital/vektor v0.6.0 // indirect
+	github.com/williamfhe/godivert v0.0.0-20181229124620-a48c5b872c73 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/sys v0.0.0-20220731174439-a90be440212d // indirect
 	golang.zx2c4.com/wintun v0.0.0-20211104114900-415007cec224 // indirect
