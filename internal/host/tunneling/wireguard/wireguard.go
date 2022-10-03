@@ -30,5 +30,6 @@ func NewTunnel() (tunnel *Tunnel, err error) {
 		}
 	}
 
-	return instance, nil
+	tunnel = instance
+	return
 }
